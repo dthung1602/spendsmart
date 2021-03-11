@@ -38,7 +38,7 @@
         - Name
         - Start date
         - End date
-        - Category
+        - Categories
         - Compare <=>
         - Total
         - Status: waiting, on track, warning, failed, completed, abandoned
@@ -65,6 +65,7 @@
   - Take a picture
   - Convert to transaction later
 - Sync data across devices?
+  - Resolve conflict: like git, with forced rebase
 
 ## Other requirements
 
@@ -78,3 +79,45 @@
 - React
 - Ant design
 - Typescript
+
+## DB Design
+
+- Category:
+    - Title: string unique
+    - Parent title: string
+
+- Transaction:
+    - Spending Datetime: datetime, timezone utc, indexed, default now
+    - Title: string, non-empty, stripped, locale-aware
+    - Title words: [string], calculated from title, lowercase, remove accents
+    - Categories: [string], hierarchy enforced by application layer, default cat
+    - Price: float
+    - Is unexpected: bool, default false
+    - Created at: datetime
+    - Updated at: datetime
+    - Deleted at: datetime
+    - Id: timestamp
+    
+- Transaction History:
+    - Transaction id
+    - Field: string
+    - Old content
+    - New content
+    - Created at
+    - Id: timestamp
+    
+- Global Config:
+    - Key: string
+    - Value: any
+    
+- Target
+    - Title
+    - Title words?
+    - Start date
+    - End date
+    - Categories [string]
+    - Include unexpected: bool
+    - Compare enum <=>
+    - Total float
+    - Status enum waiting, on track, warning, failed, completed, abandoned
+    - Created at
