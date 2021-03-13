@@ -119,3 +119,28 @@
   - Total float
   - Status enum waiting, on track, warning, failed, completed, abandoned
   - Created at
+
+## Roadmap
+
+- Mobile version, without sync
+  - Design UI
+  - Bootstrap project
+    - Basic layout
+    - Some global config
+  - Add / edit / delete transactions
+  - Add / edit / delete categories
+  - Search transaction
+  - Target
+  - Report
+  - Polish + optimize
+  
+- BE for sync across devices
+
+- Desktop version?
+
+- Small features
+  - Quick record
+  - Voice API?
+  - Reminder to record spending
+  - Scheduled transaction
+  - Password protection
