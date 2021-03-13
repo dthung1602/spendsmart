@@ -1,12 +1,24 @@
-type Compare = "=" | "<" | ">";
+import {
+  EQUAL,
+  LESS_THAN,
+  MORE_THAN,
+  TARGET_STT_WAITING,
+  TARGET_STT_ON_TRACK,
+  TARGET_STT_WARNING,
+  TARGET_STT_FAILED,
+  TARGET_STT_COMPLETED,
+  TARGET_STT_ABANDONED,
+} from "../types/constants";
+
+type Compare = typeof LESS_THAN | typeof EQUAL | typeof MORE_THAN;
 
 type Status =
-  | "waiting"
-  | "on track"
-  | "warning"
-  | "failed"
-  | "completed"
-  | "abandoned";
+  | typeof TARGET_STT_WAITING
+  | typeof TARGET_STT_ON_TRACK
+  | typeof TARGET_STT_WARNING
+  | typeof TARGET_STT_FAILED
+  | typeof TARGET_STT_COMPLETED
+  | typeof TARGET_STT_ABANDONED;
 
 class Target {
   constructor(

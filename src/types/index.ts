@@ -1,4 +1,8 @@
 type Nullable<T> = T | null;
 type Optional<T> = T | undefined | null;
-
-export type { Nullable, Optional };
+type IDBResultEvent<T> = Event & {
+  target: {
+    result: T;
+  };
+};
+export type { Nullable, Optional, IDBResultEvent };
