@@ -77,7 +77,7 @@
 
 - IndexedDB
 - React
-- Ant design
+- Less
 - Typescript
 
 ## DB Design
@@ -144,3 +144,17 @@
   - Reminder to record spending
   - Scheduled transaction
   - Password protection
+  
+## UX design
+
+- Color
+  - Red - error: #ff6053
+  - Yellow - warning: #ffa957
+  - Blue - info: 5AB1BB
+  - Green - success: 94C9A9
+  - Primary: #393e5b
+  - Background: #ede6cb
+- Dark mode: primary switch with background
+- Font: raleway
+- Icon: Font awesome
+- Chart: nivo
