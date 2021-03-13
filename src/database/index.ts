@@ -33,16 +33,20 @@ function getDB(): Nullable<IDBDatabase> {
   return db;
 }
 
-const category = new CategoryDatastore(Category, "Category", getDB);
-const transaction = new TransactionDatastore(Transaction, "Transaction", getDB);
+const category = new CategoryDatastore(Category, "Categories", getDB);
+const transaction = new TransactionDatastore(
+  Transaction,
+  "Transactions",
+  getDB
+);
 const transactionHistory = new TransactionHistoryDatastore(
   TransactionHistory,
-  "TransactionHistory",
+  "TransactionHistories",
   getDB
 );
 const globalConfig = new GlobalConfigDatastore(
   GlobalConfig,
-  "GlobalConfig",
+  "GlobalConfigs",
   getDB
 );
 
