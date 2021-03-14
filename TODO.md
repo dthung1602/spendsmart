@@ -12,10 +12,10 @@
   - Constraint:
     - a belongs to cat A, A is sub cat of B, then a belongs to B
     - a transaction can belong to a non-leaf cat
-- Add/Edit/Delete transaction:
+- Add/Edit?/Delete transaction:
   - Fields:
     - Datetime
-    - Name
+    - Note
     - Categories (follow one branch in the hierarchy)
     - Price
     - Daily spending / Unexpected spending Flag
@@ -46,7 +46,6 @@
   - Search target by: name, date
 - Global config:
   - Currency
-  - Dark theme
   - Password? Fingerprint??
   - Multiple profile per device? Add/Delete profile
 - Reminder to record spending??:
@@ -61,9 +60,6 @@
       - Monthly: what date/time
       - Yearly: what date/time
   - Add/Edit/Delete
-- Quick record
-  - Take a picture
-  - Convert to transaction later
 - Sync data across devices?
   - Resolve conflict: like git, with forced rebase
 
@@ -83,31 +79,31 @@
 ## DB Design
 
 - Category:
-
   - Title: string unique
   - Parent title: string
 
 - Transaction:
   - Spending Datetime: datetime, timezone utc, indexed, default now
-  - Title: string, non-empty, stripped, locale-aware
-  - Title words: [string], calculated from title, lowercase, remove accents
+  - Note: string, non-empty, stripped, locale-aware
+  - Note words: [string], calculated from title, lowercase, remove accents
   - Categories: [string], hierarchy enforced by application layer, default cat
   - Price: float
   - Is unexpected: bool, default false
-  - Created at: datetime
-  - Updated at: datetime
-  - Deleted at: datetime
+  - Updated at: datetime ??
+  - Deleted at: datetime ??
   - Id: timestamp
-- Transaction History:
+
+- Transaction History: ??
   - Transaction id
   - Field: string
   - Old content
   - New content
-  - Created at
   - Id: timestamp
+
 - Global Config:
   - Key: string
   - Value: any
+
 - Target
   - Title
   - Title words?
@@ -118,20 +114,25 @@
   - Compare enum <=>
   - Total float
   - Status enum waiting, on track, warning, failed, completed, abandoned
-  - Created at
+  - Id: timestamp
 
 ## Roadmap
 
 - Mobile version, without sync
-  - Design UI
-  - Bootstrap project
-    - Basic layout
-    - Some global config
-  - Add / edit / delete transactions
-  - Add / edit / delete categories
+  - v1
+    - Design UI
+    - Bootstrap project
+      - Basic layout
+      - Some global config
+      - Language
+    - Add / delete transactions
+    - Add / delete categories
   - Search transaction
   - Target
   - Report
+  - Import export data  
+  - Homepage
+  - Legal notice  
   - Polish + optimize
   
 - BE for sync across devices
@@ -154,7 +155,6 @@
   - Green - success: 94C9A9
   - Primary: #393e5b
   - Background: #ede6cb
-- Dark mode: primary switch with background
 - Font: raleway
 - Icon: Font awesome
 - Chart: nivo
