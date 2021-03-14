@@ -1,17 +1,17 @@
-import { DB_VERSION } from "../types/constants";
-import { Nullable } from "../types";
-import { DBError } from "../errors";
+import { DB_VERSION } from "../utils/constants";
+import { Nullable } from "../utils/types";
+import { DBError } from "../utils/errors";
 import migrate from "./migrations";
-import CategoryDatastore from "./CategoryDatastore";
-import TransactionDatastore from "./TransactionDatastore";
-import TransactionHistoryDatastore from "./TransactionHistoryDatastore";
-import GlobalConfigDatastore from "./GlobalConfigDatastore";
+import CategoryDatastore from "./datastores/CategoryDatastore";
+import TransactionDatastore from "./datastores/TransactionDatastore";
+import TransactionHistoryDatastore from "./datastores/TransactionHistoryDatastore";
+import GlobalConfigDatastore from "./datastores/GlobalConfigDatastore";
 import {
   Category,
   Transaction,
   TransactionHistory,
   GlobalConfig,
-} from "../models";
+} from "./models";
 
 const db: Nullable<IDBDatabase> = null;
 
@@ -50,4 +50,14 @@ const globalConfig = new GlobalConfigDatastore(
   getDB
 );
 
-export { initDB, category, transaction, transactionHistory, globalConfig };
+export {
+  initDB,
+  category,
+  transaction,
+  transactionHistory,
+  globalConfig,
+  Category,
+  Transaction,
+  TransactionHistory,
+  GlobalConfig,
+};

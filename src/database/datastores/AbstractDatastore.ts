@@ -1,5 +1,5 @@
-import { DBError } from "../errors";
-import { Nullable, Optional, IDBResultEvent } from "../types";
+import { DBError } from "../../utils/errors";
+import { Nullable, Optional, IDBResultEvent } from "../../utils/types";
 
 type FilterObject<ModelClass> = {
   [Property in keyof ModelClass]+?: ModelClass[Property];

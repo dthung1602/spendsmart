@@ -1,4 +1,4 @@
-import { Optional } from "../types";
+import { Optional } from "../../utils/types";
 
 class Transaction {
   constructor(

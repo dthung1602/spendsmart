@@ -1,4 +1,4 @@
-import { IDBResultEvent } from "../../types";
+import { IDBResultEvent } from "../../utils/types";
 import version1 from "./version1";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function

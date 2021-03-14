@@ -8,7 +8,7 @@ import {
   TARGET_STT_FAILED,
   TARGET_STT_COMPLETED,
   TARGET_STT_ABANDONED,
-} from "../types/constants";
+} from "../../utils/constants";
 
 type Compare = typeof LESS_THAN | typeof EQUAL | typeof MORE_THAN;
 
