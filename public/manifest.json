@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Spend Smart",
+  "name": "Spend Smart",
+  "description": "A personal finance management web app",
   "icons": [
     {
       "src": "favicon.ico",
@@ -13,13 +14,38 @@
       "sizes": "192x192"
     },
     {
+      "src": "logo256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/dashboard",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#393e5b",
+  "background_color": "#ede6cb",
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "Access recent transactions",
+      "url": "/dashboard"
+    },
+    {
+      "name": "Transactions",
+      "short_name": "Transactions",
+      "description": "Filter & search all transactions",
+      "url": "/transactions"
+    },
+    {
+      "name": "Report",
+      "short_name": "Report",
+      "description": "Report and targets",
+      "url": "/reports"
+    }
+  ]
 }
