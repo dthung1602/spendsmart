@@ -26,4 +26,8 @@ module.exports = {
       version: "detect",
     },
   },
+  rules: {
+    "react/prop-types": 0,
+    "@typescript-eslint/no-empty-interface": 0
+  }
 };
