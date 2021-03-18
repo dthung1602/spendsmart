@@ -1,0 +1,24 @@
+@import "../../assets/styles/theme";
+
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  background: @color-primary;
+  z-index: 500;
+
+  a {
+    flex: 1;
+    height: 100%;
+    padding: 16px;
+    text-align: center;
+    color: @color-background;
+
+    &.active {
+      color: @color-primary;
+      background: @color-background;
+    }
+  }
+}
