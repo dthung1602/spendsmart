@@ -1,0 +1,40 @@
+@import "../../assets/styles/theme";
+
+@fab-right: 16px;
+@fab-bottom: 90px;
+@fab-size: 48px;
+
+.fab {
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+
+  width: @fab-size;
+  height: @fab-size;
+
+  bottom: @fab-bottom;
+  right: @fab-right;
+  position: fixed;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.success {
+    background: @color-success;
+    color: white;
+  }
+  &.info {
+    background: @color-info;
+    color: white;
+  }
+  &.warning {
+    background: @color-warning;
+    color: white;
+  }
+  &.error {
+    background: @color-error;
+    color: white;
+  }
+}
+
