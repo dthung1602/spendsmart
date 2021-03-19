@@ -26,6 +26,7 @@ import "./Navbar.less";
 
 function Navbar(): JSX.Element {
   const location = useLocation();
+  const idx = Object.keys(routeMapping).indexOf(location.pathname);
 
   return (
     <div className="nav-bar">
@@ -38,6 +39,16 @@ function Navbar(): JSX.Element {
           <FontAwesomeIcon icon={icon} size="lg" />
         </Link>
       ))}
+      <div
+        className="highlight"
+        style={{ transform: `translate(${(idx - 1) * 33.3333333333333}%)` }}
+      >
+        <div />
+        <div>
+          <div />
+        </div>
+        <div />
+      </div>
     </div>
   );
 }
