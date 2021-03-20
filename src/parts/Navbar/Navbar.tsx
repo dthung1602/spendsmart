@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTachometerAlt,
@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, Link } from "react-router-dom";
 
+import { GlobalContext } from "../../GlobalContext";
 import {
   ROUTE_DASHBOARD,
   ROUTE_SETTINGS,
@@ -25,11 +26,12 @@ const routeMapping = {
 import "./Navbar.less";
 
 function Navbar(): JSX.Element {
+  const [{ overlayOpen }] = useContext(GlobalContext);
   const location = useLocation();
   const idx = Object.keys(routeMapping).indexOf(location.pathname);
 
   return (
-    <div className="nav-bar">
+    <div className={`nav-bar ${overlayOpen ? "hide" : ""}`}>
       {Object.entries(routeMapping).map(([route, icon]) => (
         <Link
           to={route}

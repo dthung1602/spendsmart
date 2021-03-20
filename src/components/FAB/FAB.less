@@ -1,24 +1,35 @@
 @import "../../assets/styles/theme";
+@import "../../assets/styles/global";
 
 @fab-right: 16px;
 @fab-bottom: 90px;
 @fab-size: 48px;
 
 .fab {
+  overflow: hidden;
   background: white;
   border-radius: 50%;
   cursor: pointer;
+  z-index: 500;
 
   width: @fab-size;
   height: @fab-size;
+  transform: rotate(0);
+  transition: @transition-fast;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   bottom: @fab-bottom;
   right: @fab-right;
   position: fixed;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  &.hide {
+    width: 0;
+    height: 0;
+    transform: rotate(360deg);
+  }
 
   &.success {
     background: @color-success;

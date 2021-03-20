@@ -1,7 +1,5 @@
 @import "../../assets/styles/theme";
-
-@border-radius: 24px;
-@transition-time: 0.5s;
+@import "../../assets/styles/global";
 
 .nav-bar {
   position: fixed;
@@ -11,6 +9,12 @@
   display: flex;
   background: @color-background;
   z-index: 500;
+  transition: @transition-fast;
+  transform: translateY(0);
+
+  &.hide {
+    transform: translateY(100px);
+  }
 
   a {
     flex: 1;
@@ -18,7 +22,7 @@
     padding: 16px;
     text-align: center;
     color: @color-primary;
-    transition: color @transition-time;
+    transition: @transition;
     background: transparent;
     z-index: 510;
 
@@ -34,7 +38,7 @@
     z-index: 505;
     height: 100%;
     width: 75%;
-    transition: all @transition-time;
+    transition: @transition;
 
     & > * {
       display: inline-block;
@@ -44,17 +48,17 @@
     }
 
     & > *:first-child {
-      border-top-right-radius: @border-radius;
+      border-top-right-radius: @border-radius-round;
     }
     & > *:last-child {
-      border-top-left-radius: @border-radius;
+      border-top-left-radius: @border-radius-round;
     }
     & > *:nth-child(2) {
       background: @color-background;
       &>div {
         background: @color-primary;
-        border-bottom-left-radius: @border-radius;
-        border-bottom-right-radius: @border-radius;
+        border-bottom-left-radius: @border-radius-round;
+        border-bottom-right-radius: @border-radius-round;
         width: 100%;
         height: 100%;
       }

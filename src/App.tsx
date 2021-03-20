@@ -1,14 +1,14 @@
-import React, { Suspense, lazy } from "react";
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { GlobalContextProvider } from "./GlobalContext";
 import { ErrorBoundary, FullScreenLoading } from "./components";
 import Navbar from "./parts/Navbar";
 import {
-  ROUTE_HOME,
   ROUTE_DASHBOARD,
-  ROUTE_SETTINGS,
+  ROUTE_HOME,
   ROUTE_REPORTS,
+  ROUTE_SETTINGS,
   ROUTE_TRANSACTIONS,
 } from "./utils/constants";
 
