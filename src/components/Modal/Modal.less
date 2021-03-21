@@ -1,7 +1,7 @@
 @import "../../assets/styles/theme";
 @import "../../assets/styles/global";
 
-.select-background {
+.modal-background {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -17,7 +17,7 @@
   }
 }
 
-.select-placeholder {
+.modal-placeholder {
   z-index: 200;
   position: fixed;
   bottom: 0;
@@ -25,7 +25,7 @@
   right: 0;
 }
 
-.select-container {
+.modal-container {
   transition: @transition-fast;
   transform: translateY(100%);
   &.open {
@@ -33,7 +33,7 @@
   }
 }
 
-.select-header {
+.modal-header {
   background: @color-background;
   color: @color-primary;
   text-align: center;
@@ -43,6 +43,8 @@
   border-top-right-radius: @border-radius-round;
 
   svg {
-    float: right;
+    position: absolute;
+    right: @space-large;
+    cursor: pointer;
   }
 }

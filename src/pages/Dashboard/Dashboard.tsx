@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-import Select from "../../components/Select";
+import Select from "../../components/Modal";
 import FAB from "../../components/FAB";
 import "./Dashboard.less";
 

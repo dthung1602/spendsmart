@@ -3,17 +3,17 @@ import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { GlobalContext } from "../../GlobalContext";
-import SelectOption from "./SelectOption";
-import "./Select.less";
+import ModalOption from "./ModalOption";
+import "./Modal.less";
 
-interface SelectProp
+interface ModalProp
   extends React.PropsWithChildren<{
     title: string;
     open: boolean;
     onClose: () => void;
   }> {}
 
-function Select({ title, open, onClose, children }: SelectProp): JSX.Element {
+function Modal({ title, open, onClose, children }: ModalProp): JSX.Element {
   const updateContext = useContext(GlobalContext)[1];
 
   const close: React.MouseEventHandler = (event) => {
@@ -23,18 +23,23 @@ function Select({ title, open, onClose, children }: SelectProp): JSX.Element {
 
   useEffect(() => {
     updateContext({ overlayOpen: open });
+    if (open) {
+      document.body.classList.add("disable-scroll");
+    } else {
+      document.body.classList.remove("disable-scroll");
+    }
   });
 
   return (
     <>
       <div
-        className={`select-background ${open ? "open" : ""}`}
+        className={`modal-background ${open ? "open" : ""}`}
         onClick={close}
       />
-      <div className="select-placeholder">
-        <div className={`select-container ${open ? "open" : ""}`}>
-          <div className="select-header">
-            {title}
+      <div className="modal-placeholder">
+        <div className={`modal-container ${open ? "open" : ""}`}>
+          <div className="modal-header">
+            <span className="sub-title">{title}</span>
             <FontAwesomeIcon icon={faTimesCircle} size="1x" onClick={close} />
           </div>
           {children}
@@ -44,6 +49,6 @@ function Select({ title, open, onClose, children }: SelectProp): JSX.Element {
   );
 }
 
-Select.Option = SelectOption;
+Modal.Option = ModalOption;
 
-export default Select;
+export default Modal;
