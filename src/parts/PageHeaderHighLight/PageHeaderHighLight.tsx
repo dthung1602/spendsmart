@@ -15,7 +15,7 @@ function PageHeaderHighLight({
 }: PageHeaderHighLightProp): JSX.Element {
   return (
     <div className="page-header-highlight">
-      <svg className="page-header-background" viewBox="0 0 150 100">
+      <svg className="page-header-background" viewBox="0 0 150 80">
         <path
           fill="#ff6053"
           fillOpacity="1"
