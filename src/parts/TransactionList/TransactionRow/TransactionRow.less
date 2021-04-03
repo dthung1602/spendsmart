@@ -1,0 +1,45 @@
+@import "../../../assets/styles/global";
+@import "../../../assets/styles/theme";
+@import "../../../assets/styles/typography";
+
+.transaction-row {
+  padding: @space-medium;
+  margin: @space-medium @space-medium 0 @space-medium;
+  border-radius: @space-medium;
+  background: lighten(@color-primary, 10%);
+  color: @color-background;
+  cursor: pointer;
+
+  display: grid;
+  grid-template-areas:
+    "icon cat price"
+    "icon time price";
+  grid-template-columns: 40px 1fr 1fr;
+  align-items: center;
+  row-gap: @space-medium;
+  column-gap: @space-medium;
+}
+
+.transaction-icon {
+  grid-area: icon;
+  justify-self: center;
+}
+
+.transaction-category {
+  grid-area: cat;
+  .sub-title();
+}
+
+.transaction-time {
+  grid-area: time;
+  color: white;
+  font-size: 0.8rem;
+}
+
+.transaction-price {
+  grid-area: price;
+  justify-self: end;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: @color-success;
+}

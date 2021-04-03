@@ -21,7 +21,7 @@ function Tab({
 
   return (
     <div className="tab">
-      <div className="tab-header">
+      <div className="tab-header no-scroll-bar">
         {children.map((tab) => {
           const onClick = () => {
             setSelectedTab(tab.props.tab);
