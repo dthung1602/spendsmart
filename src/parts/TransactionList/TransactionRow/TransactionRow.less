@@ -3,21 +3,38 @@
 @import "../../../assets/styles/typography";
 
 .transaction-row {
-  padding: @space-medium;
   margin: @space-medium @space-medium 0 @space-medium;
-  border-radius: @space-medium;
+  border-radius: @border-radius-lightly-round;
   background: lighten(@color-primary, 10%);
   color: @color-background;
   cursor: pointer;
+  overflow: hidden;
+}
 
+.transaction-body {
+  padding: @space-wide;
   display: grid;
   grid-template-areas:
     "icon cat price"
     "icon time price";
-  grid-template-columns: 40px 1fr 1fr;
+  grid-template-columns: 40px 5fr 1fr;
   align-items: center;
   row-gap: @space-medium;
   column-gap: @space-medium;
+
+  &.expand {
+    grid-template-areas:
+      "icon cat price"
+      "icon time price"
+      ". title expect";
+  }
+}
+
+.transaction-footer {
+  display: flex;
+  &>* {
+    flex: 1
+  }
 }
 
 .transaction-icon {
@@ -38,8 +55,18 @@
 
 .transaction-price {
   grid-area: price;
+  column-span: 2;
   justify-self: end;
   font-size: 1.1rem;
   font-weight: bold;
   color: @color-success;
+}
+
+.transaction-title {
+  grid-area: title;
+}
+
+.transaction-expect {
+  grid-area: expect;
+  justify-self: end;
 }

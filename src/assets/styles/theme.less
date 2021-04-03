@@ -1,6 +1,21 @@
+@import "./typography";
+
 @color-primary: #393e5b;
 @color-background: #ede6cb;
 @color-error: #ff6053;
 @color-warning: #ffa957;
 @color-info: #5ab1bb;
 @color-success: #94c9a9;
+
+@colors: primary, background, error, warning, info, success;
+
+.-colors(@i: length(@colors), @prop) when (@i > 0) {
+  @name: extract(@colors, @i);
+  @value: "color-@{name}";
+  .@{prop}-@{name} {
+    @{prop}: @@value;
+  }
+  .-colors(@i: (@i - 1), @prop: @prop);
+}
+
+

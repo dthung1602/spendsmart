@@ -2,6 +2,7 @@
 @transition: all 0.5s ease-in-out;
 @transition-fast: all 0.25s ease-in-out;
 
+@border-radius-lightly-round: 16px;
 @border-radius-round: 24px;
 
 @space-huge: 20px;
@@ -9,3 +10,23 @@
 @space-wide: 12px;
 @space-medium: 8px;
 @space-narrow: 4px;
+
+@spaces: huge, large, wide, medium, narrow;
+
+.-space(@i: length(@spaces), @prop) when (@i > 0) {
+  @name: extract(@spaces, @i);
+  @value: "space-@{name}";
+  .v-@{prop}-@{name} {
+      @{prop}-top: @@value;
+      @{prop}-bottom: @@value;
+  }
+  .h-@{prop}-@{name} {
+      @{prop}-left: @@value;
+      @{prop}-right: @@value;
+  }
+  .-space(@i: (@i - 1), @prop: @prop);
+}
+
+.-space(@prop: padding);
+.-space(@prop: margin);
+

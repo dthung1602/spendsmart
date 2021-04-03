@@ -1,0 +1,20 @@
+@import "./theme";
+@import "./typography";
+@import "./global";
+
+.-btns(@i: length(@colors)) when (@i > 0) {
+  @name: extract(@colors, @i);
+  @value: "color-@{name}";
+  .btn-@{name} {
+    background: @@value;
+    display: inline-block;
+    text-align: center;
+    color: white;
+    .small();
+    .sub-title();
+    .v-padding-wide();
+  }
+  .-btns((@i - 1));
+}
+
+.-btns();

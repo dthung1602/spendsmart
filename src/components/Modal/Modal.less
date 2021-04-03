@@ -18,19 +18,24 @@
 }
 
 .modal-placeholder {
-  z-index: 200;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: -100;
+
+  &.open {
+    z-index: 200;
+  }
 }
 
 .modal-container {
   transition: @transition-fast;
   transform: translateY(100%);
-  &.open {
-    transform: translateY(0);
-  }
+}
+
+.open .modal-container {
+  transform: translateY(0);
 }
 
 .modal-header {

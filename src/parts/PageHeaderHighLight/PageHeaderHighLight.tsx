@@ -34,11 +34,11 @@ function PageHeaderHighLight({
       </svg>
       <div className="text-box">
         <div>
-          <div className="sub-title">This week</div>
+          <div className="sub-title small">This week</div>
           <div className="total">{formatMoney(thisWeek)}</div>
         </div>
         <div>
-          <div className="sub-title">This month</div>
+          <div className="sub-title small">This month</div>
           <div className="total">{formatMoney(thisMonth)}</div>
         </div>
       </div>

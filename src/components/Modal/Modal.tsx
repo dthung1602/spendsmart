@@ -21,6 +21,7 @@ function Modal({ title, open, onClose, children }: ModalProp): JSX.Element {
     onClose();
   };
 
+  // FIXME
   useEffect(() => {
     updateContext({ overlayOpen: open });
     if (open) {
@@ -28,7 +29,7 @@ function Modal({ title, open, onClose, children }: ModalProp): JSX.Element {
     } else {
       document.body.classList.remove("disable-scroll");
     }
-  });
+  }, [open]);
 
   return (
     <>
@@ -36,8 +37,8 @@ function Modal({ title, open, onClose, children }: ModalProp): JSX.Element {
         className={`modal-background ${open ? "open" : ""}`}
         onClick={close}
       />
-      <div className="modal-placeholder">
-        <div className={`modal-container ${open ? "open" : ""}`}>
+      <div className={`modal-placeholder ${open ? "open" : ""}`}>
+        <div className="modal-container">
           <div className="modal-header">
             <span className="sub-title">{title}</span>
             <FontAwesomeIcon icon={faTimesCircle} size="1x" onClick={close} />
