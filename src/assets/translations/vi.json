@@ -1,1 +1,11 @@
-{}
+{
+  "parts": {
+    "page-header-highlight": {
+      "this-week": "Tuần này",
+      "this-month": "Tháng này"
+    },
+    "transaction-list": {
+      "recent-transactions": "Chi tiêu gần đây"
+    }
+  }
+}

@@ -3,6 +3,7 @@ import React from "react";
 import "./PageHeaderHighLight.less";
 
 import { formatMoney } from "../../utils";
+import { useTranslation } from "../../utils/hooks";
 
 interface PageHeaderHighLightProp {
   thisWeek: number;
@@ -13,6 +14,8 @@ function PageHeaderHighLight({
   thisWeek,
   thisMonth,
 }: PageHeaderHighLightProp): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <div className="page-header-highlight">
       <svg className="page-header-background" viewBox="0 0 150 80">
@@ -34,11 +37,15 @@ function PageHeaderHighLight({
       </svg>
       <div className="text-box">
         <div>
-          <div className="sub-title small">This week</div>
+          <div className="sub-title small">
+            {t("parts.page-header-highlight.this-week")}
+          </div>
           <div className="total">{formatMoney(thisWeek)}</div>
         </div>
         <div>
-          <div className="sub-title small">This month</div>
+          <div className="sub-title small">
+            {t("parts.page-header-highlight.this-month")}
+          </div>
           <div className="total">{formatMoney(thisMonth)}</div>
         </div>
       </div>

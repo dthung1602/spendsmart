@@ -1,10 +1,16 @@
 import React, { createContext, useState } from "react";
 
-const initContextState = {
-  overlayOpen: false,
+import type { Language } from "./utils/types";
+
+type GlobalContextState = {
+  language: Language;
+  overlayOpen: boolean;
 };
 
-type GlobalContextState = typeof initContextState;
+const initContextState: GlobalContextState = {
+  language: "en",
+  overlayOpen: false,
+};
 
 interface GlobalContextProp {
   children: JSX.Element;

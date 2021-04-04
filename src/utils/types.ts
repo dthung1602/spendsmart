@@ -7,4 +7,6 @@ type IDBResultEvent<T> = Event & {
   };
 };
 
-export type { Nullable, Optional, IDBResultEvent };
+type Language = "en" | "vi";
+
+export type { Nullable, Optional, IDBResultEvent, Language };

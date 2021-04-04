@@ -1,1 +1,11 @@
-{}
+{
+  "parts": {
+    "page-header-highlight": {
+      "this-week": "This week",
+      "this-month": "This month"
+    },
+    "transaction-list": {
+      "recent-transactions": "Recent transactions"
+    }
+  }
+}
