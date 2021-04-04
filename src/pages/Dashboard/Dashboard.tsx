@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import Select from "../../components/Modal";
 import FAB from "../../components/FAB";
 import Tab from "../../components/Tab";
 import PageHeaderHighLight from "../../parts/PageHeaderHighLight";
+import TransactionList from "../../parts/TransactionList";
+import { GlobalContext } from "../../GlobalContext";
 import { Transaction } from "../../database";
 import "./Dashboard.less";
-import TransactionList from "../../parts/TransactionList";
 
 const mockTransactions = [
   new Transaction(
@@ -83,7 +84,7 @@ const mockTransactions = [
 ];
 
 function Dashboard(): JSX.Element {
-  const [open, setOpen] = useState<boolean>(false);
+  const [{ overlayOpen }, updateContext] = useContext(GlobalContext);
 
   return (
     <div className="dashboard-page">
@@ -101,11 +102,16 @@ function Dashboard(): JSX.Element {
           ))}
       </Tab>
       <TransactionList transactions={mockTransactions} />
-      <FAB icon={faPlus} type="success" onClick={() => setOpen(true)} />
+      <FAB
+        icon={faPlus}
+        type="success"
+        hide={overlayOpen}
+        onClick={() => updateContext({ overlayOpen: true })}
+      />
       <Select
         title="New transaction"
-        open={open}
-        onClose={() => setOpen(false)}
+        open={overlayOpen}
+        onClose={() => updateContext({ overlayOpen: false })}
       >
         <Select.Option>Option 1</Select.Option>
         <Select.Option>Option 2</Select.Option>
