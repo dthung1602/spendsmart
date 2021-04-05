@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHome } from "@fortawesome/free-solid-svg-icons";
 
 import Select from "../../components/Modal";
 import FAB from "../../components/FAB";
 import Tab from "../../components/Tab";
 import PageHeaderHighLight from "../../parts/PageHeaderHighLight";
 import TransactionList from "../../parts/TransactionList";
+import VerticalScrollSelect from "../../components/VerticalScrollSelect";
 import { GlobalContext } from "../../GlobalContext";
 import { Transaction } from "../../database";
 import "./Dashboard.less";
@@ -113,10 +114,26 @@ function Dashboard(): JSX.Element {
         open={overlayOpen}
         onClose={() => updateContext({ overlayOpen: false })}
       >
-        <Select.Option>Option 1</Select.Option>
-        <Select.Option>Option 2</Select.Option>
-        <Select.Option>Option 3</Select.Option>
-        <Select.Option>Option 4</Select.Option>
+        <VerticalScrollSelect
+          onSelect={(value) => console.log("Select: ", value)}
+          options={[
+            {
+              value: 1,
+              displayText: "Option 1",
+              icon: faHome,
+            },
+            {
+              value: 2,
+              displayText: "Option 2",
+              icon: faHome,
+            },
+            {
+              value: 3,
+              displayText: "Option 3",
+              icon: faPlus,
+            },
+          ]}
+        />
       </Select>
     </div>
   );
