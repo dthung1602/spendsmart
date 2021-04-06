@@ -1,4 +1,7 @@
 {
+  "common": {
+    "category": "Category"
+  },
   "parts": {
     "page-header-highlight": {
       "this-week": "This week",
@@ -6,6 +9,9 @@
     },
     "transaction-list": {
       "recent-transactions": "Recent transactions"
+    },
+    "new-transaction-modal": {
+      "title": "New transaction"
     }
   }
 }

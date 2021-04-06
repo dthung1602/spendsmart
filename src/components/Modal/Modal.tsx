@@ -39,7 +39,7 @@ function Modal({ title, open, onClose, children }: ModalProp): JSX.Element {
             <span className="sub-title">{title}</span>
             <FontAwesomeIcon icon={faTimesCircle} size="1x" onClick={close} />
           </div>
-          {children}
+          <div className="modal-body">{children}</div>
         </div>
       </div>
     </>

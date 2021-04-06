@@ -9,4 +9,9 @@ type IDBResultEvent<T> = Event & {
 
 type Language = "en" | "vi";
 
-export type { Nullable, Optional, IDBResultEvent, Language };
+interface BasicJSXProp {
+  className?: string;
+  style?: { [key: string]: string | number };
+}
+
+export type { Nullable, Optional, IDBResultEvent, Language, BasicJSXProp };

@@ -3,6 +3,22 @@
 
 .vertical-scroll-select-option {
   text-align: center;
-  vertical-align: center;
+  transition: all 0.2s linear;
+
+  color: fade(black, 40%);
+
+  &.selected {
+    color: black;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+
+  &:first-child {
+    margin-top: 34px;
+  }
+
+  &:last-child {
+    margin-bottom: 34px;
+  }
 }
 

@@ -1,34 +1,9 @@
 @import "../../assets/styles/theme";
 @import "../../assets/styles/global";
 
-@blur-height: @space-huge;
-
 .vertical-scroll-select {
   position: relative;
   background: @color-background;
-
-  .blur{
-    position: absolute;
-    height: @blur-height;
-    width: 100%;
-
-    &:first-child {
-      top: 0;
-      background: linear-gradient(0deg, fade(@color-background, 0.5) 0%, @color-background 80%);
-    }
-
-    &:last-child {
-      bottom: 0;
-      background: linear-gradient(180deg, fade(@color-background, 0.5) 0%, @color-background 80%);
-    }
-  }
-
-  .body {
-    height: 36px + 2 * @blur-height;
-    overflow-y: scroll;
-  }
-
-  .place-holder {
-    height: @blur-height;
-  }
+  height: 96px;
+  overflow-y: scroll;
 }

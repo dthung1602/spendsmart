@@ -1,4 +1,7 @@
 {
+  "common": {
+    "category": "Danh mục"
+  },
   "parts": {
     "page-header-highlight": {
       "this-week": "Tuần này",
@@ -6,6 +9,9 @@
     },
     "transaction-list": {
       "recent-transactions": "Chi tiêu gần đây"
+    },
+    "new-transaction-modal": {
+      "title": "Tạo mới"
     }
   }
 }

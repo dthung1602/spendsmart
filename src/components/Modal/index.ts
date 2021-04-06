@@ -1,2 +1,2 @@
-import Select from "./Modal";
-export default Select;
+import Modal from "./Modal";
+export default Modal;

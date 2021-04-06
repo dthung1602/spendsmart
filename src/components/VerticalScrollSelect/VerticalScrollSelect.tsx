@@ -5,6 +5,7 @@ import { debounce } from "lodash";
 
 import type { VerticalScrollSelectOptionProp } from "./VerticalScrollSelectOption";
 import VerticalScrollSelectOption from "./VerticalScrollSelectOption";
+import { BasicJSXProp } from "../../utils/types";
 import "./VerticalScrollSelect.less";
 
 interface VerticalScrollSelectOptionValue<T>
@@ -12,7 +13,7 @@ interface VerticalScrollSelectOptionValue<T>
   value: T;
 }
 
-interface VerticalScrollSelectProp<T> {
+interface VerticalScrollSelectProp<T> extends BasicJSXProp {
   options: VerticalScrollSelectOptionValue<T>[];
   defaultValue?: T;
   onSelect: (value: T) => void;
@@ -26,6 +27,7 @@ function VerticalScrollSelect<T>({
   const defaultIdx = options.findIndex((opt) => opt.value === defaultValue);
 
   const selectedIdxRef = useRef<number>(Math.min(defaultIdx, 0));
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const onScroll: UIEventHandler<HTMLDivElement> = debounce((event) => {
     const blurHeight = event.target.children[0].getBoundingClientRect().height;
@@ -35,28 +37,36 @@ function VerticalScrollSelect<T>({
     if (newSelectIdx != selectedIdxRef.current) {
       onSelect(options[newSelectIdx].value);
       selectedIdxRef.current = newSelectIdx;
+      containerRef.current
+        ?.querySelectorAll(".vertical-scroll-select-option")
+        .forEach((ele, i) => {
+          if (i === newSelectIdx) {
+            ele.classList.add("selected");
+          } else {
+            ele.classList.remove("selected");
+          }
+        });
     }
+
     event.target.scrollTo({
-      top: newSelectIdx * optionHeight,
+      top: newSelectIdx * optionHeight + 2,
       behavior: "smooth",
     });
-  }, 250);
+  }, 200);
 
   return (
-    <div className="vertical-scroll-select">
-      <div className="blur" />
-      <div className="body no-scroll-bar" onScroll={onScroll}>
-        <div className="place-holder" />
-        {options.map((option) => (
-          <VerticalScrollSelectOption
-            key={option.displayText}
-            displayText={option.displayText}
-            icon={option.icon}
-          />
-        ))}
-        <div className="place-holder" />
-      </div>
-      <div className="blur" />
+    <div
+      className="vertical-scroll-select no-scroll-bar"
+      onScroll={onScroll}
+      ref={containerRef}
+    >
+      {options.map((option) => (
+        <VerticalScrollSelectOption
+          key={option.displayText}
+          displayText={option.displayText}
+          icon={option.icon}
+        />
+      ))}
     </div>
   );
 }

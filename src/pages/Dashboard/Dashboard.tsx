@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { faPlus, faHome } from "@fortawesome/free-solid-svg-icons";
 
-import Select from "../../components/Modal";
+import Modal from "../../components/Modal";
 import FAB from "../../components/FAB";
 import Tab from "../../components/Tab";
 import PageHeaderHighLight from "../../parts/PageHeaderHighLight";
@@ -10,6 +10,7 @@ import VerticalScrollSelect from "../../components/VerticalScrollSelect";
 import { GlobalContext } from "../../GlobalContext";
 import { Transaction } from "../../database";
 import "./Dashboard.less";
+import NewTransactionModal from "../../parts/NewTransactionModal";
 
 const mockTransactions = [
   new Transaction(
@@ -109,32 +110,10 @@ function Dashboard(): JSX.Element {
         hide={overlayOpen}
         onClick={() => updateContext({ overlayOpen: true })}
       />
-      <Select
-        title="New transaction"
+      <NewTransactionModal
         open={overlayOpen}
         onClose={() => updateContext({ overlayOpen: false })}
-      >
-        <VerticalScrollSelect
-          onSelect={(value) => console.log("Select: ", value)}
-          options={[
-            {
-              value: 1,
-              displayText: "Option 1",
-              icon: faHome,
-            },
-            {
-              value: 2,
-              displayText: "Option 2",
-              icon: faHome,
-            },
-            {
-              value: 3,
-              displayText: "Option 3",
-              icon: faPlus,
-            },
-          ]}
-        />
-      </Select>
+      />
     </div>
   );
 }

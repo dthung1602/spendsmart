@@ -1,3 +1,4 @@
+@import "./reset";
 @import "./theme";
 @import "./typography";
 @import "./global";
@@ -8,6 +9,12 @@ body {
   font-family: "Raleway", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+input {
+  font-size: 1rem;
+  padding: @space-medium @space-wide;
+  border-radius: @border-radius-lightly-round;
 }
 
 .disable-scroll {
