@@ -5,15 +5,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ModalOption from "./ModalOption";
 import "./Modal.less";
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
+
+interface ModalButton {
+  displayText?: string;
+  icon?: IconProp;
+  type?: "success" | "info" | "warning" | "error" | "default";
+  onClick: () => void;
+}
 
 interface ModalProp
   extends React.PropsWithChildren<{
     title: string;
     open: boolean;
     onClose: () => void;
+    buttons?: ModalButton[];
   }> {}
 
-function Modal({ title, open, onClose, children }: ModalProp): JSX.Element {
+function Modal({
+  title,
+  open,
+  onClose,
+  buttons,
+  children,
+}: ModalProp): JSX.Element {
   const close: React.MouseEventHandler = (event) => {
     event.stopPropagation();
     onClose();
@@ -26,6 +41,19 @@ function Modal({ title, open, onClose, children }: ModalProp): JSX.Element {
       document.body.classList.remove("disable-scroll");
     }
   });
+
+  const footer = !buttons ? null : (
+    <div className="modal-footer">
+      {buttons.map(({ icon, displayText, onClick, type = "default" }, i) => (
+        <div key={i} onClick={onClick} className={`btn-${type}`}>
+          {icon ? (
+            <FontAwesomeIcon className="r-margin-wide" size="lg" icon={icon} />
+          ) : null}
+          {displayText}
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <>
@@ -40,6 +68,7 @@ function Modal({ title, open, onClose, children }: ModalProp): JSX.Element {
             <FontAwesomeIcon icon={faTimesCircle} size="1x" onClick={close} />
           </div>
           <div className="modal-body">{children}</div>
+          {footer}
         </div>
       </div>
     </>
@@ -49,3 +78,4 @@ function Modal({ title, open, onClose, children }: ModalProp): JSX.Element {
 Modal.Option = ModalOption;
 
 export default Modal;
+export type { ModalButton };

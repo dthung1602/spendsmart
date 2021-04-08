@@ -20,8 +20,20 @@
       @{prop}-top: @@value;
       @{prop}-bottom: @@value;
   }
+  .t-@{prop}-@{name} {
+      @{prop}-top: @@value;
+  }
+  .b-@{prop}-@{name} {
+      @{prop}-bottom: @@value;
+  }
   .h-@{prop}-@{name} {
       @{prop}-left: @@value;
+      @{prop}-right: @@value;
+  }
+  .l-@{prop}-@{name} {
+      @{prop}-left: @@value;
+  }
+  .r-@{prop}-@{name} {
       @{prop}-right: @@value;
   }
   .-space(@i: (@i - 1), @prop: @prop);

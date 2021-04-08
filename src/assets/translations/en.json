@@ -1,6 +1,10 @@
 {
   "common": {
-    "category": "Category"
+    "category": "category",
+    "price": "price",
+    "add": "add",
+    "more": "more",
+    "less": "less"
   },
   "parts": {
     "page-header-highlight": {

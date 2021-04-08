@@ -1,6 +1,10 @@
 {
   "common": {
-    "category": "Danh mục"
+    "category": "danh mục",
+    "price": "Giá",
+    "add": "Thêm",
+    "more": "Mở rộng",
+    "less": "Thu gọn"
   },
   "parts": {
     "page-header-highlight": {
