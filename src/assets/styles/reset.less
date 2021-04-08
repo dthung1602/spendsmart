@@ -12,6 +12,17 @@ A couple of things to watch out for:
 - By turning off ::-webkit-search-decoration, it removes the extra whitespace on the left on search inputs
 ----------------------------------------------------------------------------------------------------*/
 
+/* remove the annoying blue box when touched on mobile devices */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 input,
 label,
 select,
@@ -29,7 +40,6 @@ textarea
 
   /* Browsers have different default form fonts */
   font-size:13px;
-  font-family:Arial;
 }
 
 /* Remove the stupid outer glow in Webkit */

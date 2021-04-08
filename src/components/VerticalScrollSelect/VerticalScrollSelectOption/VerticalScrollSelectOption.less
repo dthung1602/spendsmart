@@ -2,23 +2,32 @@
 @import "../../../assets/styles/global";
 
 .vertical-scroll-select-option {
-  text-align: center;
+  padding-left: 25%;
+  height: @space-large;
   transition: all 0.2s linear;
-
   color: fade(black, 40%);
+
+  svg {
+    width: 1.1rem;
+  }
 
   &.selected {
     color: black;
     font-weight: bold;
-    font-size: 1.1rem;
   }
 
   &:first-child {
-    margin-top: 34px;
+    margin-top: 2rem;
   }
 
   &:last-child {
-    margin-bottom: 34px;
+    margin-bottom: 2rem;
+  }
+
+  &.nested {
+    padding-left: 33%;
+    font-style: italic;
+    font-size: 0.95rem;
   }
 }
 
