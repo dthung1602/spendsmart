@@ -18,10 +18,10 @@ function Accordion({
     console.log(accordionRef.current);
     if (accordionRef.current) {
       if (expand) {
-        accordionRef.current.style.maxHeight =
+        accordionRef.current.style.height =
           accordionRef.current.scrollHeight + "px";
       } else {
-        accordionRef.current.style.maxHeight = "";
+        accordionRef.current.style.height = "0";
       }
     }
   });
