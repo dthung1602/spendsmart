@@ -138,14 +138,15 @@ function NewTransactionModal({
           onSelect={(value) => setCategory(value)}
           options={mockCategories}
         />
-        <Accordion expand={expand}>
-          <p> this is some content</p>
-          <p> this is some content</p>
-          <p> this is some content</p>
-          <p> this is some content</p>
-          <p> this is some content</p>
-        </Accordion>
       </div>
+      <Accordion expand={expand} className="new-transaction">
+        <label>{t("common.unexpected-spending")}</label>
+        <input type="checkbox" />
+        <label>{t("common.datetime")}</label>
+        <input type="datetime-local" />
+        <label>{t("common.note")}</label>
+        <textarea placeholder="Note" />
+      </Accordion>
     </Modal>
   );
 }

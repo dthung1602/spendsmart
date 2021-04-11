@@ -2,6 +2,9 @@
   "common": {
     "category": "category",
     "price": "price",
+    "note": "note",
+    "unexpected-spending": "unexpected spending",
+    "datetime": "date time",
     "add": "add",
     "more": "more",
     "less": "less"

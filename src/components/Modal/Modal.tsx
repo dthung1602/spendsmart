@@ -67,7 +67,9 @@ function Modal({
             <span className="sub-title">{title}</span>
             <FontAwesomeIcon icon={faTimesCircle} size="1x" onClick={close} />
           </div>
-          <div className="modal-body">{children}</div>
+          <div className="modal-body v-padding-medium h-padding-huge">
+            {children}
+          </div>
           {footer}
         </div>
       </div>
