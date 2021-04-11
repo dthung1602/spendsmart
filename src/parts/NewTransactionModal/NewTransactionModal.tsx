@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import VerticalScrollSelect from "../../components/VerticalScrollSelect";
 import Modal from "../../components/Modal";
+import Accordion from "../../components/Accordion";
 import type { ModalButton } from "../../components/Modal/Modal";
 import { useTranslation } from "../../utils/hooks";
 import "./NewTransactionModal.less";
@@ -137,6 +138,13 @@ function NewTransactionModal({
           onSelect={(value) => setCategory(value)}
           options={mockCategories}
         />
+        <Accordion expand={expand}>
+          <p> this is some content</p>
+          <p> this is some content</p>
+          <p> this is some content</p>
+          <p> this is some content</p>
+          <p> this is some content</p>
+        </Accordion>
       </div>
     </Modal>
   );

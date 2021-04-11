@@ -1,3 +1,5 @@
+import React, { PropsWithChildren } from "react";
+
 type Nullable<T> = T | null;
 type Optional<T> = T | undefined | null;
 
@@ -14,4 +16,15 @@ interface BasicJSXProp {
   style?: { [key: string]: string | number };
 }
 
-export type { Nullable, Optional, IDBResultEvent, Language, BasicJSXProp };
+interface BasicJSXPropWithChildren extends BasicJSXProp {
+  children: React.ReactNode;
+}
+
+export type {
+  Nullable,
+  Optional,
+  IDBResultEvent,
+  Language,
+  BasicJSXProp,
+  BasicJSXPropWithChildren,
+};
