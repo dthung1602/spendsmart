@@ -13,6 +13,7 @@ import {
 import VerticalScrollSelect from "../../components/VerticalScrollSelect";
 import Modal from "../../components/Modal";
 import Accordion from "../../components/Accordion";
+import Switch from "../../components/Switch";
 import type { ModalButton } from "../../components/Modal/Modal";
 import { useTranslation } from "../../utils/hooks";
 import "./NewTransactionModal.less";
@@ -97,6 +98,7 @@ function NewTransactionModal({
 }: NewTransactionModalProp): JSX.Element {
   const [expand, setExpand] = useState<boolean>(false);
   const [category, setCategory] = useState<string>(mockCategories[0].value);
+  const [isUnexpected, setIsUnexpected] = useState<boolean>(false);
 
   const { t } = useTranslation();
   const amountInputRef = useRef<HTMLInputElement>(null);
@@ -144,11 +146,16 @@ function NewTransactionModal({
         className="new-transaction new-transaction-extra-input"
       >
         <label>{t("common.unexpected-spending")}</label>
-        <input type="checkbox" />
+        <Switch
+          checked={isUnexpected}
+          onClick={() => {
+            console.log({ isUnexpected });
+            setIsUnexpected(!isUnexpected);
+          }}
+        />
         <label>{t("common.datetime")}</label>
         <input type="datetime-local" />
         <label>{t("common.note")}</label>
-        {/*<span />*/}
         <textarea />
       </Accordion>
     </Modal>

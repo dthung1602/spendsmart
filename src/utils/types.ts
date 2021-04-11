@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from "react";
+import type { MouseEventHandler } from "react";
 
 type Nullable<T> = T | null;
 type Optional<T> = T | undefined | null;
@@ -14,6 +15,7 @@ type Language = "en" | "vi";
 interface BasicJSXProp {
   className?: string;
   style?: { [key: string]: string | number };
+  onClick?: MouseEventHandler;
 }
 
 interface BasicJSXPropWithChildren extends BasicJSXProp {

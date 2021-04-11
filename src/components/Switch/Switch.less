@@ -1,0 +1,31 @@
+@import "../../assets/styles/global";
+@import "../../assets/styles/theme";
+
+@switch-spacing: 2px;
+@switch-circle-diameter: 1rem;
+@switch-height: calc(@switch-spacing * 2 + @switch-circle-diameter);
+@switch-width: calc(@switch-circle-diameter * 2);
+
+.switch {
+  width: @switch-width;
+  padding: @switch-spacing;
+  background: lightgray;
+  border-radius: calc(@switch-height / 2);
+
+  .circle {
+    border-radius: 50%;
+    height: calc(1rem - 2px);
+    width: $height;
+    background: white;
+    transition: @transition-fast;
+    transform: translateX(0);
+  }
+
+  &.checked {
+    background: @color-warning;
+
+    .circle {
+      transform: translateX(calc(@switch-circle-diameter + @switch-spacing));
+    }
+  }
+}
