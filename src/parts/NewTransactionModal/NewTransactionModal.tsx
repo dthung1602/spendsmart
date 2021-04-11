@@ -152,6 +152,7 @@ function NewTransactionModal({
             console.log({ isUnexpected });
             setIsUnexpected(!isUnexpected);
           }}
+          style={{ justifySelf: "end" }}
         />
         <label>{t("common.datetime")}</label>
         <input type="datetime-local" />
