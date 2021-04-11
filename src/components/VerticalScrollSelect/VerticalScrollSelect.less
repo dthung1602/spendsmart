@@ -1,9 +1,24 @@
 @import "../../assets/styles/theme";
 @import "../../assets/styles/global";
 
-.vertical-scroll-select {
+.vertical-scroll-select-container {
   position: relative;
-  background: @color-background;
+}
+
+.vertical-scroll-select {
+  background: transparent;
   height: (@space-large * 6);
   overflow-y: scroll;
+  z-index: 400;
+  position: relative;
+}
+
+.vertical-scroll-select-highlight {
+  z-index: 300;
+  position: absolute;
+  width: 100%;
+  height: 33.3333%;
+  border-top: 1.5px solid lighten(@color-background, 10%);
+  border-bottom: $border-top;
+  top: 33.3333%;
 }

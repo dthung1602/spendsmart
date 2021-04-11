@@ -48,20 +48,23 @@ function VerticalScrollSelect<T>({
   }, 200);
 
   return (
-    <div
-      className="vertical-scroll-select no-scroll-bar"
-      onScroll={onScroll}
-      ref={containerRef}
-    >
-      {options.map((option, idx) => (
-        <VerticalScrollSelectOption
-          className={idx === selectedIdx ? "selected" : ""}
-          key={option.displayText}
-          displayText={option.displayText}
-          icon={option.icon}
-          nested={option.nested}
-        />
-      ))}
+    <div className="vertical-scroll-select-container">
+      <div
+        className="vertical-scroll-select no-scroll-bar"
+        onScroll={onScroll}
+        ref={containerRef}
+      >
+        {options.map((option, idx) => (
+          <VerticalScrollSelectOption
+            className={idx === selectedIdx ? "selected" : ""}
+            key={option.displayText}
+            displayText={option.displayText}
+            icon={option.icon}
+            nested={option.nested}
+          />
+        ))}
+      </div>
+      <div className="vertical-scroll-select-highlight" />
     </div>
   );
 }
