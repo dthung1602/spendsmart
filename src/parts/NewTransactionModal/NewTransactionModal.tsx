@@ -131,7 +131,7 @@ function NewTransactionModal({
     >
       <div className="new-transaction">
         <label>{t("common.price")}</label>
-        <input type="number" placeholder="$" ref={amountInputRef} />
+        <input type="number" ref={amountInputRef} />
         <label>{t("common.category")}</label>
         <VerticalScrollSelect
           className="cat-input"
@@ -139,13 +139,17 @@ function NewTransactionModal({
           options={mockCategories}
         />
       </div>
-      <Accordion expand={expand} className="new-transaction">
+      <Accordion
+        expand={expand}
+        className="new-transaction new-transaction-extra-input"
+      >
         <label>{t("common.unexpected-spending")}</label>
         <input type="checkbox" />
         <label>{t("common.datetime")}</label>
         <input type="datetime-local" />
         <label>{t("common.note")}</label>
-        <textarea placeholder="Note" />
+        {/*<span />*/}
+        <textarea />
       </Accordion>
     </Modal>
   );
