@@ -2,25 +2,27 @@ import React, { useEffect } from "react";
 
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 import ModalOption from "./ModalOption";
+import type { BasicJSXPropWithChildren } from "../../utils/types";
 import "./Modal.less";
-import type { IconProp } from "@fortawesome/fontawesome-svg-core";
+
+type ModalButtonType = "success" | "info" | "warning" | "error" | "default";
 
 interface ModalButton {
   displayText?: string;
   icon?: IconProp;
-  type?: "success" | "info" | "warning" | "error" | "default";
+  type?: ModalButtonType;
   onClick: () => void;
 }
 
-interface ModalProp
-  extends React.PropsWithChildren<{
-    title: string;
-    open: boolean;
-    onClose: () => void;
-    buttons?: ModalButton[];
-  }> {}
+interface ModalProps extends BasicJSXPropWithChildren {
+  title: string;
+  open: boolean;
+  onClose: () => void;
+  buttons?: ModalButton[];
+}
 
 function Modal({
   title,
@@ -28,7 +30,7 @@ function Modal({
   onClose,
   buttons,
   children,
-}: ModalProp): JSX.Element {
+}: ModalProps): JSX.Element {
   const close: React.MouseEventHandler = (event) => {
     event.stopPropagation();
     onClose();
@@ -80,4 +82,4 @@ function Modal({
 Modal.Option = ModalOption;
 
 export default Modal;
-export type { ModalButton };
+export type { ModalProps, ModalButton, ModalButtonType };

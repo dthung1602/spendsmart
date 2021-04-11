@@ -1,16 +1,15 @@
 import React, { useContext } from "react";
-import { faPlus, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-import Modal from "../../components/Modal";
-import FAB from "../../components/FAB";
-import Tab from "../../components/Tab";
-import PageHeaderHighLight from "../../parts/PageHeaderHighLight";
-import TransactionList from "../../parts/TransactionList";
-import VerticalScrollSelect from "../../components/VerticalScrollSelect";
+import {
+  PageHeaderHighLight,
+  NewTransactionModal,
+  TransactionList,
+} from "../../parts";
+import { FAB, Tab } from "../../components";
 import { GlobalContext } from "../../GlobalContext";
 import { Transaction } from "../../database";
 import "./Dashboard.less";
-import NewTransactionModal from "../../parts/NewTransactionModal";
 
 const mockTransactions = [
   new Transaction(

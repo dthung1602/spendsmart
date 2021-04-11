@@ -3,13 +3,13 @@ import type { UIEventHandler } from "react";
 
 import { debounce } from "lodash";
 
-import type { VerticalScrollSelectOptionProp } from "./VerticalScrollSelectOption";
 import VerticalScrollSelectOption from "./VerticalScrollSelectOption";
+import type { VerticalScrollSelectOptionProps } from "./VerticalScrollSelectOption";
 import { BasicJSXProp } from "../../utils/types";
 import "./VerticalScrollSelect.less";
 
 interface VerticalScrollSelectOptionValue<T>
-  extends VerticalScrollSelectOptionProp {
+  extends VerticalScrollSelectOptionProps {
   value: T;
 }
 
@@ -42,7 +42,7 @@ function VerticalScrollSelect<T>({
     }
 
     event.target.scrollTo({
-      top: newSelectIdx * optionHeight + 2,
+      top: newSelectIdx * optionHeight,
       behavior: "smooth",
     });
   }, 200);
@@ -70,3 +70,7 @@ function VerticalScrollSelect<T>({
 }
 
 export default VerticalScrollSelect;
+export type {
+  VerticalScrollSelectOptionProps,
+  VerticalScrollSelectOptionValue,
+};

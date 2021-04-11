@@ -1,5 +1,6 @@
-import VerticalScrollSelectOption from "./VerticalScrollSelectOption";
-import type { VerticalScrollSelectOptionProp } from "./VerticalScrollSelectOption";
+import VerticalScrollSelectOption, {
+  VerticalScrollSelectOptionProps,
+} from "./VerticalScrollSelectOption";
 
 export default VerticalScrollSelectOption;
-export type { VerticalScrollSelectOptionProp };
+export type { VerticalScrollSelectOptionProps };

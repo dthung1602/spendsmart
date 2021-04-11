@@ -6,7 +6,7 @@ import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 import "./VerticalScrollSelectOption.less";
 import { BasicJSXProp } from "../../../utils/types";
 
-interface VerticalScrollSelectOptionProp extends BasicJSXProp {
+interface VerticalScrollSelectOptionProps extends BasicJSXProp {
   icon: IconProp;
   displayText: string;
   nested?: boolean;
@@ -15,13 +15,15 @@ interface VerticalScrollSelectOptionProp extends BasicJSXProp {
 function VerticalScrollSelectOption({
   icon,
   displayText,
-  className,
   nested = false,
-}: VerticalScrollSelectOptionProp): JSX.Element {
+  className = "",
+  style = {},
+}: VerticalScrollSelectOptionProps): JSX.Element {
   return (
     <div
       className={`vertical-scroll-select-option v-padding-medium 
         ${nested ? "nested" : ""} ${className}`}
+      style={style}
     >
       <FontAwesomeIcon className="h-padding-wide" icon={icon} size="1x" />
       <span>{displayText}</span>
@@ -30,4 +32,4 @@ function VerticalScrollSelectOption({
 }
 
 export default VerticalScrollSelectOption;
-export type { VerticalScrollSelectOptionProp };
+export type { VerticalScrollSelectOptionProps };

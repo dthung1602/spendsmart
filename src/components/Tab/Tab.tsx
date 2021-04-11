@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, ReactElement } from "react";
 
-import TabPane, { TabPaneProp } from "./TabPane";
+import TabPane, { TabPaneProps } from "./TabPane";
 import "./Tab.less";
 
-interface TabProp {
+interface TabProps {
   onTabChange: (tab: string) => void;
-  children: React.ReactElement<TabPaneProp>[];
+  children: ReactElement<TabPaneProps>[];
   defaultSelectedTab?: string;
 }
 
@@ -13,7 +13,7 @@ function Tab({
   onTabChange,
   children,
   defaultSelectedTab,
-}: TabProp): JSX.Element {
+}: TabProps): JSX.Element {
   defaultSelectedTab = defaultSelectedTab || (children[0].props.tab as string);
   const [selectedTab, setSelectedTab] = useState(defaultSelectedTab);
 
@@ -48,3 +48,4 @@ function Tab({
 Tab.TabPane = TabPane;
 
 export default Tab;
+export type { TabProps };

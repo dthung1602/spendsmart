@@ -1,2 +1,5 @@
-import NewTransactionModal from "./NewTransactionModal";
+import NewTransactionModal, {
+  NewTransactionModalProps,
+} from "./NewTransactionModal";
 export default NewTransactionModal;
+export type { NewTransactionModalProps };

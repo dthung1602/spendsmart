@@ -1,5 +1,4 @@
 import React from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory } from "@fortawesome/free-solid-svg-icons";
 
@@ -8,11 +7,11 @@ import { Transaction } from "../../database";
 import { useTranslation } from "../../utils/hooks";
 import "./TransactionList.less";
 
-interface TransactionListProp {
+interface TransactionListProps {
   transactions: Transaction[];
 }
 
-function TransactionList({ transactions }: TransactionListProp): JSX.Element {
+function TransactionList({ transactions }: TransactionListProps): JSX.Element {
   const { t } = useTranslation();
 
   return (
@@ -33,4 +32,7 @@ function TransactionList({ transactions }: TransactionListProp): JSX.Element {
   );
 }
 
+TransactionList.TransactionRow = TransactionRow;
+
 export default TransactionList;
+export type { TransactionListProps };

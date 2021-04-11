@@ -15,6 +15,7 @@ import {
   ROUTE_REPORTS,
   ROUTE_TRANSACTIONS,
 } from "../../utils/constants";
+import "./Navbar.less";
 
 const routeMapping = {
   [ROUTE_DASHBOARD]: faTachometerAlt,
@@ -22,8 +23,6 @@ const routeMapping = {
   [ROUTE_REPORTS]: faBullseye,
   [ROUTE_SETTINGS]: faTools,
 };
-
-import "./Navbar.less";
 
 function Navbar(): JSX.Element {
   const [{ overlayOpen }] = useContext(GlobalContext);

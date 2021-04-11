@@ -1,17 +1,24 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
+import { BasicJSXPropWithChildren } from "../../../utils/types";
 import "./TabPane.less";
 
-interface TabPaneProp {
+interface TabPaneProps extends BasicJSXPropWithChildren {
   tab: string;
-  title: React.ReactNode;
-  children: React.ReactNode;
+  title: ReactNode;
 }
 
-function TabPane({ children }: TabPaneProp): JSX.Element {
-  return <div className="tab-pane">{children}</div>;
+function TabPane({
+  children,
+  className = "",
+  style = {},
+}: TabPaneProps): JSX.Element {
+  return (
+    <div className={`tab-pane ${className}`} style={style}>
+      {children}
+    </div>
+  );
 }
 
 export default TabPane;
-
-export type { TabPaneProp };
+export type { TabPaneProps };

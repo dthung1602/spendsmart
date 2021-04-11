@@ -3,7 +3,7 @@ import React from "react";
 import "./Switch.less";
 import { BasicJSXProp } from "../../utils/types";
 
-interface SwitchProp extends BasicJSXProp {
+interface SwitchProps extends BasicJSXProp {
   checked: boolean;
 }
 
@@ -12,10 +12,10 @@ function Switch({
   style = {},
   className = "",
   onClick,
-}: SwitchProp): JSX.Element {
+}: SwitchProps): JSX.Element {
   return (
     <div
-      className={`switch ${checked ? "checked" : ""} {} ${className}`}
+      className={`switch ${checked ? "checked" : ""} ${className}`}
       style={style}
       onClick={onClick}
     >
@@ -25,3 +25,4 @@ function Switch({
 }
 
 export default Switch;
+export type { SwitchProps };

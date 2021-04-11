@@ -5,7 +5,7 @@ import "./PageHeaderHighLight.less";
 import { formatMoney } from "../../utils";
 import { useTranslation } from "../../utils/hooks";
 
-interface PageHeaderHighLightProp {
+interface PageHeaderHighLightProps {
   thisWeek: number;
   thisMonth: number;
 }
@@ -13,7 +13,7 @@ interface PageHeaderHighLightProp {
 function PageHeaderHighLight({
   thisWeek,
   thisMonth,
-}: PageHeaderHighLightProp): JSX.Element {
+}: PageHeaderHighLightProps): JSX.Element {
   const { t } = useTranslation();
 
   return (
@@ -54,3 +54,4 @@ function PageHeaderHighLight({
 }
 
 export default PageHeaderHighLight;
+export type { PageHeaderHighLightProps };

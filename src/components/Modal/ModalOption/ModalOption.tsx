@@ -1,9 +1,9 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 import "./ModalOption.less";
 
 interface ModalOptionProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 function ModalOption({ children }: ModalOptionProps): JSX.Element {
@@ -11,3 +11,4 @@ function ModalOption({ children }: ModalOptionProps): JSX.Element {
 }
 
 export default ModalOption;
+export type { ModalOptionProps };

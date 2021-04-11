@@ -73,16 +73,16 @@ const icons = {
   faRandom,
 };
 
-type IconName = keyof typeof icons;
+type TransactionIconName = keyof typeof icons;
 
-interface TransactionRowProp {
+interface TransactionRowProps {
   transaction: Transaction;
 }
 
-function TransactionRow({ transaction }: TransactionRowProp): JSX.Element {
+function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
   const [expand, setExpand] = useState(false);
 
-  const icon = icons[transaction.icon as IconName];
+  const icon = icons[transaction.icon as TransactionIconName];
 
   return (
     <div className="transaction-row small" onClick={() => setExpand(!expand)}>
@@ -121,3 +121,4 @@ function TransactionRow({ transaction }: TransactionRowProp): JSX.Element {
 }
 
 export default TransactionRow;
+export type { TransactionRowProps, TransactionIconName };

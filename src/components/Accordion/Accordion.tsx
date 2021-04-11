@@ -14,8 +14,8 @@ function Accordion({
   children,
 }: AccordionProps): JSX.Element {
   const accordionRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    console.log(accordionRef.current);
     if (accordionRef.current) {
       if (expand) {
         accordionRef.current.style.height =
@@ -34,3 +34,4 @@ function Accordion({
 }
 
 export default Accordion;
+export type { AccordionProps };

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-
 import {
   faAngleDoubleDown,
   faAngleDoubleUp,
@@ -10,15 +9,18 @@ import {
   faPlane,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import VerticalScrollSelect from "../../components/VerticalScrollSelect";
-import Modal from "../../components/Modal";
-import Accordion from "../../components/Accordion";
-import Switch from "../../components/Switch";
-import type { ModalButton } from "../../components/Modal/Modal";
+
+import {
+  VerticalScrollSelect,
+  Modal,
+  ModalButton,
+  Accordion,
+  Switch,
+} from "../../components";
 import { useTranslation } from "../../utils/hooks";
 import "./NewTransactionModal.less";
 
-interface NewTransactionModalProp {
+interface NewTransactionModalProps {
   open: boolean;
   onClose: () => void;
 }
@@ -95,7 +97,7 @@ const mockCategories = [
 function NewTransactionModal({
   open,
   onClose,
-}: NewTransactionModalProp): JSX.Element {
+}: NewTransactionModalProps): JSX.Element {
   const [expand, setExpand] = useState<boolean>(false);
   const [category, setCategory] = useState<string>(mockCategories[0].value);
   const [isUnexpected, setIsUnexpected] = useState<boolean>(false);
@@ -143,7 +145,7 @@ function NewTransactionModal({
       </div>
       <Accordion
         expand={expand}
-        className="new-transaction new-transaction-extra-input"
+        className="new-transaction new-transaction-extra"
       >
         <label>{t("common.unexpected-spending")}</label>
         <Switch
@@ -164,3 +166,4 @@ function NewTransactionModal({
 }
 
 export default NewTransactionModal;
+export type { NewTransactionModalProps };
