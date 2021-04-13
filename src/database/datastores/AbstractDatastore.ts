@@ -94,6 +94,28 @@ class AbstractDatastore<ModelClassType> {
       };
     });
   }
+
+  public create(object: ModelClassType): Promise<Optional<ModelClassType>> {
+    return new Promise((resolve, reject) => {
+      const db = this.dbFactory();
+      if (!db) {
+        reject(new DBError("Cannot find IndexedDB"));
+        return;
+      }
+
+      const transaction = db.transaction(this.objectStoreName, "readwrite");
+      const objectStore = transaction.objectStore(this.objectStoreName);
+
+      transaction.onerror = (event) => {
+        reject(new DBError(event));
+      };
+
+      const request = objectStore.add(object);
+      request.onsuccess = () => {
+        resolve(object);
+      };
+    });
+  }
 }
 
 export default AbstractDatastore;
