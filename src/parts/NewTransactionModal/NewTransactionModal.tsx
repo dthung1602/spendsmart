@@ -143,23 +143,22 @@ function NewTransactionModal({
           options={mockCategories}
         />
       </div>
-      <Accordion
-        expand={expand}
-        className="new-transaction new-transaction-extra"
-      >
-        <label>{t("common.unexpected-spending")}</label>
-        <Switch
-          checked={isUnexpected}
-          onClick={() => {
-            console.log({ isUnexpected });
-            setIsUnexpected(!isUnexpected);
-          }}
-          style={{ justifySelf: "end" }}
-        />
-        <label>{t("common.datetime")}</label>
-        <input type="datetime-local" />
-        <label>{t("common.note")}</label>
-        <textarea />
+      <Accordion expand={expand}>
+        <div className="new-transaction new-transaction-extra">
+          <label>{t("common.unexpected-spending")}</label>
+          <Switch
+            checked={isUnexpected}
+            onClick={() => {
+              console.log({ isUnexpected });
+              setIsUnexpected(!isUnexpected);
+            }}
+            style={{ justifySelf: "end" }}
+          />
+          <label>{t("common.datetime")}</label>
+          <input type="datetime-local" />
+          <label>{t("common.note")}</label>
+          <textarea />
+        </div>
       </Accordion>
     </Modal>
   );
