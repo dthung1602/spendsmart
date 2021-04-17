@@ -2,40 +2,43 @@ import React, { createContext, useState } from "react";
 
 import type { Language } from "./utils/types";
 
-type GlobalContextState = {
-  language: Language;
-  overlayOpen: boolean;
-};
-
-const initContextState: GlobalContextState = {
-  language: "en",
-  overlayOpen: false,
-};
-
-interface GlobalContextProp {
+interface GlobalContextProps {
   children: JSX.Element;
 }
 
-const defaultContextValue = [
-  initContextState,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-  (s: Partial<GlobalContextState>): void => {},
-] as const;
+/* eslint-disable @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars */
+const defaultContextValue = {
+  language: window.localStorage.getItem("language") as Language | "en",
+  setLanguage: (language: Language) => {},
+  overlayOpen: false as boolean,
+  setOverlayOpen: (open: boolean) => {},
+} as const;
+/* eslint-enable @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars */
 
 const GlobalContext = createContext(defaultContextValue);
 
-function GlobalContextProvider(props: GlobalContextProp): JSX.Element {
-  const [state, setState] = useState<GlobalContextState>(initContextState);
+function GlobalContextProvider(props: GlobalContextProps): JSX.Element {
+  const [language, setLanguage] = useState<Language>(
+    defaultContextValue.language
+  );
+  const [overlayOpen, setOverlayOpen] = useState<boolean>(
+    defaultContextValue.overlayOpen
+  );
 
-  const updateState = (newState: Partial<GlobalContextState>): void => {
-    setState({
-      ...state,
-      ...newState,
-    });
+  const setLanguageWrapper = (lang: Language) => {
+    window.localStorage.setItem("language", lang);
+    setLanguage(lang);
+  };
+
+  const value = {
+    language,
+    setLanguage: setLanguageWrapper,
+    overlayOpen,
+    setOverlayOpen,
   };
 
   return (
-    <GlobalContext.Provider value={[state, updateState]}>
+    <GlobalContext.Provider value={value}>
       {props.children}
     </GlobalContext.Provider>
   );

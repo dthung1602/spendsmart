@@ -9,10 +9,10 @@ interface IntroTourProps {
 }
 
 function IntroTour({ onFinishIntroTour }: IntroTourProps): JSX.Element {
-  const updateContext = useContext(GlobalContext)[1];
+  const { setLanguage } = useContext(GlobalContext);
 
   const click = (language: Language) => {
-    updateContext({ language });
+    setLanguage(language);
     onFinishIntroTour();
   };
 

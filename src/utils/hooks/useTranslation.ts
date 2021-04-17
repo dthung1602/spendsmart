@@ -9,9 +9,10 @@ function useTranslation(): {
   t: (keys: string) => string;
   setLanguage: (lang: Language) => void;
 } {
-  const [{ language }, updateContext] = useContext(GlobalContext);
+  const { language, setLanguage } = useContext(GlobalContext);
 
   function t(keys: string): string {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let translated: any = language === "en" ? en : vi;
     try {
       keys.split(".").forEach((key) => {
@@ -21,10 +22,6 @@ function useTranslation(): {
       return keys;
     }
     return typeof translated === "string" ? translated : keys;
-  }
-
-  function setLanguage(lang: Language): void {
-    updateContext({ language: lang });
   }
 
   return { t, setLanguage };

@@ -25,7 +25,7 @@ const routeMapping = {
 };
 
 function Navbar(): JSX.Element {
-  const [{ overlayOpen }] = useContext(GlobalContext);
+  const { overlayOpen } = useContext(GlobalContext);
   const location = useLocation();
   const idx = Object.keys(routeMapping).indexOf(location.pathname);
 

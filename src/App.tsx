@@ -23,10 +23,15 @@ const TransactionsPage = lazy(() => import("./pages/Transactions"));
 
 function App(): JSX.Element {
   const [introTourTaken, setIntroTourTaken] = useState<boolean>(
-    Boolean(window.localStorage.getItem("introTourTaken"))
+    Boolean(
+      JSON.parse(window.localStorage.getItem("introTourTaken") || "false")
+    )
   );
 
-  const onFinishIntroTour = () => setIntroTourTaken(true);
+  const onFinishIntroTour = () => {
+    window.localStorage.setItem("introTourTaken", "true");
+    setIntroTourTaken(true);
+  };
 
   useEffect(() => {
     initDB().catch((e) => alert(e));
@@ -36,9 +41,9 @@ function App(): JSX.Element {
     <ErrorBoundary>
       <Router>
         <GlobalContextProvider>
-          {introTourTaken ? (
-            <>
-              <Suspense fallback={<FullScreenLoading />}>
+          <Suspense fallback={<FullScreenLoading />}>
+            {introTourTaken ? (
+              <>
                 <Switch>
                   <Route exact path={ROUTE_HOME} component={HomePage} />
                   <Route
@@ -54,12 +59,12 @@ function App(): JSX.Element {
                   <Route path={ROUTE_SETTINGS} component={SettingsPage} />
                   <Route path="*" component={NotFoundPage} />
                 </Switch>
-              </Suspense>
-              <Navbar />
-            </>
-          ) : (
-            <IntroTourPage onFinishIntroTour={onFinishIntroTour} />
-          )}
+                <Navbar />
+              </>
+            ) : (
+              <IntroTourPage onFinishIntroTour={onFinishIntroTour} />
+            )}
+          </Suspense>
         </GlobalContextProvider>
       </Router>
     </ErrorBoundary>

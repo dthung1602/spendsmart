@@ -85,7 +85,7 @@ const mockTransactions = [
 ];
 
 function Dashboard(): JSX.Element {
-  const [{ overlayOpen }, updateContext] = useContext(GlobalContext);
+  const { overlayOpen, setOverlayOpen } = useContext(GlobalContext);
 
   return (
     <div className="dashboard-page">
@@ -107,11 +107,11 @@ function Dashboard(): JSX.Element {
         icon={faPlus}
         type="success"
         hide={overlayOpen}
-        onClick={() => updateContext({ overlayOpen: true })}
+        onClick={() => setOverlayOpen(true)}
       />
       <NewTransactionModal
         open={overlayOpen}
-        onClose={() => updateContext({ overlayOpen: false })}
+        onClose={() => setOverlayOpen(false)}
       />
     </div>
   );
