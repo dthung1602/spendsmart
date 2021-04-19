@@ -12,8 +12,12 @@ class AbstractDatastore<ModelClassType> {
     protected dbFactory: () => Nullable<IDBDatabase>
   ) {}
 
+  public findAll(): Promise<ModelClassType[]> {
+    return this.find({});
+  }
+
   public find(
-    filters: FilterObject<ModelClassType>
+    filters: FilterObject<ModelClassType> = {}
   ): Promise<ModelClassType[]> {
     return new Promise((resolve, reject) => {
       const db = this.dbFactory();

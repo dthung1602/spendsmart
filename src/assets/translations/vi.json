@@ -1,21 +1,39 @@
 {
   "common": {
     "category": "danh mục",
-    "price": "Giá",
-    "add": "Thêm",
-    "more": "Mở rộng",
-    "less": "Thu gọn"
+    "price": "giá",
+    "add": "thêm",
+    "more": "mở rộng",
+    "less": "thu gọn"
   },
   "parts": {
     "page-header-highlight": {
-      "this-week": "Tuần này",
-      "this-month": "Tháng này"
+      "this-week": "tuần này",
+      "this-month": "tháng này"
     },
     "transaction-list": {
-      "recent-transactions": "Chi tiêu gần đây"
+      "recent-transactions": "chi tiêu gần đây"
     },
     "new-transaction-modal": {
-      "title": "Tạo mới"
+      "title": "tạo mới"
     }
+  },
+  "default-categories": {
+    "living": "nhà cửa",
+    "housing": "nhà",
+    "water": "nước",
+    "electricity": "điện",
+    "wifi-phone": "wifi & điện thoại",
+    "food": "ăn",
+    "main-meals": "ăn chính",
+    "snack-coffee": "ăn vặt & cafe",
+    "transportation": "di chuyển",
+    "healthcare": "sức khoẻ",
+    "entertainment": "giải trí",
+    "investment": "đầu tư",
+    "personal-spending": "chi tiêu cá nhân",
+    "charity": "từ thiện",
+    "travelling": "du lịch",
+    "miscellaneous": "khác"
   }
 }

@@ -11,14 +11,32 @@
   },
   "parts": {
     "page-header-highlight": {
-      "this-week": "This week",
-      "this-month": "This month"
+      "this-week": "this week",
+      "this-month": "this month"
     },
     "transaction-list": {
-      "recent-transactions": "Recent transactions"
+      "recent-transactions": "recent transactions"
     },
     "new-transaction-modal": {
-      "title": "New transaction"
+      "title": "new transaction"
     }
+  },
+  "default-categories": {
+    "living": "living",
+    "housing": "housing",
+    "water": "water",
+    "electricity": "electricity",
+    "wifi-phone": "wifi & phone",
+    "food": "food",
+    "main-meals": "main meals",
+    "snack-coffee": "snack & coffee",
+    "transportation": "transportation",
+    "healthcare": "healthcare",
+    "entertainment": "entertainment",
+    "investment": "investment",
+    "personal-spending": "personal spending",
+    "charity": "charity",
+    "travelling": "travelling",
+    "miscellaneous": "miscellaneous"
   }
 }

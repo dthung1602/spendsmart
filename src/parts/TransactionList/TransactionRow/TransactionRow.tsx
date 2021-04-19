@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import {
   faHome,
+  faHouseUser,
   faFaucet,
   faPlug,
   faUtensils,
@@ -26,10 +27,13 @@ import {
   faHeartbeat,
   faBriefcase,
   faTicketAlt,
+  faMusic,
   faFilm,
   faBook,
   faUniversity,
   faPiggyBank,
+  faUser,
+  faHandHoldingHeart,
   faRandom,
 } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -42,6 +46,7 @@ import "./TransactionRow.less";
 
 const icons = {
   faHome,
+  faHouseUser,
   faFaucet,
   faPlug,
   faUtensils,
@@ -66,10 +71,13 @@ const icons = {
   faHeartbeat,
   faBriefcase,
   faTicketAlt,
+  faMusic,
   faFilm,
   faBook,
   faUniversity,
   faPiggyBank,
+  faUser,
+  faHandHoldingHeart,
   faRandom,
 };
 

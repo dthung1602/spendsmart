@@ -1,7 +1,8 @@
 import { DB_VERSION } from "../utils/constants";
-import { Nullable } from "../utils/types";
+import { IDBResultEvent, Nullable } from "../utils/types";
 import { DBError } from "../utils/errors";
 import migrate from "./migrations";
+import localStorage from "./localstorage";
 import CategoryDatastore from "./datastores/CategoryDatastore";
 import TransactionDatastore from "./datastores/TransactionDatastore";
 import TransactionHistoryDatastore from "./datastores/TransactionHistoryDatastore";
@@ -13,7 +14,7 @@ import {
   GlobalConfig,
 } from "./models";
 
-const db: Nullable<IDBDatabase> = null;
+let db: Nullable<IDBDatabase> = null;
 
 function initDB(): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -23,7 +24,10 @@ function initDB(): Promise<void> {
       reject(new DBError(event));
     };
 
-    request.onsuccess = () => resolve();
+    request.onsuccess = (event) => {
+      db = (event as IDBResultEvent<IDBDatabase>).target.result;
+      resolve();
+    };
 
     request.onupgradeneeded = migrate;
   });
@@ -33,18 +37,18 @@ function getDB(): Nullable<IDBDatabase> {
   return db;
 }
 
-const category = new CategoryDatastore(Category, "Categories", getDB);
-const transaction = new TransactionDatastore(
+const categoryDataStore = new CategoryDatastore(Category, "Categories", getDB);
+const transactionDataStore = new TransactionDatastore(
   Transaction,
   "Transactions",
   getDB
 );
-const transactionHistory = new TransactionHistoryDatastore(
+const transactionHistoryDataStore = new TransactionHistoryDatastore(
   TransactionHistory,
   "TransactionHistories",
   getDB
 );
-const globalConfig = new GlobalConfigDatastore(
+const globalConfigDataStore = new GlobalConfigDatastore(
   GlobalConfig,
   "GlobalConfigs",
   getDB
@@ -52,10 +56,11 @@ const globalConfig = new GlobalConfigDatastore(
 
 export {
   initDB,
-  category,
-  transaction,
-  transactionHistory,
-  globalConfig,
+  localStorage,
+  categoryDataStore,
+  transactionDataStore,
+  transactionHistoryDataStore,
+  globalConfigDataStore,
   Category,
   Transaction,
   TransactionHistory,
