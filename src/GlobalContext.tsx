@@ -1,6 +1,8 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 import type { Language } from "./utils/types";
+
+import { localStorage } from "./database";
 
 interface GlobalContextProps {
   children: JSX.Element;
@@ -8,7 +10,7 @@ interface GlobalContextProps {
 
 /* eslint-disable @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars */
 const defaultContextValue = {
-  language: window.localStorage.getItem("language") as Language | "en",
+  language: localStorage.language || "en",
   setLanguage: (language: Language) => {},
   overlayOpen: false as boolean,
   setOverlayOpen: (open: boolean) => {},
@@ -25,14 +27,13 @@ function GlobalContextProvider(props: GlobalContextProps): JSX.Element {
     defaultContextValue.overlayOpen
   );
 
-  const setLanguageWrapper = (lang: Language) => {
-    window.localStorage.setItem("language", lang);
-    setLanguage(lang);
-  };
+  useEffect(() => {
+    localStorage.language = language;
+  }, [language]);
 
   const value = {
     language,
-    setLanguage: setLanguageWrapper,
+    setLanguage,
     overlayOpen,
     setOverlayOpen,
   };

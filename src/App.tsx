@@ -2,7 +2,7 @@ import React, { lazy, useEffect, Suspense, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { GlobalContextProvider } from "./GlobalContext";
-import { initDB } from "./database";
+import { initDB, localStorage } from "./database";
 import { ErrorBoundary, FullScreenLoading } from "./components";
 import Navbar from "./parts/Navbar";
 import {
@@ -23,18 +23,18 @@ const TransactionsPage = lazy(() => import("./pages/Transactions"));
 
 function App(): JSX.Element {
   const [introTourTaken, setIntroTourTaken] = useState<boolean>(
-    Boolean(
-      JSON.parse(window.localStorage.getItem("introTourTaken") || "false")
-    )
+    localStorage.introTourTaken
   );
 
   const onFinishIntroTour = () => {
-    window.localStorage.setItem("introTourTaken", "true");
+    localStorage.introTourTaken = true;
     setIntroTourTaken(true);
   };
 
   useEffect(() => {
-    initDB().catch((e) => alert(e));
+    if (introTourTaken) {
+      initDB().catch((e) => alert(e));
+    }
   });
 
   return (
