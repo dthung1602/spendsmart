@@ -1,7 +1,6 @@
 import en from "../../assets/translations/en.json";
 import vi from "../../assets/translations/vi.json";
 
-import { Language } from "../../utils/types";
 import localStorage from "../localstorage";
 
 const availableTranslations = { en, vi };
@@ -27,8 +26,6 @@ const defaultCategories = [
   { title: "miscellaneous", parentTitle: undefined, icon: "faRandom" },
 ];
 
-const defaultGlobalConfig = {};
-
 function loadDefaultCategories(store: IDBObjectStore) {
   const translation =
     availableTranslations[localStorage.language]["default-categories"];
@@ -42,22 +39,11 @@ function loadDefaultCategories(store: IDBObjectStore) {
   });
 }
 
-function loadDefaultGlobalConfigs(store: IDBObjectStore) {
-  Object.entries(defaultGlobalConfig).map(([k, v]) => {
-    store.add(v, k);
-  });
-}
-
 export default function (db: IDBDatabase): void {
-  let store;
-
-  store = db.createObjectStore("Categories", {
+  const catStore = db.createObjectStore("Categories", {
     keyPath: "title",
   });
-  loadDefaultCategories(store);
-
-  store = db.createObjectStore("GlobalConfigs");
-  loadDefaultGlobalConfigs(store);
+  loadDefaultCategories(catStore);
 
   db.createObjectStore("Transactions", { keyPath: "id" });
 

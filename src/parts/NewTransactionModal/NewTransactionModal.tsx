@@ -143,6 +143,7 @@ function NewTransactionModal({
           options={mockCategories}
         />
       </div>
+
       <Accordion expand={expand}>
         <div className="new-transaction new-transaction-extra">
           <label>{t("common.unexpected-spending")}</label>

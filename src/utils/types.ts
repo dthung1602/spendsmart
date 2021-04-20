@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React from "react";
 import type { MouseEventHandler } from "react";
 
 type Nullable<T> = T | null;

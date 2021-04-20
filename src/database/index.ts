@@ -6,13 +6,7 @@ import localStorage from "./localstorage";
 import CategoryDatastore from "./datastores/CategoryDatastore";
 import TransactionDatastore from "./datastores/TransactionDatastore";
 import TransactionHistoryDatastore from "./datastores/TransactionHistoryDatastore";
-import GlobalConfigDatastore from "./datastores/GlobalConfigDatastore";
-import {
-  Category,
-  Transaction,
-  TransactionHistory,
-  GlobalConfig,
-} from "./models";
+import { Category, Transaction, TransactionHistory } from "./models";
 
 let db: Nullable<IDBDatabase> = null;
 
@@ -48,11 +42,6 @@ const transactionHistoryDataStore = new TransactionHistoryDatastore(
   "TransactionHistories",
   getDB
 );
-const globalConfigDataStore = new GlobalConfigDatastore(
-  GlobalConfig,
-  "GlobalConfigs",
-  getDB
-);
 
 export {
   initDB,
@@ -60,9 +49,7 @@ export {
   categoryDataStore,
   transactionDataStore,
   transactionHistoryDataStore,
-  globalConfigDataStore,
   Category,
   Transaction,
   TransactionHistory,
-  GlobalConfig,
 };
