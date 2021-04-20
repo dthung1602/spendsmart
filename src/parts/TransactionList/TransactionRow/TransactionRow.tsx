@@ -1,85 +1,13 @@
 import React, { useState } from "react";
 
-import {
-  faHome,
-  faHouseUser,
-  faFaucet,
-  faPlug,
-  faUtensils,
-  faHamburger,
-  faIceCream,
-  faPizzaSlice,
-  faBreadSlice,
-  faCoffee,
-  faCocktail,
-  faWineBottle,
-  faWineGlass,
-  faGasPump,
-  faCar,
-  faMotorcycle,
-  faBicycle,
-  faPlane,
-  faShip,
-  faPhone,
-  faMobile,
-  faWifi,
-  faMedkit,
-  faHeartbeat,
-  faBriefcase,
-  faTicketAlt,
-  faMusic,
-  faFilm,
-  faBook,
-  faUniversity,
-  faPiggyBank,
-  faUser,
-  faHandHoldingHeart,
-  faRandom,
-} from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 
 import { Transaction } from "../../../database";
-import { formatMoney } from "../../../utils";
-import "./TransactionRow.less";
+import { formatMoney, icons } from "../../../utils";
 
-const icons = {
-  faHome,
-  faHouseUser,
-  faFaucet,
-  faPlug,
-  faUtensils,
-  faHamburger,
-  faIceCream,
-  faPizzaSlice,
-  faBreadSlice,
-  faCoffee,
-  faCocktail,
-  faWineBottle,
-  faWineGlass,
-  faGasPump,
-  faCar,
-  faMotorcycle,
-  faBicycle,
-  faPlane,
-  faShip,
-  faPhone,
-  faMobile,
-  faWifi,
-  faMedkit,
-  faHeartbeat,
-  faBriefcase,
-  faTicketAlt,
-  faMusic,
-  faFilm,
-  faBook,
-  faUniversity,
-  faPiggyBank,
-  faUser,
-  faHandHoldingHeart,
-  faRandom,
-};
+import "./TransactionRow.less";
 
 type TransactionIconName = keyof typeof icons;
 
