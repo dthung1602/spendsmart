@@ -72,7 +72,7 @@ const icons = {
   faRandom,
 };
 
-type Icon = keyof typeof icons;
+type IconName = keyof typeof icons;
 
-export type { Icon };
+export type { IconName };
 export default icons;
