@@ -15,7 +15,7 @@ import {
 } from "../../components";
 import { useTranslation } from "../../utils/hooks";
 import { categoriesToSelectOptions } from "../../utils";
-import { categoryDataStore } from "../../database";
+import { Category, categoryDataStore, Transaction } from "../../database";
 import "./NewTransactionModal.less";
 
 interface NewTransactionModalProps {
@@ -29,28 +29,30 @@ function NewTransactionModal({
 }: NewTransactionModalProps): JSX.Element {
   const { t } = useTranslation();
   const [expand, setExpand] = useState<boolean>(false);
-  const [categoryOptions, setCategoryOptions] = useState<
+  const categoriesRef = useRef<Category[]>([]);
+  const [catOptions, setCatOptions] = useState<
     VerticalScrollSelectOptionValue<string>[]
   >([]);
 
   const [category, setCategory] = useState<string>("");
   const [isUnexpected, setIsUnexpected] = useState<boolean>(false);
 
-  const amountInputRef = useRef<HTMLInputElement>(null);
+  const priceInputRef = useRef<HTMLInputElement>(null);
   const spendDateInputRef = useRef<HTMLInputElement>(null);
   const noteTextAreaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (open) {
-      amountInputRef.current?.focus();
+      priceInputRef.current?.focus();
     }
   }, [open]);
 
   useEffect(() => {
     categoryDataStore.findAll().then((cats) => {
       const options = categoriesToSelectOptions(cats);
-      setCategoryOptions(options);
+      setCatOptions(options);
       setCategory(options[0].value);
+      categoriesRef.current = cats;
     });
   }, []);
 
@@ -58,17 +60,33 @@ function NewTransactionModal({
     // clear input before close
     setExpand(false);
     setIsUnexpected(false);
-    [amountInputRef, spendDateInputRef, noteTextAreaRef].forEach((r) => {
+    [priceInputRef, spendDateInputRef, noteTextAreaRef].forEach((r) => {
       if (r.current) r.current.value = "";
     });
     onClose();
   };
 
   const add = () => {
+    const leafCategory = categoriesRef.current.find(
+      (cat) => cat.title === category
+    ) as Category;
+    const parentCategory = categoriesRef.current.find(
+      (cat) => cat.title === leafCategory.parentTitle
+    );
+    const categories = [leafCategory];
+    if (parentCategory) {
+      categories.push(parentCategory);
+    }
+    const spendDatetimeStr = spendDateInputRef.current?.value;
     const data = {
-      category,
+      categories,
       isUnexpected,
+      spendDatetime: spendDatetimeStr ? new Date(spendDatetimeStr) : undefined,
+      note: noteTextAreaRef.current?.value as string,
+      price: parseFloat(priceInputRef.current?.value as string),
     };
+    const transaction = new Transaction(data);
+    console.log(transaction);
   };
 
   const buttons: ModalButton[] = [
@@ -95,12 +113,12 @@ function NewTransactionModal({
     >
       <div className="new-transaction">
         <label>{t("common.price")}</label>
-        <input type="number" ref={amountInputRef} />
+        <input type="number" ref={priceInputRef} />
         <label>{t("common.category")}</label>
         <VerticalScrollSelect
           className="cat-input"
           onSelect={(value) => setCategory(value)}
-          options={categoryOptions}
+          options={catOptions}
         />
       </div>
 

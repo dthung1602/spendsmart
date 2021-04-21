@@ -5,7 +5,7 @@ import type { WithOptional } from "../../utils/types";
 
 type TransactionConstructorArgument = WithOptional<
   Transaction,
-  "id" | "createdAt" | "updatedAt" | "deletedAt"
+  "id" | "spendDatetime" | "createdAt" | "updatedAt" | "deletedAt"
 >;
 
 class Transaction {
@@ -29,7 +29,7 @@ class Transaction {
 
     this.price = data.price;
     this.categories = data.categories;
-    this.spendDatetime = data.spendDatetime;
+    this.spendDatetime = data.spendDatetime || now;
     this.isUnexpected = data.isUnexpected;
     this.note = data.note;
     this.noteWords = stemString(this.note);

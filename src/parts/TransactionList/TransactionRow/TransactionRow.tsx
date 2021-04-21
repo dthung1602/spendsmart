@@ -18,13 +18,15 @@ interface TransactionRowProps {
 function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
   const [expand, setExpand] = useState(false);
 
-  const icon = icons[transaction.icon as TransactionIconName];
+  const icon = icons[transaction.categories[0].icon as TransactionIconName];
 
   return (
     <div className="transaction-row small" onClick={() => setExpand(!expand)}>
       <div className={`transaction-body ${expand ? "expand" : ""}`}>
         <FontAwesomeIcon icon={icon} size="lg" className="transaction-icon" />
-        <div className="transaction-category">{transaction.leafCategory}</div>
+        <div className="transaction-category">
+          {transaction.categories[0].title}
+        </div>
         <div className="transaction-time">
           {format(transaction.spendDatetime, "Y-M-d")}
         </div>
@@ -33,7 +35,7 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
         </div>
         {expand ? (
           <>
-            <div className="transaction-title">{transaction.title}</div>
+            <div className="transaction-note">{transaction.note}</div>
             <div className="transaction-expect">
               {transaction.isUnexpected ? "Unexpected" : "Expected"}
             </div>
