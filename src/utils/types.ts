@@ -4,6 +4,10 @@ import type { MouseEventHandler } from "react";
 type Nullable<T> = T | null;
 type Optional<T> = T | undefined | null;
 
+// Reference: https://github.com/Microsoft/TypeScript/issues/25760
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
 type IDBResultEvent<T> = Event & {
   target: {
     result: T;
@@ -25,6 +29,8 @@ interface BasicJSXPropWithChildren extends BasicJSXProp {
 export type {
   Nullable,
   Optional,
+  Omit,
+  WithOptional,
   IDBResultEvent,
   Language,
   BasicJSXProp,

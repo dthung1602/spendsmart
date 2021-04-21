@@ -1,20 +1,43 @@
 import { Optional } from "../../utils/types";
+import Category from "./Category";
+import { stemString } from "../../utils";
+import type { WithOptional } from "../../utils/types";
+
+type TransactionConstructorArgument = WithOptional<
+  Transaction,
+  "id" | "createdAt" | "updatedAt" | "deletedAt"
+>;
 
 class Transaction {
-  constructor(
-    public id: number = new Date().getTime(),
-    public spendDatetime: Date = new Date(),
-    public title: string,
-    private titleWords: string[],
-    public categories: string[],
-    public leafCategory: string,
-    public icon: string,
-    public price: number,
-    public isUnexpected: boolean = false,
-    public createdAt: Date = new Date(),
-    public updatedAt: Date = new Date(),
-    public deletedAt: Optional<Date> = undefined
-  ) {}
+  public id: number;
+
+  public price: number;
+  public categories: Category[];
+  public spendDatetime: Date;
+  public isUnexpected: boolean;
+  public note: string;
+  private noteWords: string[];
+
+  public createdAt: Date;
+  public updatedAt: Date;
+  public deletedAt: Optional<Date>;
+
+  constructor(data: TransactionConstructorArgument) {
+    const now = new Date();
+
+    this.id = data.id || now.getTime();
+
+    this.price = data.price;
+    this.categories = data.categories;
+    this.spendDatetime = data.spendDatetime;
+    this.isUnexpected = data.isUnexpected;
+    this.note = data.note;
+    this.noteWords = stemString(this.note);
+
+    this.createdAt = data.createdAt || now;
+    this.updatedAt = data.updatedAt || now;
+    this.deletedAt = data.deletedAt;
+  }
 }
 
 export default Transaction;

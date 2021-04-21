@@ -25,3 +25,8 @@ export const categoriesToSelectOptions = (
     nested: Boolean(parentTitle),
   }));
 };
+
+// TODO improver this
+export const stemString = (str: string): string[] => {
+  return str.split(" ");
+};

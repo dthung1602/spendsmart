@@ -27,6 +27,7 @@ function NewTransactionModal({
   open,
   onClose,
 }: NewTransactionModalProps): JSX.Element {
+  const { t } = useTranslation();
   const [expand, setExpand] = useState<boolean>(false);
   const [categoryOptions, setCategoryOptions] = useState<
     VerticalScrollSelectOptionValue<string>[]
@@ -34,8 +35,6 @@ function NewTransactionModal({
 
   const [category, setCategory] = useState<string>("");
   const [isUnexpected, setIsUnexpected] = useState<boolean>(false);
-
-  const { t } = useTranslation();
 
   const amountInputRef = useRef<HTMLInputElement>(null);
   const spendDateInputRef = useRef<HTMLInputElement>(null);
@@ -50,10 +49,6 @@ function NewTransactionModal({
   useEffect(() => {
     categoryDataStore.findAll().then((cats) => {
       const options = categoriesToSelectOptions(cats);
-      console.log({
-        cat: cats.map((c) => c.icon),
-        opt: options.map((c) => c.icon),
-      });
       setCategoryOptions(options);
       setCategory(options[0].value);
     });
@@ -69,6 +64,13 @@ function NewTransactionModal({
     onClose();
   };
 
+  const add = () => {
+    const data = {
+      category,
+      isUnexpected,
+    };
+  };
+
   const buttons: ModalButton[] = [
     {
       type: "info",
@@ -80,7 +82,7 @@ function NewTransactionModal({
       type: "success",
       displayText: t("common.add"),
       icon: faPlus,
-      onClick: () => console.log("ADD"),
+      onClick: add,
     },
   ];
 

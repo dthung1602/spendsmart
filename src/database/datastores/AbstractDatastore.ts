@@ -20,7 +20,6 @@ class AbstractDatastore<ModelClassType> {
     filters: FilterObject<ModelClassType> = {}
   ): Promise<ModelClassType[]> {
     return new Promise((resolve, reject) => {
-      console.log("find");
       const db = this.dbFactory();
       if (!db) {
         reject(new DBError("Cannot find IndexedDB"));
@@ -32,22 +31,18 @@ class AbstractDatastore<ModelClassType> {
       const objectStore = transaction.objectStore(this.objectStoreName);
 
       transaction.onerror = (event) => {
-        console.log("error");
         reject(new DBError(event));
       };
 
       transaction.oncomplete = () => {
-        console.log({ result });
         resolve(result);
       };
 
       // TODO an optimized implementation using indices
       const request = objectStore.getAll();
       request.onsuccess = (event: Event) => {
-        console.log({ event });
         result = (event as IDBResultEvent<ModelClassType[]>).target.result
           .filter((o) => {
-            console.log({ o });
             for (const [k, v] of Object.entries(filters)) {
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
@@ -59,7 +54,6 @@ class AbstractDatastore<ModelClassType> {
             return true;
           })
           .map((o) => new this.ModelClass(o));
-        console.log("get all completed");
       };
     });
   }
