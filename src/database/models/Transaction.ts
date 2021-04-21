@@ -1,15 +1,16 @@
 import { Optional } from "../../utils/types";
 import Category from "./Category";
+import AbstractModel from "./AbstractModel";
 import { stemString } from "../../utils";
-import type { WithOptional } from "../../utils/types";
+import type { WithRequired } from "../../utils/types";
 
-type TransactionConstructorArgument = WithOptional<
+type TransactionConstructorArgument = WithRequired<
   Transaction,
-  "id" | "spendDatetime" | "createdAt" | "updatedAt" | "deletedAt"
+  "price" | "categories" | "isUnexpected" | "note"
 >;
 
-class Transaction {
-  public id: number;
+class Transaction extends AbstractModel {
+  public readonly id: number;
 
   public price: number;
   public categories: Category[];
@@ -23,6 +24,7 @@ class Transaction {
   public deletedAt: Optional<Date>;
 
   constructor(data: TransactionConstructorArgument) {
+    super();
     const now = new Date();
 
     this.id = data.id || now.getTime();
@@ -37,6 +39,11 @@ class Transaction {
     this.createdAt = data.createdAt || now;
     this.updatedAt = data.updatedAt || now;
     this.deletedAt = data.deletedAt;
+  }
+
+  public preSave(): void {
+    super.preSave();
+    this.noteWords = stemString(this.note);
   }
 }
 

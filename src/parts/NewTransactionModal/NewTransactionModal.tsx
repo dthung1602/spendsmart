@@ -15,7 +15,12 @@ import {
 } from "../../components";
 import { useTranslation } from "../../utils/hooks";
 import { categoriesToSelectOptions } from "../../utils";
-import { Category, categoryDataStore, Transaction } from "../../database";
+import {
+  Category,
+  Transaction,
+  categoryDataStore,
+  transactionDataStore,
+} from "../../database";
 import "./NewTransactionModal.less";
 
 interface NewTransactionModalProps {
@@ -56,13 +61,16 @@ function NewTransactionModal({
     });
   }, []);
 
-  const close = () => {
-    // clear input before close
+  const clearAllInputs = () => {
     setExpand(false);
     setIsUnexpected(false);
     [priceInputRef, spendDateInputRef, noteTextAreaRef].forEach((r) => {
       if (r.current) r.current.value = "";
     });
+  };
+
+  const close = () => {
+    clearAllInputs();
     onClose();
   };
 
@@ -86,7 +94,7 @@ function NewTransactionModal({
       price: parseFloat(priceInputRef.current?.value as string),
     };
     const transaction = new Transaction(data);
-    console.log(transaction);
+    transactionDataStore.create(transaction).then(close).catch(console.error);
   };
 
   const buttons: ModalButton[] = [

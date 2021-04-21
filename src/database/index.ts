@@ -5,8 +5,7 @@ import migrate from "./migrations";
 import localStorage from "./localstorage";
 import CategoryDatastore from "./datastores/CategoryDatastore";
 import TransactionDatastore from "./datastores/TransactionDatastore";
-import TransactionHistoryDatastore from "./datastores/TransactionHistoryDatastore";
-import { Category, Transaction, TransactionHistory } from "./models";
+import { Category, Transaction } from "./models";
 
 let db: Nullable<IDBDatabase> = null;
 
@@ -37,19 +36,12 @@ const transactionDataStore = new TransactionDatastore(
   "Transactions",
   getDB
 );
-const transactionHistoryDataStore = new TransactionHistoryDatastore(
-  TransactionHistory,
-  "TransactionHistories",
-  getDB
-);
 
 export {
   initDB,
   localStorage,
   categoryDataStore,
   transactionDataStore,
-  transactionHistoryDataStore,
   Category,
   Transaction,
-  TransactionHistory,
 };

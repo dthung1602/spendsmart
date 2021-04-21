@@ -46,6 +46,4 @@ export default function (db: IDBDatabase): void {
   loadDefaultCategories(catStore);
 
   db.createObjectStore("Transactions", { keyPath: "id" });
-
-  db.createObjectStore("TransactionHistories", { keyPath: "id" });
 }

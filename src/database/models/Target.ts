@@ -9,6 +9,7 @@ import {
   TARGET_STT_COMPLETED,
   TARGET_STT_ABANDONED,
 } from "../../utils/constants";
+import AbstractModel from "./AbstractModel";
 
 type Compare = typeof LESS_THAN | typeof EQUAL | typeof MORE_THAN;
 
@@ -20,7 +21,7 @@ type Status =
   | typeof TARGET_STT_COMPLETED
   | typeof TARGET_STT_ABANDONED;
 
-class Target {
+class Target extends AbstractModel {
   constructor(
     public id: number,
     public title: string,
@@ -33,7 +34,9 @@ class Target {
     public total: number,
     public status: Status,
     public createdAt: Date
-  ) {}
+  ) {
+    super();
+  }
 }
 
 export default Target;

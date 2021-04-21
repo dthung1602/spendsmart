@@ -7,6 +7,7 @@ type Optional<T> = T | undefined | null;
 // Reference: https://github.com/Microsoft/TypeScript/issues/25760
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+type WithRequired<T, K extends keyof T> = Pick<T, K> & Partial<T>;
 
 type IDBResultEvent<T> = Event & {
   target: {
@@ -31,6 +32,7 @@ export type {
   Optional,
   Omit,
   WithOptional,
+  WithRequired,
   IDBResultEvent,
   Language,
   BasicJSXProp,
