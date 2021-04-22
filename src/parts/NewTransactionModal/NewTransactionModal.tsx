@@ -12,6 +12,7 @@ import {
   Switch,
   VerticalScrollSelect,
   VerticalScrollSelectOptionValue,
+  notify,
 } from "../../components";
 import { useTranslation } from "../../utils/hooks";
 import { categoriesToSelectOptions } from "../../utils";
@@ -94,7 +95,13 @@ function NewTransactionModal({
       price: parseFloat(priceInputRef.current?.value as string),
     };
     const transaction = new Transaction(data);
-    transactionDataStore.create(transaction).then(close).catch(console.error);
+    transactionDataStore
+      .create(transaction)
+      .then(() => {
+        close();
+        notify(t("parts.new-transaction-modal.added"), "success");
+      })
+      .catch((e) => notify(String(e), "error"));
   };
 
   const buttons: ModalButton[] = [

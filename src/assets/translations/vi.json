@@ -15,7 +15,8 @@
       "recent-transactions": "chi tiêu gần đây"
     },
     "new-transaction-modal": {
-      "title": "tạo mới"
+      "title": "tạo mới",
+      "added": "đã tạo"
     }
   },
   "default-categories": {

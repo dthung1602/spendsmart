@@ -20,3 +20,6 @@ export type {
   VerticalScrollSelectOptionValue,
   VerticalScrollSelectOptionProps,
 } from "./VerticalScrollSelect";
+export { default as Notification } from "./Notification";
+export { notify } from "./Notification";
+export type { NotificationType } from "./Notification";

@@ -18,7 +18,8 @@
       "recent-transactions": "recent transactions"
     },
     "new-transaction-modal": {
-      "title": "new transaction"
+      "title": "new transaction",
+      "added": "transaction added"
     }
   },
   "default-categories": {

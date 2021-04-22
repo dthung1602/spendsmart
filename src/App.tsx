@@ -1,9 +1,9 @@
-import React, { lazy, useEffect, Suspense, useState } from "react";
+import React, { lazy, Suspense, useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { GlobalContextProvider } from "./GlobalContext";
 import { initDB, localStorage } from "./database";
-import { ErrorBoundary, FullScreenLoading } from "./components";
+import { ErrorBoundary, FullScreenLoading, notify } from "./components";
 import Navbar from "./parts/Navbar";
 import {
   ROUTE_DASHBOARD,
@@ -32,8 +32,14 @@ function App(): JSX.Element {
         localStorage.introTourTaken = true;
         setIntroTourTaken(true);
       })
-      .catch((e) => alert(e));
+      .catch((e) => notify(String(e), "error"));
   };
+
+  useEffect(() => {
+    if (introTourTaken) {
+      initDB().catch((e) => notify(String(e), "error"));
+    }
+  });
 
   return (
     <ErrorBoundary>

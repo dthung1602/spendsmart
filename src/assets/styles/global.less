@@ -17,6 +17,10 @@
 .-space(@i: length(@spaces), @prop) when (@i > 0) {
   @name: extract(@spaces, @i);
   @value: "space-@{name}";
+
+  .@{prop}-@{name} {
+      @{prop}: @@value;
+  }
   .v-@{prop}-@{name} {
       @{prop}-top: @@value;
       @{prop}-bottom: @@value;

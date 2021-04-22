@@ -10,6 +10,10 @@ import { Category, Transaction } from "./models";
 let db: Nullable<IDBDatabase> = null;
 
 function initDB(): Promise<void> {
+  if (db) {
+    return Promise.resolve();
+  }
+
   return new Promise((resolve, reject) => {
     const request = window.indexedDB.open("SpendSmartDB", DB_VERSION);
 
