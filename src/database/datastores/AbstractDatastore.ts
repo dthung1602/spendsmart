@@ -1,7 +1,6 @@
 import { DBError } from "../../utils/errors";
 import { Nullable, Optional, IDBResultEvent } from "../../utils/types";
 import AbstractModel from "../models/AbstractModel";
-import { serialize } from "v8";
 
 type FilterObject<ModelClass> = {
   [Property in keyof ModelClass]+?: ModelClass[Property];

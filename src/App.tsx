@@ -27,15 +27,13 @@ function App(): JSX.Element {
   );
 
   const onFinishIntroTour = () => {
-    localStorage.introTourTaken = true;
-    setIntroTourTaken(true);
+    initDB()
+      .then(() => {
+        localStorage.introTourTaken = true;
+        setIntroTourTaken(true);
+      })
+      .catch((e) => alert(e));
   };
-
-  useEffect(() => {
-    if (introTourTaken) {
-      initDB().catch((e) => alert(e));
-    }
-  });
 
   return (
     <ErrorBoundary>
