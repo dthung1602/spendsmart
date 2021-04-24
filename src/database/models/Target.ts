@@ -37,6 +37,10 @@ class Target extends AbstractModel {
   ) {
     super();
   }
+
+  public getKey(): number {
+    return this.id;
+  }
 }
 
 export default Target;

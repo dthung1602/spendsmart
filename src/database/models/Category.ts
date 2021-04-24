@@ -12,6 +12,10 @@ class Category extends AbstractModel {
     this.icon = data.icon;
     this.parentTitle = data.parentTitle;
   }
+
+  public getKey(): string {
+    return this.title;
+  }
 }
 
 export default Category;

@@ -1,6 +1,8 @@
 import { Transaction } from "../database";
 
-type PublishParams = ["transaction-added", Transaction];
+type PublishParams =
+  | ["transaction-added", Transaction]
+  | ["transaction-deleted", Transaction];
 
 type Handler = ((data: PublishParams[1]) => void) | null;
 

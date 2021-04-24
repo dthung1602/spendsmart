@@ -20,7 +20,7 @@ type FilterObject<ModelClass> = {
   [Property in keyof OmitMethods<ModelClass>]+?: Compare<ModelClass[Property]>;
 };
 
-class AbstractDatastore<ModelClassType extends AbstractModel> {
+abstract class AbstractDatastore<ModelClassType extends AbstractModel> {
   constructor(
     protected readonly ModelClass: new (...args: any[]) => ModelClassType,
     protected readonly objectStoreName: string,
@@ -88,18 +88,35 @@ class AbstractDatastore<ModelClassType extends AbstractModel> {
         return;
       }
 
-      const transaction = db.transaction(this.objectStoreName, "readwrite");
-      const objectStore = transaction.objectStore(this.objectStoreName);
-
-      transaction.onerror = (event) => {
-        reject(new DBError(event));
-      };
-
       object.preSave();
-      const request = objectStore.add(object);
+
+      const request = db
+        .transaction(this.objectStoreName, "readwrite")
+        .objectStore(this.objectStoreName)
+        .add(object);
+
+      request.onerror = (event) => reject(new DBError(event));
       request.onsuccess = () => {
         resolve(object);
       };
+    });
+  }
+
+  delete(object: ModelClassType): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const db = this.dbFactory();
+      if (!db) {
+        reject(new DBError("Cannot find IndexedDB"));
+        return;
+      }
+
+      const request = db
+        .transaction(this.objectStoreName, "readwrite")
+        .objectStore(this.objectStoreName)
+        .delete(object.getKey());
+
+      request.onsuccess = () => resolve();
+      request.onerror = (event) => reject(new DBError(event));
     });
   }
 }

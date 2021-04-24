@@ -4,7 +4,9 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 
-import { Transaction } from "../../../database";
+import { Transaction, transactionDataStore } from "../../../database";
+import { notify } from "../../../components";
+import { publish } from "../../../pubsub";
 import { formatMoney, icons } from "../../../utils";
 
 import "./TransactionRow.less";
@@ -19,6 +21,15 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
   const [expand, setExpand] = useState(false);
 
   const icon = icons[transaction.categories[0].icon as TransactionIconName];
+
+  const deleteTransaction = () => {
+    transactionDataStore
+      .delete(transaction)
+      .then(() => {
+        publish("transaction-deleted", transaction);
+      })
+      .catch((e) => notify(String(e), "error"));
+  };
 
   return (
     <div className="transaction-row small" onClick={() => setExpand(!expand)}>
@@ -44,7 +55,7 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
       </div>
       {expand ? (
         <div className="transaction-footer">
-          <div className="btn-error">
+          <div className="btn-error" onClick={deleteTransaction}>
             <FontAwesomeIcon
               icon={faTrash}
               size="lg"

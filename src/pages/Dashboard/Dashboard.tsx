@@ -31,7 +31,15 @@ function Dashboard(): JSX.Element {
   useEffect(loadRecentTransactions, []);
 
   useEffect(() => {
-    return subscribe("transaction-added", loadRecentTransactions);
+    const unsubscribe1 = subscribe("transaction-added", loadRecentTransactions);
+    const unsubscribe2 = subscribe(
+      "transaction-deleted",
+      loadRecentTransactions
+    );
+    return () => {
+      unsubscribe1();
+      unsubscribe2();
+    };
   });
 
   return (

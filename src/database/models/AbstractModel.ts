@@ -2,6 +2,7 @@
 
 abstract class AbstractModel {
   public preSave(): void {}
+  public abstract getKey(): string | number;
 }
 
 export default AbstractModel;

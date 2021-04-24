@@ -45,6 +45,10 @@ class Transaction extends AbstractModel {
     super.preSave();
     this.noteWords = stemString(this.note);
   }
+
+  public getKey(): number {
+    return this.id;
+  }
 }
 
 export default Transaction;
