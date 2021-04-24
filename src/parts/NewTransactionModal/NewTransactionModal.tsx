@@ -14,6 +14,7 @@ import {
   VerticalScrollSelectOptionValue,
   notify,
 } from "../../components";
+import { publish } from "../../pubsub";
 import { useTranslation } from "../../utils/hooks";
 import { categoriesToSelectOptions } from "../../utils";
 import {
@@ -100,6 +101,7 @@ function NewTransactionModal({
       .then(() => {
         close();
         notify(t("parts.new-transaction-modal.added"), "success");
+        publish("transaction-added", transaction);
       })
       .catch((e) => notify(String(e), "error"));
   };

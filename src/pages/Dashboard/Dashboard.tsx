@@ -1,20 +1,38 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { subDays } from "date-fns/fp";
 
 import {
   PageHeaderHighLight,
   NewTransactionModal,
   TransactionList,
 } from "../../parts";
-import { FAB, Tab } from "../../components";
+import { FAB, notify, Tab } from "../../components";
+import { subscribe } from "../../pubsub";
 import { GlobalContext } from "../../GlobalContext";
-import { Transaction } from "../../database";
+import { Transaction, transactionDataStore } from "../../database";
 import "./Dashboard.less";
 
-const mockTransactions: Transaction[] = [];
+const subtract3Days = subDays(3);
 
 function Dashboard(): JSX.Element {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
   const { overlayOpen, setOverlayOpen } = useContext(GlobalContext);
+
+  const loadRecentTransactions = () => {
+    transactionDataStore
+      .findAll()
+      .then((trans) => {
+        setTransactions(trans);
+      })
+      .catch((e) => notify(String(e), "error"));
+  };
+
+  useEffect(loadRecentTransactions, []);
+
+  useEffect(() => {
+    return subscribe("transaction-added", loadRecentTransactions);
+  });
 
   return (
     <div className="dashboard-page">
@@ -31,7 +49,7 @@ function Dashboard(): JSX.Element {
             </Tab.TabPane>
           ))}
       </Tab>
-      <TransactionList transactions={mockTransactions} />
+      <TransactionList transactions={transactions} />
       <FAB
         icon={faPlus}
         type="success"

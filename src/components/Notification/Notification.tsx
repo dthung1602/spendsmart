@@ -62,7 +62,7 @@ function Notification({
   );
 }
 
-function notify(message: string, type: NotificationType, time = 30000): void {
+function notify(message: string, type: NotificationType, time = 3000): void {
   const container = document.createElement("div");
   document.body.appendChild(container);
 

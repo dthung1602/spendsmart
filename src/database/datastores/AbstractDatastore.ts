@@ -2,8 +2,22 @@ import { DBError } from "../../utils/errors";
 import { Nullable, Optional, IDBResultEvent } from "../../utils/types";
 import AbstractModel from "../models/AbstractModel";
 
+type Compare<T> =
+  | T
+  | { eq: T }
+  | { neq: T }
+  | { gt: T }
+  | { gte: T }
+  | { lt: T }
+  | { lte: T };
+
+type OmitMethods<ModelClass> = Omit<
+  ModelClass,
+  "findAll" | "find" | "findOne" | "create"
+>;
+
 type FilterObject<ModelClass> = {
-  [Property in keyof ModelClass]+?: ModelClass[Property];
+  [Property in keyof OmitMethods<ModelClass>]+?: Compare<ModelClass[Property]>;
 };
 
 class AbstractDatastore<ModelClassType extends AbstractModel> {
