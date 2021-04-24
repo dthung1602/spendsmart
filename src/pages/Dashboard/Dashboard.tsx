@@ -6,6 +6,7 @@ import {
   PageHeaderHighLight,
   NewTransactionModal,
   TransactionList,
+  DashboardGraphs,
 } from "../../parts";
 import { FAB, notify, Tab } from "../../components";
 import { subscribe } from "../../pubsub";
@@ -45,18 +46,7 @@ function Dashboard(): JSX.Element {
   return (
     <div className="dashboard-page">
       <PageHeaderHighLight thisWeek={1234567} thisMonth={12345678} />
-      <Tab onTabChange={(tab) => console.log("tab clicked: ", tab)}>
-        {Array(10)
-          .fill(null)
-          .map((v, i) => (
-            <Tab.TabPane key={`tab${i}`} tab={`tab${i}`} title={`Tab ${i}`}>
-              <div style={{ height: "200px" }}>
-                {" "}
-                This is the content of tab {i}
-              </div>
-            </Tab.TabPane>
-          ))}
-      </Tab>
+      <DashboardGraphs />
       <TransactionList transactions={transactions} />
       <FAB
         icon={faPlus}

@@ -23,3 +23,4 @@ export type {
 export { default as Notification } from "./Notification";
 export { notify } from "./Notification";
 export type { NotificationType } from "./Notification";
+export { default as WorkInProgress } from "./WorkInProgress";

@@ -4,8 +4,8 @@ import TabPane, { TabPaneProps } from "./TabPane";
 import "./Tab.less";
 
 interface TabProps {
-  onTabChange: (tab: string) => void;
-  children: ReactElement<TabPaneProps>[];
+  onTabChange?: (tab: string) => void;
+  children: ReactElement<TabPaneProps>[] | ReactElement<TabPaneProps>;
   defaultSelectedTab?: string;
 }
 
@@ -14,6 +14,9 @@ function Tab({
   children,
   defaultSelectedTab,
 }: TabProps): JSX.Element {
+  if (!Array.isArray(children)) {
+    children = [children];
+  }
   defaultSelectedTab = defaultSelectedTab || (children[0].props.tab as string);
   const [selectedTab, setSelectedTab] = useState(defaultSelectedTab);
 
@@ -25,7 +28,9 @@ function Tab({
         {children.map((tab) => {
           const onClick = () => {
             setSelectedTab(tab.props.tab);
-            onTabChange(tab.props.tab);
+            if (onTabChange) {
+              onTabChange(tab.props.tab);
+            }
           };
           return (
             <div

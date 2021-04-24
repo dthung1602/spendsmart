@@ -9,3 +9,4 @@ export type {
   TransactionRowProps,
   TransactionIconName,
 } from "./TransactionList";
+export { default as DashboardGraphs } from "./DashboardGraphs";
