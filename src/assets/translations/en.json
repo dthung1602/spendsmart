@@ -6,6 +6,7 @@
     "unexpected-spending": "unexpected",
     "datetime": "date time",
     "add": "add",
+    "delete": "delete",
     "more": "more",
     "less": "less"
   },
@@ -16,6 +17,9 @@
     },
     "transaction-list": {
       "recent-transactions": "recent transactions"
+    },
+    "transaction-row": {
+      "delete-confirm": "click again to delete"
     },
     "new-transaction-modal": {
       "title": "new transaction",

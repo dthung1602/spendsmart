@@ -2,7 +2,11 @@
   "common": {
     "category": "danh mục",
     "price": "giá",
+    "note": "ghi chú",
+    "unexpected-spending": "không thường xuyên",
+    "datetime": "ngày tháng",
     "add": "thêm",
+    "delete": "xoá",
     "more": "mở rộng",
     "less": "thu gọn"
   },
@@ -13,6 +17,9 @@
     },
     "transaction-list": {
       "recent-transactions": "chi tiêu gần đây"
+    },
+    "transaction-row": {
+      "delete-confirm": "bấm lần nữa để xoá"
     },
     "new-transaction-modal": {
       "title": "tạo mới",

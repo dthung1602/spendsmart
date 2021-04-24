@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, MouseEventHandler } from "react";
 
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,7 @@ import { Transaction, transactionDataStore } from "../../../database";
 import { notify } from "../../../components";
 import { publish } from "../../../pubsub";
 import { formatMoney, icons } from "../../../utils";
+import { useTranslation } from "../../../utils/hooks";
 
 import "./TransactionRow.less";
 
@@ -18,17 +19,28 @@ interface TransactionRowProps {
 }
 
 function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
+  const { t } = useTranslation();
   const [expand, setExpand] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+
+  useEffect(() => {
+    setDeleteConfirm(false);
+  }, [expand]);
 
   const icon = icons[transaction.categories[0].icon as TransactionIconName];
 
-  const deleteTransaction = () => {
-    transactionDataStore
-      .delete(transaction)
-      .then(() => {
-        publish("transaction-deleted", transaction);
-      })
-      .catch((e) => notify(String(e), "error"));
+  const deleteTransaction: MouseEventHandler = (event) => {
+    event.stopPropagation();
+    if (deleteConfirm) {
+      transactionDataStore
+        .delete(transaction)
+        .then(() => {
+          publish("transaction-deleted", transaction);
+        })
+        .catch((e) => notify(String(e), "error"));
+    } else {
+      setDeleteConfirm(true);
+    }
   };
 
   return (
@@ -61,7 +73,9 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
               size="lg"
               className="h-margin-wide"
             />
-            Delete
+            {deleteConfirm
+              ? t("parts.transaction-row.delete-confirm")
+              : t("common.delete")}
           </div>
         </div>
       ) : null}
