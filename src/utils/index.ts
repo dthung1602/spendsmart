@@ -28,5 +28,5 @@ export const categoriesToSelectOptions = (
 
 // TODO improver this
 export const stemString = (str: string): string[] => {
-  return str.split(" ");
+  return str.toLowerCase().split(" ");
 };

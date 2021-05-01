@@ -28,6 +28,7 @@ module.exports = {
   },
   rules: {
     "react/prop-types": 0,
-    "@typescript-eslint/no-empty-interface": 0
+    "@typescript-eslint/no-empty-interface": 0,
+    "no-prototype-builtins": 0
   }
 };

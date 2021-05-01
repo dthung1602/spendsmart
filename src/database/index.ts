@@ -2,9 +2,8 @@ import { DB_VERSION } from "../utils/constants";
 import { IDBResultEvent, Nullable } from "../utils/types";
 import { DBError } from "../utils/errors";
 import migrate from "./migrations";
-import localStorage from "./localstorage";
-import CategoryDatastore from "./datastores/CategoryDatastore";
-import TransactionDatastore from "./datastores/TransactionDatastore";
+import localStorage from "./LocalStorage";
+import Datastore from "./Datastore";
 import { Category, Transaction } from "./models";
 
 let db: Nullable<IDBDatabase> = null;
@@ -34,12 +33,8 @@ function getDB(): Nullable<IDBDatabase> {
   return db;
 }
 
-const categoryDataStore = new CategoryDatastore(Category, "Categories", getDB);
-const transactionDataStore = new TransactionDatastore(
-  Transaction,
-  "Transactions",
-  getDB
-);
+const categoryDataStore = new Datastore(Category, "Categories", getDB);
+const transactionDataStore = new Datastore(Transaction, "Transactions", getDB);
 
 export {
   initDB,

@@ -1,7 +1,8 @@
 import en from "../../assets/translations/en.json";
 import vi from "../../assets/translations/vi.json";
 
-import localStorage from "../localstorage";
+import Transaction from "../models/Transaction";
+import localStorage from "../LocalStorage";
 
 const availableTranslations = { en, vi };
 
@@ -39,11 +40,20 @@ function loadDefaultCategories(store: IDBObjectStore) {
   });
 }
 
+function createTransactionIndices(store: IDBObjectStore) {
+  store.createIndex(Transaction.SPEND_DATETIME_INDEX, "spendDatetime");
+  store.createIndex(Transaction.CATEGORY_INDEX, "categories.title", {
+    multiEntry: true,
+  });
+  store.createIndex(Transaction.TEXT_INDEX, "$text", { multiEntry: true });
+}
+
 export default function (db: IDBDatabase): void {
   const catStore = db.createObjectStore("Categories", {
     keyPath: "title",
   });
   loadDefaultCategories(catStore);
 
-  db.createObjectStore("Transactions", { keyPath: "id" });
+  const tranStore = db.createObjectStore("Transactions", { keyPath: "id" });
+  createTransactionIndices(tranStore);
 }

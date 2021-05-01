@@ -27,12 +27,25 @@ interface BasicJSXPropWithChildren extends BasicJSXProp {
   children: React.ReactNode;
 }
 
+// ref: https://stackoverflow.com/a/55479659/7342188
+type NonFunctionProperties<T> = Pick<
+  T,
+  {
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    [K in keyof T]: T[K] extends Function ? never : K;
+  }[keyof T]
+>;
+
+type Class<T> = new (...args: any[]) => T;
+
 export type {
   Nullable,
   Optional,
   Omit,
   WithOptional,
   WithRequired,
+  NonFunctionProperties,
+  Class,
   IDBResultEvent,
   Language,
   BasicJSXProp,
