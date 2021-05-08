@@ -1,6 +1,6 @@
 import { IDBResultEvent } from "../../utils/types";
 import version1 from "./version1";
-import localStorage from "../LocalStorage";
+import localStorage from "../localstorage";
 
 const migrations: ((db: IDBDatabase) => void)[] = [version1];
 

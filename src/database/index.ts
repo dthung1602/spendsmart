@@ -2,8 +2,8 @@ import { DB_VERSION } from "../utils/constants";
 import { IDBResultEvent, Nullable } from "../utils/types";
 import { DBError } from "../utils/errors";
 import migrate from "./migrations";
-import localStorage from "./LocalStorage";
-import Datastore from "./Datastore";
+import localStorage from "./localstorage";
+import Datastore from "./datastore";
 import { Category, Transaction } from "./models";
 
 let db: Nullable<IDBDatabase> = null;

@@ -1,8 +1,8 @@
 import { Language } from "../utils/types";
 
-class LocalStorage {
+class Localstorage {
   public static get lastMigratedVersion(): number {
-    return LocalStorage.getInt("dbLastMigratedVersion", 0);
+    return Localstorage.getInt("dbLastMigratedVersion", 0);
   }
 
   public static set lastMigratedVersion(value: number) {
@@ -10,7 +10,7 @@ class LocalStorage {
   }
 
   public static get language(): Language {
-    return LocalStorage.getString("language", "en") as Language;
+    return Localstorage.getString("language", "en") as Language;
   }
 
   public static set language(value: Language) {
@@ -19,7 +19,7 @@ class LocalStorage {
 
   public static get introTourTaken(): boolean {
     return Boolean(
-      JSON.parse(LocalStorage.getString("introTourTaken", "false"))
+      JSON.parse(Localstorage.getString("introTourTaken", "false"))
     );
   }
 
@@ -38,4 +38,4 @@ class LocalStorage {
   }
 }
 
-export default LocalStorage;
+export default Localstorage;

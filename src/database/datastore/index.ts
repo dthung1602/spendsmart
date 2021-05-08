@@ -1,121 +1,14 @@
-import { DBError } from "../utils/errors";
-import type {
-  Nullable,
-  Optional,
-  Class,
-  XOR,
-  NoExtra,
-  IDBResultEvent,
-  Path,
-  NonFunctionKeys,
-  PathValue,
-} from "../utils/types";
-import AbstractModel from "./models/AbstractModel";
-import { stemString } from "../utils";
+import AbstractModel from "../models/AbstractModel";
+import NonIndexedFieldFilters from "./non-indexed-field-filters";
+import getIndexRange from "./index-range-builder";
+import { DBError } from "../../utils/errors";
+import { stemString } from "../../utils";
 
-interface IndexPreference<Model> {
-  readonly INDICES_PREFERENCE_ORDER: {
-    field: Path<Model> | "$text";
-    index: string;
-  }[];
-}
-
-type ModelClass<Model> = Class<Model> & IndexPreference<Model>;
-
-type SelectedIndex = {
-  field: string;
-  index: string;
-  query: any;
-};
-
-type EqualQuery<T> = NoExtra<{ $eq: T }>;
-type LessThanQuery<T> = XOR<{ $lte: T }, { $lt: T }>;
-type GreaterThanQuery<T> = XOR<{ $gte: T }, { $gt: T }>;
-type RangeQuery<T> = LessThanQuery<T> & GreaterThanQuery<T>;
-
-type Query<T> = XOR<
-  EqualQuery<T>,
-  XOR<XOR<GreaterThanQuery<T>, LessThanQuery<T>>, RangeQuery<T>>
->;
-
-type TextQuery = { $text?: string };
-
-type Pagination = {
-  $limit?: number;
-  $skip?: number;
-};
-
-type ComparableQuery<Model> = {
-  [K in Path<Model>]?: Query<PathValue<Model, K>>;
-};
-
-type FilterObject<Model> = ComparableQuery<Model> & TextQuery & Pagination;
-
-class NonIndexedFilters<Model> {
-  private readonly filter: FilterObject<Model>;
-  private limit: number;
-  private skip: number;
-
-  constructor(filter: FilterObject<Model>) {
-    this.filter = filter;
-    this.limit = filter.$limit || Number.MAX_SAFE_INTEGER;
-    this.skip = filter.$skip || 0;
-  }
-
-  public match(object: Model): boolean {
-    let match = true;
-    for (const entry of Object.entries(this.filter)) {
-      const field = entry[0] as NonFunctionKeys<Model>;
-      const query = entry[1] as any;
-
-      if (query.hasOwnProperty("$eq")) {
-        if (object[field] === query["$eq"]) {
-          match = false;
-          break;
-        }
-      }
-      if (query.hasOwnProperty("$lte")) {
-        if (object[field] > query["$lte"]) {
-          match = false;
-          break;
-        }
-      }
-      if (query.hasOwnProperty("$lt")) {
-        if (object[field] >= query["$lt"]) {
-          match = false;
-          break;
-        }
-      }
-      if (query.hasOwnProperty("$gte")) {
-        if (object[field] < query["$gte"]) {
-          match = false;
-          break;
-        }
-      }
-      if (query.hasOwnProperty("$gt")) {
-        if (object[field] <= query["$gt"]) {
-          match = false;
-          break;
-        }
-      }
-    }
-    if (match) {
-      if (this.skip > 0) {
-        this.skip--;
-        match = false;
-      } else if (this.limit > 0) {
-        this.limit--;
-      }
-    }
-    return match;
-  }
-
-  public shouldContinue() {
-    return this.limit > 0;
-  }
-}
+import { Nullable, Optional, IDBResultEvent } from "../../utils/types";
+import type { FilterObject, SelectedIndex, ModelClass } from "./type";
 
 // https://www.codeproject.com/Articles/744986/How-to-do-some-magic-with-indexedDB
+// TODO some agg
 class Datastore<Model extends AbstractModel> {
   constructor(
     protected readonly ModelClass: ModelClass<Model>,
@@ -173,7 +66,7 @@ class Datastore<Model extends AbstractModel> {
         }
       }
 
-      const nonIndexedFilters = new NonIndexedFilters(filters);
+      const nonIndexedFilters = new NonIndexedFieldFilters(filters);
 
       const result: Model[] = [];
       const handleError = (e: string | Event) => reject(new DBError(e));
@@ -246,18 +139,10 @@ class Datastore<Model extends AbstractModel> {
     if (selectedIndex) {
       return objectStore
         .index(selectedIndex.index)
-        .openCursor(this.getIndexRange(selectedIndex));
+        .openCursor(getIndexRange(selectedIndex));
     } else {
       return objectStore.openCursor();
     }
-  }
-
-  private getIndexRange(selectedIndex: SelectedIndex): IDBKeyRange {
-    const key =
-      selectedIndex.field === "$text"
-        ? "$text"
-        : Object.keys(selectedIndex.query).sort().join("");
-    return keyRangeMapping[key](selectedIndex.query);
   }
 
   private mergeResults(partialResults: Model[][]): Model[] {
@@ -272,21 +157,5 @@ class Datastore<Model extends AbstractModel> {
     return Array.from(result.values());
   }
 }
-
-const keyRangeMapping: Record<string, (query: any) => IDBKeyRange> = {
-  $gte: (query: any) => IDBKeyRange.lowerBound(query.$gte),
-  $gt: (query: any) => IDBKeyRange.lowerBound(query.$gt, true),
-  $lte: (query: any) => IDBKeyRange.upperBound(query.$lte),
-  $lt: (query: any) => IDBKeyRange.upperBound(query.$lt, true),
-  $gte$lte: (query: any) => IDBKeyRange.bound(query.$gte, query.$lte),
-  $gt$lt: (query: any) => IDBKeyRange.bound(query.$gt, query.$lt, true, true),
-  $gt$lte: (query: any) =>
-    IDBKeyRange.bound(query.$gt, query.$lte, true, false),
-  $gte$lt: (query: any) =>
-    IDBKeyRange.bound(query.$gte, query.$lt, false, true),
-  $eq: (query: any) => IDBKeyRange.only(query.$eq),
-  $text: (query: any) => IDBKeyRange.only(query),
-  "": (query: any) => IDBKeyRange.only(query.$eq),
-};
 
 export default Datastore;

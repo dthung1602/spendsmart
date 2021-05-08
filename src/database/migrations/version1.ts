@@ -2,7 +2,7 @@ import en from "../../assets/translations/en.json";
 import vi from "../../assets/translations/vi.json";
 
 import Transaction from "../models/Transaction";
-import localStorage from "../LocalStorage";
+import localStorage from "../localstorage";
 
 const availableTranslations = { en, vi };
 
