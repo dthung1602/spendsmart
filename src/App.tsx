@@ -49,7 +49,7 @@ function App(): JSX.Element {
             {introTourTaken ? (
               <>
                 <Switch>
-                  <Route exact path={ROUTE_HOME} component={HomePage} />
+                  <Route exact path={ROUTE_HOME} component={DashboardPage} />
                   <Route
                     path={ROUTE_DASHBOARD}
                     exact

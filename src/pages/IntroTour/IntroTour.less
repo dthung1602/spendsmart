@@ -1,0 +1,27 @@
+@import "../../assets/styles/theme";
+@import "../../assets/styles/page";
+@import "../../assets/styles/global";
+
+.intro-tour-page {
+  background: @color-primary;
+  width: 100%;
+  min-height: 100vh;
+
+  .language {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    div {
+      text-align: center;
+      color: white;
+    }
+
+    &>* {
+      color: black;
+      margin: @space-wide;
+      border-radius: @border-radius-round;
+    }
+  }
+}
