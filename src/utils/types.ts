@@ -6,7 +6,6 @@ type Optional<T> = T | undefined | null;
 
 // Reference: https://github.com/Microsoft/TypeScript/issues/25760
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 type WithRequired<T, K extends keyof T> = Pick<T, K> & Partial<T>;
 
 type IDBResultEvent<T> = Event & {
@@ -49,10 +48,6 @@ type Impossible<K extends keyof any> = {
 
 type NoExtra<T, U extends T = T> = U & Impossible<Exclude<keyof U, keyof T>>;
 
-type Pretify<T> = {
-  [K in keyof T]: T[K];
-};
-
 type Join<K, P> = K extends string
   ? P extends string
     ? `${K}${"" extends P ? "" : "."}${P}`
@@ -88,11 +83,6 @@ type Leaves<T> = {
 
 type BasicType = string | number | boolean | Date;
 
-type NestedPath<
-  A extends string = string,
-  B extends string = string
-> = `${A}.${B}`;
-
 type Path<T, K extends keyof T = keyof T> = K extends string
   ? // eslint-disable-next-line @typescript-eslint/ban-types
     FlattenIfArray<T[K]> extends Function
@@ -124,7 +114,6 @@ export type {
   Nullable,
   Optional,
   Omit,
-  WithOptional,
   WithRequired,
   NonFunctionKeys,
   NonFunctionProperties,
@@ -133,10 +122,8 @@ export type {
   NoExtra,
   XOR,
   Join,
-  Pretify,
   FlattenIfArray,
   Leaves,
-  // LeaveType,
   Path,
   PathValue,
   IDBResultEvent,

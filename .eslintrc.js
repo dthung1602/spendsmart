@@ -4,7 +4,13 @@ module.exports = {
     browser: true,
     jest: true,
   },
-  ignorePatterns: [".eslintrc.js", "craco.config.js", "node_module/**"],
+  ignorePatterns: [
+    ".eslintrc.js",
+    "craco.config.js",
+    "node_module/**",
+    "*foo*",
+    "**/*foo*"
+  ],
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: "module",

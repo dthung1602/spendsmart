@@ -1,12 +1,26 @@
 import Category from "./Category";
 import AbstractModel from "./AbstractModel";
 import { stemString } from "../../utils";
-import type { WithRequired, NonFunctionProperties } from "../../utils/types";
+import type {
+  WithRequired,
+  NonFunctionProperties,
+  XOR,
+} from "../../utils/types";
 
-type TransactionConstructorArgument = WithRequired<
-  NonFunctionProperties<Transaction>,
-  "price" | "categories" | "isUnexpected" | "note"
+type CategoryInit = XOR<
+  { categories: Category[] },
+  {
+    categoriesTitles: Category["title"][];
+    categoriesParentTitles: Category["parentTitle"][];
+    categoriesIcons: Category["icon"][];
+  }
 >;
+
+type TransactionConstructorArgument = CategoryInit &
+  WithRequired<
+    NonFunctionProperties<Transaction>,
+    "price" | "isUnexpected" | "note"
+  >;
 
 class Transaction extends AbstractModel {
   public static readonly SPEND_DATETIME_INDEX = "spend-datetime-index";
@@ -15,15 +29,15 @@ class Transaction extends AbstractModel {
 
   public static readonly INDICES_PREFERENCE_ORDER = [
     {
-      field: "$text",
+      field: "$text" as const,
       index: Transaction.TEXT_INDEX,
     },
     {
-      field: "spendDatetime",
+      field: "spendDatetime" as const,
       index: Transaction.SPEND_DATETIME_INDEX,
     },
     {
-      field: "categories.title",
+      field: "categoriesTitles" as const,
       index: Transaction.CATEGORY_INDEX,
     },
   ];
@@ -32,11 +46,26 @@ class Transaction extends AbstractModel {
   public readonly createdAt: Date;
 
   public price: number;
-  public categories: Category[];
   public spendDatetime: Date;
   public isUnexpected: boolean;
   public note: string;
   private $text: string[];
+
+  private _categories: Category[] = [];
+  public categoriesTitles: Category["title"][] = [];
+  public categoriesParentTitles: Category["parentTitle"][] = [];
+  public categoriesIcons: Category["icon"][] = [];
+
+  public get categories(): Category[] {
+    return this._categories;
+  }
+
+  public set categories(categories: Category[]) {
+    this._categories = categories;
+    this.categoriesTitles = this.categories.map((cat) => cat.title);
+    this.categoriesParentTitles = this.categories.map((cat) => cat.parentTitle);
+    this.categoriesIcons = this.categories.map((cat) => cat.icon);
+  }
 
   constructor(data: TransactionConstructorArgument) {
     super();
@@ -46,11 +75,23 @@ class Transaction extends AbstractModel {
     this.createdAt = data.createdAt || now;
 
     this.price = data.price;
-    this.categories = data.categories;
     this.spendDatetime = data.spendDatetime || now;
     this.isUnexpected = data.isUnexpected;
     this.note = data.note;
     this.$text = stemString(this.note);
+
+    if (data.categories) {
+      this.categories = data.categories;
+    } else {
+      this.categories = Array.from(Array(8).keys()).map(
+        (i) =>
+          new Category({
+            title: data.categoriesTitles[i],
+            parentTitle: data.categoriesParentTitles[i],
+            icon: data.categoriesIcons[i],
+          })
+      );
+    }
   }
 
   public preSave(): void {

@@ -42,7 +42,7 @@ function loadDefaultCategories(store: IDBObjectStore) {
 
 function createTransactionIndices(store: IDBObjectStore) {
   store.createIndex(Transaction.SPEND_DATETIME_INDEX, "spendDatetime");
-  store.createIndex(Transaction.CATEGORY_INDEX, "categories.title", {
+  store.createIndex(Transaction.CATEGORY_INDEX, "categoriesTitles", {
     multiEntry: true,
   });
   store.createIndex(Transaction.TEXT_INDEX, "$text", { multiEntry: true });

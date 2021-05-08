@@ -27,7 +27,7 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
     setDeleteConfirm(false);
   }, [expand]);
 
-  const icon = icons[transaction.categories[0].icon as TransactionIconName];
+  const icon = icons[transaction.categoriesIcons[0] as TransactionIconName];
 
   const deleteTransaction: MouseEventHandler = (event) => {
     event.stopPropagation();
@@ -48,7 +48,7 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
       <div className={`transaction-body ${expand ? "expand" : ""}`}>
         <FontAwesomeIcon icon={icon} size="lg" className="transaction-icon" />
         <div className="transaction-category">
-          {transaction.categories[0].title}
+          {transaction.categoriesTitles[0]}
         </div>
         <div className="transaction-time">
           {format(transaction.spendDatetime, "Y-M-d")}

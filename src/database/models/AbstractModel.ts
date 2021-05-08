@@ -12,3 +12,5 @@ abstract class AbstractModel {
 export default AbstractModel;
 
 /* eslint-enable @typescript-eslint/no-empty-function */
+
+// type INDICES_PREFERENCE_ORDER

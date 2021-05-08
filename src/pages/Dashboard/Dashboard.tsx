@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { subDays } from "date-fns/fp";
+import { subWeeks } from "date-fns/fp";
 
 import {
   PageHeaderHighLight,
@@ -14,7 +14,7 @@ import { GlobalContext } from "../../GlobalContext";
 import { Transaction, transactionDataStore } from "../../database";
 import "./Dashboard.less";
 
-const subtract3Days = subDays(3);
+const subOneWeek = subWeeks(1);
 
 function Dashboard(): JSX.Element {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -22,7 +22,7 @@ function Dashboard(): JSX.Element {
 
   const loadRecentTransactions = () => {
     transactionDataStore
-      .findAll()
+      .find({ spendDatetime: { $gte: subOneWeek(new Date()) } })
       .then((trans) => {
         setTransactions(trans);
       })
