@@ -1,4 +1,3 @@
-import { Optional } from "../../utils/types";
 import Category from "./Category";
 import AbstractModel from "./AbstractModel";
 import { stemString } from "../../utils";

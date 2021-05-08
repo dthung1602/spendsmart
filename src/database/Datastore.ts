@@ -1,51 +1,61 @@
 import { DBError } from "../utils/errors";
-import { Nullable, Optional, Class, IDBResultEvent } from "../utils/types";
-import type { NonFunctionProperties } from "../utils/types";
-import { stemString } from "../utils";
+import type {
+  Nullable,
+  Optional,
+  Class,
+  XOR,
+  NoExtra,
+  IDBResultEvent,
+  Path,
+  NonFunctionKeys,
+  PathValue,
+} from "../utils/types";
 import AbstractModel from "./models/AbstractModel";
-import { Transaction } from "./models";
 
-type AcceptableFieldType = string | number | boolean | Date;
+interface IndexPreference<Model> {
+  readonly INDICES_PREFERENCE_ORDER: {
+    field: Path<Model> | "$text";
+    index: string;
+  }[];
+}
 
-type EqualQuery<T> = T | { $eq: T };
-type LessThanQuery<T> = { $lte: T };
-type GreaterThanQuery<T> = { $gte: T };
-type TextQuery = { $text: string };
+type ModelClass<Model> = Class<Model> & IndexPreference<Model>;
 
-type Query<T extends AcceptableFieldType> =
-  | EqualQuery<T>
-  | LessThanQuery<T>
-  | GreaterThanQuery<T>
-  | (LessThanQuery<T> & GreaterThanQuery<T>)
-  | TextQuery;
+type EqualQuery<T> = NoExtra<{ $eq: T }>;
+type LessThanQuery<T> = XOR<{ $lte: T }, { $lt: T }>;
+type GreaterThanQuery<T> = XOR<{ $gte: T }, { $gt: T }>;
+type RangeQuery<T> = LessThanQuery<T> & GreaterThanQuery<T>;
+
+type Query<T> =
+  | T
+  | XOR<
+      EqualQuery<T>,
+      XOR<XOR<GreaterThanQuery<T>, LessThanQuery<T>>, RangeQuery<T>>
+    >;
+
+type TextQuery = { $text?: string };
 
 type Pagination = {
   $limit?: number;
   $skip?: number;
 };
 
-type FilterObject<Model extends AbstractModel> = Pagination &
-  {
-    [Property in keyof NonFunctionProperties<Model>]+?: Query<Model[Property]>;
-  };
-
-interface IndexPreference<Model> {
-  readonly INDICES_PREFERENCE_ORDER: {
-    field: keyof NonFunctionProperties<Model>;
-    index: string;
-  }[];
-}
-
-type SelectedIndex<Model> = {
-  field: keyof NonFunctionProperties<Model>;
-  index: string;
-  query: Query<Model[keyof NonFunctionProperties<Model>]>;
+type ComparableQuery<Model> = {
+  [K in Path<Model>]?: Query<PathValue<Model, K>>;
 };
 
-type ModelClass<Model extends AbstractModel> = Class<Model> &
-  IndexPreference<Model>;
+type FilterObject<Model> = ComparableQuery<Model> & TextQuery & Pagination;
 
-class NonIndexedFilters<Model extends AbstractModel> {
+// type SelectedIndex<
+//   Model,
+//   Field extends Path<Model> | "$text" = Path<Model> | "$text"
+// > = {
+//   field: Field;
+//   index: string;
+//   query: Field extends Path<Model> ? Query<PathValue<Model, Field>> : string;
+// };
+
+class NonIndexedFilters<Model> {
   private readonly filter: FilterObject<Model>;
   private limit: number;
   private skip: number;
@@ -58,33 +68,38 @@ class NonIndexedFilters<Model extends AbstractModel> {
 
   public match(object: Model): boolean {
     let match = true;
-    for (const [field, query] of Object.entries(this.filter)) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+    for (const entry of Object.entries(this.filter)) {
+      const field = entry[0] as NonFunctionKeys<Model>;
+      const query = (typeof entry[1] !== "object"
+        ? { $eq: entry[1] }
+        : entry[1]) as any;
+
       if (query.hasOwnProperty("$eq")) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         if (object[field] === query["$eq"]) {
           match = false;
           break;
         }
       }
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       if (query.hasOwnProperty("$lte")) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         if (object[field] > query["$lte"]) {
           match = false;
           break;
         }
       }
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      if (query.hasOwnProperty("$lt")) {
+        if (object[field] >= query["$lt"]) {
+          match = false;
+          break;
+        }
+      }
       if (query.hasOwnProperty("$gte")) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         if (object[field] < query["$gte"]) {
+          match = false;
+          break;
+        }
+      }
+      if (query.hasOwnProperty("$gt")) {
+        if (object[field] <= query["$gt"]) {
           match = false;
           break;
         }
@@ -136,7 +151,7 @@ class Datastore<Model extends AbstractModel> {
           selectedIndex = {
             ...index,
             query: filters[index.field],
-          } as SelectedIndex<Model>;
+          };
           delete filters[index.field];
         }
       }
@@ -212,7 +227,7 @@ class Datastore<Model extends AbstractModel> {
   }
 
   private openCursor(
-    selectedIndex: SelectedIndex<Model> | undefined
+    selectedIndex: { index: string; query: any } | undefined
   ): IDBRequest {
     const objectStore = (this.db as IDBDatabase)
       .transaction(this.objectStoreName, "readonly")
@@ -226,7 +241,10 @@ class Datastore<Model extends AbstractModel> {
     }
   }
 
-  private getIndexRange(selectedIndex: SelectedIndex<Model>): IDBKeyRange {
+  private getIndexRange(selectedIndex: {
+    index: string;
+    query: any;
+  }): IDBKeyRange {
     const key = Object.keys(selectedIndex.query).sort().join("");
     return keyRangeMapping[key](selectedIndex.query);
   }
@@ -244,6 +262,7 @@ const keyRangeMapping: Record<string, (query: any) => IDBKeyRange> = {
   $gte$lt: (query: any) =>
     IDBKeyRange.bound(query.$gte, query.$lt, false, true),
   $eq: (query: any) => IDBKeyRange.only(query.$eq),
+  "": (query: any) => IDBKeyRange.only(query.$eq),
 };
 
 export default Datastore;
