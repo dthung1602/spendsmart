@@ -24,3 +24,7 @@ export { default as Notification } from "./Notification";
 export { notify } from "./Notification";
 export type { NotificationType } from "./Notification";
 export { default as WorkInProgress } from "./WorkInProgress";
+export { default as Affix } from "./Affix";
+export type { AffixProps, AffixType } from "./Affix";
+export { default as ButtonSelect } from "./ButtonSelect";
+export type { ButtonSelectProps } from "./ButtonSelect";

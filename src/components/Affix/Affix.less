@@ -1,0 +1,37 @@
+@import "../../assets/styles/global";
+@import "../../assets/styles/theme";
+
+.affix {
+  position: sticky;
+  z-index: 500;
+
+  &.primary {
+    background: darken(@color-primary, 10%);
+    color: @color-default;
+  }
+
+  &.error {
+    background: @color-error;
+    color: @color-default;
+  }
+
+  &.warning {
+    background: @color-warning;
+    color: @color-default;
+  }
+
+  &.info {
+    background: @color-info;
+    color: @color-default;
+  }
+
+  &.success {
+    background: @color-success;
+    color: @color-default;
+  }
+
+  &.default {
+    background: @color-default;
+    color: @color-primary;
+  }
+}

@@ -24,6 +24,13 @@
     "new-transaction-modal": {
       "title": "new transaction",
       "added": "transaction added"
+    },
+    "currency-settings": {
+      "currency": "currency",
+      "symbol": "symbol",
+      "placement": "placement",
+      "after": "after",
+      "before": "before"
     }
   },
   "default-categories": {

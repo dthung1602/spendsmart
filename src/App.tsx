@@ -1,10 +1,15 @@
 import React, { lazy, Suspense, useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 
 import { GlobalContextProvider } from "./GlobalContext";
 import { initDB, localStorage } from "./database";
 import { ErrorBoundary, FullScreenLoading, notify } from "./components";
-import Navbar from "./parts/Navbar";
+import { Navbar } from "./parts";
 import {
   ROUTE_DASHBOARD,
   ROUTE_HOME,
@@ -49,7 +54,9 @@ function App(): JSX.Element {
             {introTourTaken ? (
               <>
                 <Switch>
-                  <Route exact path={ROUTE_HOME} component={DashboardPage} />
+                  <Route exact path={ROUTE_HOME}>
+                    <Redirect to={ROUTE_DASHBOARD} />
+                  </Route>
                   <Route
                     path={ROUTE_DASHBOARD}
                     exact

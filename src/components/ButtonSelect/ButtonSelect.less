@@ -1,0 +1,18 @@
+@import "../../assets/styles/global";
+@import "../../assets/styles/buttons";
+
+.button-select {
+  &>*:first-child {
+    border-bottom-left-radius: @border-radius-lightly-round;
+    border-top-left-radius: $border-bottom-left-radius;
+  }
+
+  &>*:last-child {
+    border-bottom-right-radius: @border-radius-lightly-round;
+    border-top-right-radius: $border-bottom-right-radius;
+  }
+
+  &>*.selected {
+    filter: brightness(1.1);
+  }
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import type { MouseEventHandler } from "react";
+import CSS from "csstype";
 
 type Nullable<T> = T | null;
 type Optional<T> = T | undefined | null;
@@ -18,7 +19,7 @@ type Language = "en" | "vi";
 
 interface BasicJSXProp {
   className?: string;
-  style?: { [key: string]: string | number };
+  style?: CSS.Properties;
   onClick?: MouseEventHandler;
 }
 

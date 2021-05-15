@@ -1,7 +1,7 @@
 import React from "react";
 
-import "./Switch.less";
 import { BasicJSXProp } from "../../utils/types";
+import "./Switch.less";
 
 interface SwitchProps extends BasicJSXProp {
   checked: boolean;

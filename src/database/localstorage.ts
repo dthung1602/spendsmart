@@ -1,5 +1,7 @@
 import { Language } from "../utils/types";
 
+type CurrencyPlacement = "before" | "after";
+
 class Localstorage {
   public static get lastMigratedVersion(): number {
     return Localstorage.getInt("dbLastMigratedVersion", 0);
@@ -25,6 +27,25 @@ class Localstorage {
 
   public static set introTourTaken(value: boolean) {
     window.localStorage.setItem("introTourTaken", value.toString());
+  }
+
+  public static get currencySymbol(): string {
+    return Localstorage.getString("currencySymbol", "$");
+  }
+
+  public static set currencySymbol(value: string) {
+    window.localStorage.setItem("currencySymbol", value);
+  }
+
+  public static get currencyPlacement(): CurrencyPlacement {
+    return Localstorage.getString(
+      "currencyPlacement",
+      "before"
+    ) as CurrencyPlacement;
+  }
+
+  public static set currencyPlacement(value: CurrencyPlacement) {
+    window.localStorage.setItem("currencyPlacement", value);
   }
 
   private static getInt(key: string, fallback = 0): number {

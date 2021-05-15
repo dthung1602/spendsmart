@@ -24,6 +24,13 @@
     "new-transaction-modal": {
       "title": "tạo mới",
       "added": "đã tạo"
+    },
+    "currency-settings": {
+      "currency": "tiền tệ",
+      "symbol": "ký hiệu",
+      "placement": "vị trí",
+      "after": "sau",
+      "before": "trước"
     }
   },
   "default-categories": {
