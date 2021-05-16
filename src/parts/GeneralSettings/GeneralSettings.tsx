@@ -30,7 +30,11 @@ function GeneralSettings(): JSX.Element {
 
   return (
     <>
-      <Affix offsetTop={0} type="primary" className="padding-wide">
+      <Affix
+        offsetTop={0}
+        type="primary"
+        className="padding-wide b-margin-wide"
+      >
         <span className="sub-title">{t("parts.general-settings.general")}</span>
       </Affix>
       <div className="setting-row v-padding-wide h-padding-huge">

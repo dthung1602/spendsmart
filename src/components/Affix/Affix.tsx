@@ -1,7 +1,7 @@
 import React from "react";
 
-import "./Affix.less";
 import { BasicJSXPropWithChildren } from "../../utils/types";
+import "./Affix.less";
 
 type AffixType =
   | "primary"

@@ -24,7 +24,11 @@ function CategorySettings(): JSX.Element {
 
   return (
     <>
-      <Affix offsetTop={0} type="primary" className="padding-wide">
+      <Affix
+        offsetTop={0}
+        type="primary"
+        className="padding-wide v-margin-wide"
+      >
         <span className="sub-title">
           {t("parts.category-settings.category")}
         </span>
