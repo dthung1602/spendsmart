@@ -17,7 +17,7 @@ function IntroTour({ onFinishIntroTour }: IntroTourProps): JSX.Element {
 
   useEffect(() => {
     if (step === "done") onFinishIntroTour();
-  }, [step]);
+  }, [step, onFinishIntroTour]);
 
   const click = (language: Language) => {
     setLanguage(language);

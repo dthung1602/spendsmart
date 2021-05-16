@@ -25,10 +25,11 @@
       "title": "new transaction",
       "added": "transaction added"
     },
-    "currency-settings": {
-      "currency": "currency",
-      "symbol": "symbol",
-      "placement": "placement",
+    "general-settings": {
+      "general": "general",
+      "language": "language",
+      "currency-symbol": "currency symbol",
+      "currency-placement": "currency placement",
       "after": "after",
       "before": "before"
     }

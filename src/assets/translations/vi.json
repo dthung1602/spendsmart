@@ -25,10 +25,11 @@
       "title": "tạo mới",
       "added": "đã tạo"
     },
-    "currency-settings": {
-      "currency": "tiền tệ",
-      "symbol": "ký hiệu",
-      "placement": "vị trí",
+    "general-settings": {
+      "general": "tổng quát",
+      "language": "ngôn ngữ",
+      "currency-symbol": "ký hiệu tiền tệ",
+      "currency-placement": "vị trí ký hiệu",
       "after": "sau",
       "before": "trước"
     }

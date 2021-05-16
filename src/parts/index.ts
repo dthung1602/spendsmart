@@ -10,5 +10,5 @@ export type {
   TransactionIconName,
 } from "./TransactionList";
 export { default as DashboardGraphs } from "./DashboardGraphs";
-export { default as CurrencySettings } from "./CurrencySettings";
-export type { CurrencySettingsProps } from "./CurrencySettings";
+export { default as GeneralSettings } from "./GeneralSettings";
+export type { GeneralSettingsProps } from "./GeneralSettings";

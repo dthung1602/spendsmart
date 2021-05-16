@@ -7,6 +7,7 @@ import vi from "../../assets/translations/vi.json";
 
 function useTranslation(): {
   t: (keys: string) => string;
+  language: "en" | "vi";
   setLanguage: (lang: Language) => void;
 } {
   const { language, setLanguage } = useContext(GlobalContext);
@@ -24,7 +25,7 @@ function useTranslation(): {
     return typeof translated === "string" ? translated : keys;
   }
 
-  return { t, setLanguage };
+  return { t, language, setLanguage };
 }
 
 export default useTranslation;
