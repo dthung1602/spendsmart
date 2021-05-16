@@ -32,6 +32,10 @@
       "currency-placement": "currency placement",
       "after": "after",
       "before": "before"
+    },
+    "category-settings": {
+      "category": "category",
+      "add": "add"
     }
   },
   "default-categories": {

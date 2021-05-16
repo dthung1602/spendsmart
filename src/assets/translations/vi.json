@@ -32,6 +32,10 @@
       "currency-placement": "vị trí ký hiệu",
       "after": "sau",
       "before": "trước"
+    },
+    "category-settings": {
+      "category": "danh mục",
+      "add": "thêm"
     }
   },
   "default-categories": {

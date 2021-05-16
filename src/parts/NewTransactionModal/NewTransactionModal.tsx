@@ -130,7 +130,7 @@ function NewTransactionModal({
     >
       <div className="new-transaction">
         <label>{t("common.price")}</label>
-        <input type="number" ref={priceInputRef} />
+        <input type="number" className="background" ref={priceInputRef} />
         <label>{t("common.category")}</label>
         <VerticalScrollSelect
           className="cat-input"

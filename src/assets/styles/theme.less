@@ -8,4 +8,7 @@
 @color-success: #94c9a9;
 @color-default: #e9e9e9;
 
-@colors: primary, background, error, warning, info, success;
+@colors-names:  primary,                      background,         error,        warning,        info,                     success;
+@colors:        @color-primary,               @color-background,  @color-error, @color-warning, @color-info,              @color-success;
+@colors-text:   white,                        black,              white,        white,          white,                    white;
+@colors-border: lighten(@color-primary, 1.1), @color-warning,     red,          orange,         darken(@color-info, 1.2), green;

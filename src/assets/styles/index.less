@@ -3,37 +3,13 @@
 @import "./typography";
 @import "./global";
 @import "./buttons";
+@import "./input";
 
 body {
   margin: 0;
   font-family: "Raleway", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-input, textarea {
-  font-size: 1rem;
-  padding: @space-medium @space-wide;
-  border-radius: @border-radius-lightly-round;
-  font-family: "Raleway", sans-serif;
-  background: lighten(@color-background, 3%);
-  border: 1px solid lighten(@color-background, 6%);
-  max-width: 12rem;
-}
-
-input:focus, textarea:focus {
-  background: lighten(@color-background, 6%);
-  border-color: @color-warning;
-}
-
-input[type="checkbox"] {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-input.short {
-  max-width: 2rem;
-  text-align: center;
 }
 
 .disable-scroll {

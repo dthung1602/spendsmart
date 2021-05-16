@@ -1,3 +1,2 @@
-import GeneralSettings, { GeneralSettingsProps } from "./GeneralSettings";
+import GeneralSettings from "./GeneralSettings";
 export default GeneralSettings;
-export type { GeneralSettingsProps };

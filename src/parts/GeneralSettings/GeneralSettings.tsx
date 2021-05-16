@@ -7,11 +7,6 @@ import "./GeneralSettings.less";
 
 type CurrencyPlacement = "before" | "after";
 
-interface GeneralSettingsProps {
-  open: boolean;
-  onClose: () => void;
-}
-
 function GeneralSettings(): JSX.Element {
   const { t, language, setLanguage } = useTranslation();
   const [placement, setPlacement] = useState<CurrencyPlacement>(
@@ -41,7 +36,7 @@ function GeneralSettings(): JSX.Element {
       <div className="setting-row v-padding-wide h-padding-huge">
         <div>{t("parts.general-settings.language")}</div>
         <ButtonSelect
-          type="success"
+          type="primary"
           options={[
             {
               displayText: "en",
@@ -58,12 +53,12 @@ function GeneralSettings(): JSX.Element {
       </div>
       <div className="setting-row v-padding-wide h-padding-huge">
         <div>{t("parts.general-settings.currency-symbol")}</div>
-        <input className="short" ref={symbolRef} onBlur={setSymbol} />
+        <input className="short primary" ref={symbolRef} onBlur={setSymbol} />
       </div>
       <div className="setting-row v-padding-wide h-padding-huge">
         <div>{t("parts.general-settings.currency-placement")}</div>
         <ButtonSelect
-          type="success"
+          type="primary"
           options={[
             {
               displayText: t("parts.general-settings.before"),
@@ -83,4 +78,3 @@ function GeneralSettings(): JSX.Element {
 }
 
 export default GeneralSettings;
-export type { GeneralSettingsProps };

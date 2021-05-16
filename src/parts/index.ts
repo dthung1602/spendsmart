@@ -11,4 +11,4 @@ export type {
 } from "./TransactionList";
 export { default as DashboardGraphs } from "./DashboardGraphs";
 export { default as GeneralSettings } from "./GeneralSettings";
-export type { GeneralSettingsProps } from "./GeneralSettings";
+export { default as CategorySettings } from "./CategorySettings";
