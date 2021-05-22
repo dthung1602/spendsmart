@@ -9,18 +9,17 @@ import {
   Accordion,
   Modal,
   ModalButton,
+  notify,
   Switch,
   VerticalScrollSelect,
-  VerticalScrollSelectOptionValue,
-  notify,
 } from "../../components";
 import { publish } from "../../pubsub";
 import { useTranslation } from "../../utils/hooks";
 import { categoriesToSelectOptions } from "../../utils";
 import {
   Category,
-  Transaction,
   categoryDataStore,
+  Transaction,
   transactionDataStore,
 } from "../../database";
 import "./NewTransactionModal.less";
@@ -35,18 +34,18 @@ function NewTransactionModal({
   onClose,
 }: NewTransactionModalProps): JSX.Element {
   const { t } = useTranslation();
-  const [expand, setExpand] = useState<boolean>(false);
-  const categoriesRef = useRef<Category[]>([]);
-  const [catOptions, setCatOptions] = useState<
-    VerticalScrollSelectOptionValue<string>[]
-  >([]);
-
-  const [category, setCategory] = useState<string>("");
-  const [isUnexpected, setIsUnexpected] = useState<boolean>(false);
-
   const priceInputRef = useRef<HTMLInputElement>(null);
-  const spendDateInputRef = useRef<HTMLInputElement>(null);
-  const noteTextAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  const [expand, setExpand] = useState<boolean>(false);
+  const [allCategories, setAllCategories] = useState<Category[]>([]);
+
+  const [price, setPrice] = useState<number>(0);
+  const [category, setCategory] = useState<string>("");
+  const [spendDatetime, setSpendDatetime] = useState<string>("");
+  const [isUnexpected, setIsUnexpected] = useState<boolean>(false);
+  const [note, setNote] = useState<string>("");
+
+  const catOptions = categoriesToSelectOptions(allCategories);
 
   useEffect(() => {
     if (open) {
@@ -56,19 +55,18 @@ function NewTransactionModal({
 
   useEffect(() => {
     categoryDataStore.findAll().then((cats) => {
-      const options = categoriesToSelectOptions(cats);
-      setCatOptions(options);
-      setCategory(options[0].value);
-      categoriesRef.current = cats;
+      setAllCategories(cats);
+      setCategory(cats[0].title);
     });
   }, []);
 
   const clearAllInputs = () => {
+    setPrice(0);
+    setCategory("");
     setExpand(false);
+    setSpendDatetime("");
     setIsUnexpected(false);
-    [priceInputRef, spendDateInputRef, noteTextAreaRef].forEach((r) => {
-      if (r.current) r.current.value = "";
-    });
+    setNote("");
   };
 
   const close = () => {
@@ -77,23 +75,23 @@ function NewTransactionModal({
   };
 
   const add = () => {
-    const leafCategory = categoriesRef.current.find(
+    const leafCategory = allCategories.find(
       (cat) => cat.title === category
     ) as Category;
-    const parentCategory = categoriesRef.current.find(
+    const parentCategory = allCategories.find(
       (cat) => cat.title === leafCategory.parentTitle
     );
     const categories = [leafCategory];
     if (parentCategory) {
       categories.push(parentCategory);
     }
-    const spendDatetimeStr = spendDateInputRef.current?.value;
+
     const data = {
       categories,
       isUnexpected,
-      spendDatetime: spendDatetimeStr ? new Date(spendDatetimeStr) : undefined,
-      note: noteTextAreaRef.current?.value as string,
-      price: parseFloat(priceInputRef.current?.value as string),
+      spendDatetime: spendDatetime ? new Date(spendDatetime) : undefined,
+      note,
+      price,
     };
     const transaction = new Transaction(data);
     transactionDataStore
@@ -130,7 +128,18 @@ function NewTransactionModal({
     >
       <div className="new-transaction">
         <label>{t("common.price")}</label>
-        <input type="number" className="background" ref={priceInputRef} />
+        <input
+          type="number"
+          className="background"
+          ref={priceInputRef}
+          value={price}
+          onChange={(event) => {
+            const newPrice = parseFloat(event.target.value);
+            if (!isNaN(newPrice) || event.target.value === "") {
+              setPrice(newPrice);
+            }
+          }}
+        />
         <label>{t("common.category")}</label>
         <VerticalScrollSelect
           className="cat-input"
@@ -148,9 +157,18 @@ function NewTransactionModal({
             style={{ justifySelf: "end" }}
           />
           <label>{t("common.datetime")}</label>
-          <input type="datetime-local" ref={spendDateInputRef} />
+          <input
+            className="background"
+            type="datetime-local"
+            value={spendDatetime}
+            onChange={(event) => setSpendDatetime(event.target.value)}
+          />
           <label>{t("common.note")}</label>
-          <textarea ref={noteTextAreaRef} />
+          <textarea
+            className="background"
+            value={note}
+            onChange={(event) => setNote(event.target.value)}
+          />
         </div>
       </Accordion>
     </Modal>
