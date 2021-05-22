@@ -36,6 +36,15 @@
     "category-settings": {
       "category": "danh mục",
       "add": "thêm"
+    },
+    "category-modal": {
+      "title": {
+        "create": "danh mục mới",
+        "update": "cập nhật danh mục"
+      },
+      "title-label": "tên",
+      "parent-title": "tên danh mục gốc",
+      "icon": "biểu tượng"
     }
   },
   "default-categories": {

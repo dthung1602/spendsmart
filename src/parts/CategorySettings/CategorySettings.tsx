@@ -1,26 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import CategoryRow from "./CategoryRow";
-import { Affix, notify } from "../../components";
+import CategoryModal from "./CategoryModal";
+import { Affix } from "../../components";
 import { useTranslation } from "../../utils/hooks";
-import { sortCategory } from "../../utils";
-import { Category, categoryDataStore } from "../../database";
+import { Category } from "../../database";
+import { GlobalContext } from "../../GlobalContext";
 import "./CategorySettings.less";
 
 function CategorySettings(): JSX.Element {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [openedCategory, setOpenedCategory] = useState<Category | undefined>();
+  const { overlayOpen, setOverlayOpen, allCategories } = useContext(
+    GlobalContext
+  );
   const { t } = useTranslation();
 
-  useEffect(() => {
-    categoryDataStore
-      .findAll()
-      .then((cats) => {
-        setCategories(sortCategory(cats));
-      })
-      .catch((e) => notify(String(e), "error"));
-  });
+  const openModal = (cat?: Category): void => {
+    setOverlayOpen(true);
+    cat =
+      cat ||
+      new Category({
+        title: "",
+        icon: "",
+      });
+    setOpenedCategory(cat);
+  };
+
+  const closeModal = () => {
+    setOverlayOpen(false);
+    setOpenedCategory(undefined);
+  };
 
   return (
     <>
@@ -33,16 +44,27 @@ function CategorySettings(): JSX.Element {
           {t("parts.category-settings.category")}
         </span>
       </Affix>
-      <div className="setting-row v-padding-wide h-padding-huge">
+      <div className="setting-row h-padding-huge">
         <div />
-        <div className="btn-success rounded">
+        <div className="btn-success rounded" onClick={() => openModal()}>
           {t("parts.category-settings.add")} &nbsp;
           <FontAwesomeIcon icon={faPlus} />
         </div>
       </div>
-      {categories.map((cat) => (
-        <CategoryRow category={cat} key={cat.title} />
-      ))}
+      <div className="v-padding-wide">
+        {allCategories.map((cat) => (
+          <CategoryRow
+            category={cat}
+            key={cat.title}
+            onClick={() => openModal(cat)}
+          />
+        ))}
+      </div>
+      <CategoryModal
+        open={overlayOpen}
+        category={openedCategory}
+        onClose={closeModal}
+      />
     </>
   );
 }

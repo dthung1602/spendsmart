@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   faAngleDoubleDown,
   faAngleDoubleUp,
@@ -15,13 +15,8 @@ import {
 } from "../../components";
 import { publish } from "../../pubsub";
 import { useTranslation } from "../../utils/hooks";
-import { categoriesToSelectOptions } from "../../utils";
-import {
-  Category,
-  categoryDataStore,
-  Transaction,
-  transactionDataStore,
-} from "../../database";
+import { GlobalContext } from "../../GlobalContext";
+import { Category, Transaction, transactionDataStore } from "../../database";
 import "./NewTransactionModal.less";
 
 interface NewTransactionModalProps {
@@ -34,18 +29,15 @@ function NewTransactionModal({
   onClose,
 }: NewTransactionModalProps): JSX.Element {
   const { t } = useTranslation();
+  const { allCategories, categoryOptions } = useContext(GlobalContext);
   const priceInputRef = useRef<HTMLInputElement>(null);
 
   const [expand, setExpand] = useState<boolean>(false);
-  const [allCategories, setAllCategories] = useState<Category[]>([]);
-
   const [price, setPrice] = useState<number>(0);
   const [category, setCategory] = useState<string>("");
   const [spendDatetime, setSpendDatetime] = useState<string>("");
   const [isUnexpected, setIsUnexpected] = useState<boolean>(false);
   const [note, setNote] = useState<string>("");
-
-  const catOptions = categoriesToSelectOptions(allCategories);
 
   useEffect(() => {
     if (open) {
@@ -54,11 +46,8 @@ function NewTransactionModal({
   }, [open]);
 
   useEffect(() => {
-    categoryDataStore.findAll().then((cats) => {
-      setAllCategories(cats);
-      setCategory(cats[0].title);
-    });
-  }, []);
+    setCategory(allCategories[0].title);
+  }, [allCategories]);
 
   const clearAllInputs = () => {
     setPrice(0);
@@ -126,7 +115,7 @@ function NewTransactionModal({
       onClose={close}
       buttons={buttons}
     >
-      <div className="new-transaction">
+      <div className="transaction-modal input-modal">
         <label>{t("common.price")}</label>
         <input
           type="number"
@@ -144,12 +133,12 @@ function NewTransactionModal({
         <VerticalScrollSelect
           className="cat-input"
           onSelect={(value) => setCategory(value)}
-          options={catOptions}
+          options={categoryOptions}
         />
       </div>
 
       <Accordion expand={expand}>
-        <div className="new-transaction new-transaction-extra">
+        <div className="transaction-modal input-modal">
           <label>{t("common.unexpected-spending")}</label>
           <Switch
             checked={isUnexpected}

@@ -35,7 +35,7 @@ class Target extends AbstractModel {
     public status: Status,
     public createdAt: Date
   ) {
-    super();
+    super(true);
   }
 
   public getKey(): number {

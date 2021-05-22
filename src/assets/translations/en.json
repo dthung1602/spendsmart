@@ -36,6 +36,15 @@
     "category-settings": {
       "category": "category",
       "add": "add"
+    },
+    "category-modal": {
+      "title": {
+        "create": "new category",
+        "update": "update category"
+      },
+      "title-label": "title",
+      "parent-title": "parent",
+      "icon": "icon"
     }
   },
   "default-categories": {

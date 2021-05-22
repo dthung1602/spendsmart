@@ -15,7 +15,7 @@ class Category extends AbstractModel {
   public parentTitle: Optional<string> = undefined;
 
   constructor(data: TransactionConstructorArgument) {
-    super();
+    super(!data.title);
     this.title = data.title;
     this.icon = data.icon;
     this.parentTitle = data.parentTitle;

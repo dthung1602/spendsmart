@@ -1,36 +1,36 @@
 import { DB_VERSION } from "../utils/constants";
-import { IDBResultEvent, Nullable } from "../utils/types";
+import { IDBResultEvent } from "../utils/types";
 import { DBError } from "../utils/errors";
 import migrate from "./migrations";
 import localStorage from "./localstorage";
 import Datastore from "./datastore";
 import { Category, Transaction } from "./models";
 
-let db: Nullable<IDBDatabase> = null;
+let resolveDB: (db: IDBDatabase) => void;
+let rejectDB: (e: Error) => void;
+const dbPromise = new Promise<IDBDatabase>((resolve, reject) => {
+  resolveDB = resolve;
+  rejectDB = reject;
+});
 
-function initDB(): Promise<void> {
-  if (db) {
-    return Promise.resolve();
-  }
+function initDB(): Promise<IDBDatabase> {
+  const request = window.indexedDB.open("SpendSmartDB", DB_VERSION);
 
-  return new Promise((resolve, reject) => {
-    const request = window.indexedDB.open("SpendSmartDB", DB_VERSION);
+  request.onerror = function (event: Event) {
+    rejectDB(new DBError(event));
+  };
 
-    request.onerror = function (event: Event) {
-      reject(new DBError(event));
-    };
+  request.onsuccess = (event) => {
+    resolveDB((event as IDBResultEvent<IDBDatabase>).target.result);
+  };
 
-    request.onsuccess = (event) => {
-      db = (event as IDBResultEvent<IDBDatabase>).target.result;
-      resolve();
-    };
+  request.onupgradeneeded = migrate;
 
-    request.onupgradeneeded = migrate;
-  });
+  return dbPromise;
 }
 
-function getDB(): Nullable<IDBDatabase> {
-  return db;
+function getDB(): Promise<IDBDatabase> {
+  return dbPromise;
 }
 
 const categoryDataStore = new Datastore(Category, "Categories", getDB);

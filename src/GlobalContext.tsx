@@ -2,7 +2,9 @@ import React, { createContext, useState, useEffect } from "react";
 
 import type { Language } from "./utils/types";
 
-import { localStorage } from "./database";
+import { Category, categoryDataStore, localStorage } from "./database";
+import { categoriesToSelectOptions } from "./utils";
+import type { VerticalScrollSelectOptionValue } from "./components";
 
 interface GlobalContextProps {
   children: JSX.Element;
@@ -14,6 +16,9 @@ const defaultContextValue = {
   setLanguage: (language: Language) => {},
   overlayOpen: false as boolean,
   setOverlayOpen: (open: boolean) => {},
+  allCategories: [] as Category[],
+  setAllCategories: (categories: Category[]) => {},
+  categoryOptions: [] as VerticalScrollSelectOptionValue<string>[],
 } as const;
 /* eslint-enable @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars */
 
@@ -26,16 +31,30 @@ function GlobalContextProvider(props: GlobalContextProps): JSX.Element {
   const [overlayOpen, setOverlayOpen] = useState<boolean>(
     defaultContextValue.overlayOpen
   );
+  const [allCategories, setAllCategories] = useState<Category[]>(
+    defaultContextValue.allCategories
+  );
+
+  const categoryOptions = categoriesToSelectOptions(allCategories);
 
   useEffect(() => {
     localStorage.language = language;
   }, [language]);
+
+  useEffect(() => {
+    categoryDataStore.findAll().then((cats) => {
+      setAllCategories(cats);
+    });
+  }, []);
 
   const value = {
     language,
     setLanguage,
     overlayOpen,
     setOverlayOpen,
+    allCategories,
+    setAllCategories,
+    categoryOptions,
   };
 
   return (

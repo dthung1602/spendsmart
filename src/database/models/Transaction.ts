@@ -68,7 +68,7 @@ class Transaction extends AbstractModel {
   }
 
   constructor(data: TransactionConstructorArgument) {
-    super();
+    super(!data.id);
     const now = new Date();
 
     this.id = data.id || now.getTime();
