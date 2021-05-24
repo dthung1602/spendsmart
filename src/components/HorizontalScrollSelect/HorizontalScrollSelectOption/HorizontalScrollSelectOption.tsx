@@ -19,14 +19,14 @@ function HorizontalScrollSelectOption({
   style = {},
 }: HorizontalScrollSelectOptionProps): JSX.Element {
   return (
-    <span
+    <div
       className={`horizontal-scroll-select-option v-padding-medium ${className}`}
       style={style}
       onClick={onClick}
     >
       <FontAwesomeIcon className="h-padding-wide" icon={icon} size="1x" />
       {displayText ? <span>{displayText}</span> : undefined}
-    </span>
+    </div>
   );
 }
 

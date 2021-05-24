@@ -55,6 +55,10 @@ function CategoryModal({
     setIcon(category?.icon || "");
   }, [category]);
 
+  useEffect(() => {
+    titleInputRef.current?.focus();
+  }, [open]);
+
   return (
     <Modal
       title={t("parts.category-modal.title." + action)}

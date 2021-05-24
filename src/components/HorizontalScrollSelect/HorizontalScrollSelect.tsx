@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import type { HorizontalScrollSelectOptionProps } from "./HorizontalScrollSelectOption";
 import HorizontalScrollSelectOption from "./HorizontalScrollSelectOption";
@@ -21,8 +21,27 @@ function HorizontalScrollSelect<T>({
   value,
   onSelect,
 }: HorizontalScrollSelectProp<T>): JSX.Element {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [mouseLeave, setMouseLeave] = useState(false);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const selected = containerRef.current.querySelector(".selected");
+      if (selected && mouseLeave) {
+        containerRef.current.scrollLeft =
+          (selected as HTMLElement).offsetLeft -
+          containerRef.current.offsetLeft;
+      }
+    }
+  }, [value]);
+
   return (
-    <div className="horizontal-scroll-select-container padding-large">
+    <div
+      className="horizontal-scroll-select-container padding-large"
+      onMouseLeave={() => setMouseLeave(true)}
+      onMouseEnter={() => setMouseLeave(false)}
+      ref={containerRef}
+    >
       {options.map((option, idx) => (
         <HorizontalScrollSelectOption
           className={option.value === value ? "selected" : ""}
