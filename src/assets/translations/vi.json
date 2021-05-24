@@ -8,7 +8,8 @@
     "add": "thêm",
     "delete": "xoá",
     "more": "mở rộng",
-    "less": "thu gọn"
+    "less": "thu gọn",
+    "none": "trống"
   },
   "parts": {
     "page-header-highlight": {

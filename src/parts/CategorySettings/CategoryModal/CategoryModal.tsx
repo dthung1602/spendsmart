@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 
-import { Modal, VerticalScrollSelect } from "../../../components";
+import {
+  Modal,
+  VerticalScrollSelect,
+  HorizontalScrollSelect,
+} from "../../../components";
 import { useTranslation } from "../../../utils/hooks";
 import { Category } from "../../../database";
 import { GlobalContext } from "../../../GlobalContext";
@@ -30,10 +34,15 @@ function CategoryModal({
     category?.parentTitle
   );
 
+  const iconOptions = Object.entries(icons).map(([iconName, icon]) => ({
+    value: iconName,
+    icon: icon,
+  }));
+
   const categoryOptionsWithEmpty = [
     {
       icon: icons.faBan,
-      displayText: <i>- {t("common.none")} -</i>,
+      displayText: t("common.none"),
       nested: false,
       value: undefined,
     },
@@ -67,10 +76,10 @@ function CategoryModal({
           value={parentTitle}
         />
         <label>{t("parts.category-modal.icon")}</label>
-        <input
-          className="background"
+        <HorizontalScrollSelect
+          options={iconOptions}
           value={icon}
-          onChange={(event) => setIcon(event.target.value)}
+          onSelect={setIcon}
         />
       </div>
     </Modal>

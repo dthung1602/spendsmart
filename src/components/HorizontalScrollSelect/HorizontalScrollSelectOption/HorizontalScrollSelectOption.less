@@ -1,0 +1,24 @@
+@import "../../../assets/styles/global";
+
+.horizontal-scroll-select-option {
+  height: @space-large;
+  color: fade(black, 40%);
+  //background: rgba(0, 0, 0, 0.03);
+  transition: all @transition;
+  border-radius: @border-radius-lightly-round;
+
+  svg {
+    width: 1.1rem;
+  }
+
+  span {
+    text-transform: capitalize;
+  }
+
+  &.selected {
+    color: black;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.35);
+  }
+}
+

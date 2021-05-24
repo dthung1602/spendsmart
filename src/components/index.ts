@@ -28,3 +28,8 @@ export { default as Affix } from "./Affix";
 export type { AffixProps, AffixType } from "./Affix";
 export { default as ButtonSelect } from "./ButtonSelect";
 export type { ButtonSelectProps } from "./ButtonSelect";
+export { default as HorizontalScrollSelect } from "./HorizontalScrollSelect";
+export type {
+  HorizontalScrollSelectOptionProps,
+  HorizontalScrollSelectOptionValue,
+} from "./HorizontalScrollSelect";

@@ -8,7 +8,8 @@
     "add": "add",
     "delete": "delete",
     "more": "more",
-    "less": "less"
+    "less": "less",
+    "none":  "none"
   },
   "parts": {
     "page-header-highlight": {
