@@ -37,13 +37,13 @@ function PageHeaderHighLight({
       </svg>
       <div className="text-box">
         <div>
-          <div className="sub-title small">
+          <div className="sub-title small-text">
             {t("parts.page-header-highlight.this-week")}
           </div>
           <div className="total">{formatMoney(thisWeek)}</div>
         </div>
         <div>
-          <div className="sub-title small">
+          <div className="sub-title small-text">
             {t("parts.page-header-highlight.this-month")}
           </div>
           <div className="total">{formatMoney(thisMonth)}</div>

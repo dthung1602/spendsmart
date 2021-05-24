@@ -33,6 +33,7 @@ import {
   faWifi,
   faWineBottle,
   faWineGlass,
+  faBan,
 } from "@fortawesome/free-solid-svg-icons";
 
 const icons = {
@@ -70,6 +71,7 @@ const icons = {
   faUser,
   faHandHoldingHeart,
   faRandom,
+  faBan,
 };
 
 type IconName = keyof typeof icons;

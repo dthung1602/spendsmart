@@ -44,7 +44,10 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
   };
 
   return (
-    <div className="transaction-row small" onClick={() => setExpand(!expand)}>
+    <div
+      className="transaction-row small-text"
+      onClick={() => setExpand(!expand)}
+    >
       <div className={`transaction-body ${expand ? "expand" : ""}`}>
         <FontAwesomeIcon icon={icon} size="lg" className="transaction-icon" />
         <div className="transaction-category">

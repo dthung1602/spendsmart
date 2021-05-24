@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 
-import { Modal } from "../../../components";
+import { Modal, VerticalScrollSelect } from "../../../components";
 import { useTranslation } from "../../../utils/hooks";
 import { Category } from "../../../database";
 import { GlobalContext } from "../../../GlobalContext";
-import { Optional } from "../../../utils/types";
+import { icons } from "../../../utils";
 import "./CategoryModal.less";
 
 interface CategoryModalProps {
@@ -19,16 +19,26 @@ function CategoryModal({
   onClose,
 }: CategoryModalProps): JSX.Element {
   const { t } = useTranslation();
-  const { allCategories } = useContext(GlobalContext);
+  const { categoryOptions } = useContext(GlobalContext);
   const action = category?.isNew ? "create" : "update";
 
   const titleInputRef = useRef<HTMLInputElement>(null);
 
   const [title, setTitle] = useState<string>(category?.title || "");
   const [icon, setIcon] = useState<string>(category?.icon || "");
-  const [parentTitle, setParentTitle] = useState<Optional<string>>(
+  const [parentTitle, setParentTitle] = useState<string | undefined>(
     category?.parentTitle
   );
+
+  const categoryOptionsWithEmpty = [
+    {
+      icon: icons.faBan,
+      displayText: <i>- {t("common.none")} -</i>,
+      nested: false,
+      value: undefined,
+    },
+    ...categoryOptions.filter((opt) => opt.value !== title),
+  ];
 
   useEffect(() => {
     setTitle(category?.title || "");
@@ -51,10 +61,10 @@ function CategoryModal({
           onChange={(event) => setTitle(event.target.value)}
         />
         <label>{t("parts.category-modal.parent-title")}</label>
-        <input
-          className="background"
-          value={"" + parentTitle}
-          onChange={(event) => setParentTitle(event.target.value)}
+        <VerticalScrollSelect
+          options={categoryOptionsWithEmpty}
+          onSelect={setParentTitle}
+          value={parentTitle}
         />
         <label>{t("parts.category-modal.icon")}</label>
         <input

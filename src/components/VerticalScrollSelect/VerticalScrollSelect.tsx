@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import type { UIEventHandler } from "react";
 
 import { debounce } from "lodash";
@@ -15,20 +15,20 @@ interface VerticalScrollSelectOptionValue<T>
 
 interface VerticalScrollSelectProp<T> extends BasicJSXProp {
   options: VerticalScrollSelectOptionValue<T>[];
-  defaultValue?: T;
+  value: T;
   onSelect: (value: T) => void;
 }
 
 function VerticalScrollSelect<T>({
   options,
-  defaultValue,
+  value,
   onSelect,
 }: VerticalScrollSelectProp<T>): JSX.Element {
-  const defaultIdx = options.findIndex((opt) => opt.value === defaultValue);
-
-  const [selectedIdx, setSelectedIndex] = useState<number>(
-    Math.max(defaultIdx, 0)
+  const selectedIdx = Math.max(
+    options.findIndex((opt) => opt.value === value),
+    0
   );
+
   const containerRef = useRef<HTMLDivElement>(null);
 
   const onScroll: UIEventHandler<HTMLDivElement> = debounce((event) => {
@@ -38,14 +38,19 @@ function VerticalScrollSelect<T>({
 
     if (newSelectIdx != selectedIdx) {
       onSelect(options[newSelectIdx].value);
-      setSelectedIndex(newSelectIdx);
     }
-
-    event.target.scrollTo({
-      top: newSelectIdx * optionHeight,
-      behavior: "smooth",
-    });
   }, 200);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const optionHeight = containerRef.current.children[0].getBoundingClientRect()
+        .height;
+      containerRef.current.scrollTo({
+        top: selectedIdx * optionHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [selectedIdx]);
 
   return (
     <div className="vertical-scroll-select-container">
@@ -57,7 +62,7 @@ function VerticalScrollSelect<T>({
         {options.map((option, idx) => (
           <VerticalScrollSelectOption
             className={idx === selectedIdx ? "selected" : ""}
-            key={option.displayText}
+            key={idx.toString() + String(option.displayText)}
             displayText={option.displayText}
             icon={option.icon}
             nested={option.nested}

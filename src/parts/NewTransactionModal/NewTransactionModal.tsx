@@ -132,6 +132,7 @@ function NewTransactionModal({
         <label>{t("common.category")}</label>
         <VerticalScrollSelect
           className="cat-input"
+          value={category}
           onSelect={(value) => setCategory(value)}
           options={categoryOptions}
         />

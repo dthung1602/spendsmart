@@ -1,6 +1,6 @@
-import { Optional, WithRequired } from "../../utils/types";
-import AbstractModel from "./AbstractModel";
 import type { NonFunctionProperties } from "../../utils/types";
+import { WithRequired } from "../../utils/types";
+import AbstractModel from "./AbstractModel";
 
 type TransactionConstructorArgument = WithRequired<
   NonFunctionProperties<Category>,
@@ -12,7 +12,7 @@ class Category extends AbstractModel {
 
   public title: string;
   public icon: string;
-  public parentTitle: Optional<string> = undefined;
+  public parentTitle: string | undefined = undefined;
 
   constructor(data: TransactionConstructorArgument) {
     super(!data.title);

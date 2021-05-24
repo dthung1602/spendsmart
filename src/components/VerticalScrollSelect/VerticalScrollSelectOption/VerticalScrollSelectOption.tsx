@@ -8,7 +8,7 @@ import { BasicJSXProp } from "../../../utils/types";
 
 interface VerticalScrollSelectOptionProps extends BasicJSXProp {
   icon: IconProp;
-  displayText: string;
+  displayText: React.ReactNode;
   nested?: boolean;
 }
 
