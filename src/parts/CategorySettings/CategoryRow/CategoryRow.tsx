@@ -23,7 +23,7 @@ function CategoryRow({
   return (
     <div
       className={`category-row v-padding-wide h-padding-huge ${className}
-        ${category.parentTitle ? "l-margin-huge" : ""}`}
+        ${category.parentId ? "l-margin-huge" : ""}`}
       style={style}
       onClick={onClick}
     >

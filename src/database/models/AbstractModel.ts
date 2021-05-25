@@ -4,10 +4,17 @@ abstract class AbstractModel {
   public static readonly TEXT_FIELDS_INDEX_MAPPING = {};
   public static readonly COMPARABLE_FIELDS_INDEX_MAPPING = {};
 
-  protected readonly _isNew: boolean;
+  public readonly id: number;
+  private _isNew: boolean;
 
-  protected constructor(isNew: boolean) {
-    this._isNew = isNew;
+  protected constructor(id?: number) {
+    if (id === undefined) {
+      this.id = new Date().getTime();
+      this._isNew = true;
+    } else {
+      this.id = id;
+      this._isNew = false;
+    }
   }
 
   public get isNew(): boolean {
@@ -16,11 +23,11 @@ abstract class AbstractModel {
 
   public preSave(): void {}
 
-  public abstract getKey(): string | number;
+  public postSave(): void {
+    this._isNew = true;
+  }
 }
 
 export default AbstractModel;
 
 /* eslint-enable @typescript-eslint/no-empty-function */
-
-// type INDICES_PREFERENCE_ORDER

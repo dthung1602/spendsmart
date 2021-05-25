@@ -9,6 +9,5 @@ export default function (event: Event): void {
 
   migrations.slice(localStorage.lastMigratedVersion).forEach((migrate, i) => {
     migrate(db);
-    localStorage.lastMigratedVersion = i + 1;
   });
 }

@@ -6,6 +6,8 @@
     "unexpected-spending": "không thường xuyên",
     "datetime": "ngày tháng",
     "add": "thêm",
+    "create": "thêm",
+    "update": "cập nhật",
     "delete": "xoá",
     "more": "mở rộng",
     "less": "thu gọn",
@@ -45,7 +47,9 @@
       },
       "title-label": "tên",
       "parent-title": "tên danh mục gốc",
-      "icon": "biểu tượng"
+      "icon": "biểu tượng",
+      "notify-update": "cập nhật thành công",
+      "notify-create": "đã thêm thành công"
     }
   },
   "default-categories": {

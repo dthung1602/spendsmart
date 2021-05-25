@@ -17,8 +17,8 @@ const defaultContextValue = {
   overlayOpen: false as boolean,
   setOverlayOpen: (open: boolean) => {},
   allCategories: [] as Category[],
-  setAllCategories: (categories: Category[]) => {},
-  categoryOptions: [] as VerticalScrollSelectOptionValue<string>[],
+  reloadCategories: () => {},
+  categoryOptions: [] as VerticalScrollSelectOptionValue<number>[],
 } as const;
 /* eslint-enable @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars */
 
@@ -37,15 +37,17 @@ function GlobalContextProvider(props: GlobalContextProps): JSX.Element {
 
   const categoryOptions = categoriesToSelectOptions(allCategories);
 
+  const reloadCategories = () => {
+    categoryDataStore.findAll().then((cats) => {
+      setAllCategories(cats);
+    });
+  };
+
   useEffect(() => {
     localStorage.language = language;
   }, [language]);
 
-  useEffect(() => {
-    categoryDataStore.findAll().then((cats) => {
-      setAllCategories(cats);
-    });
-  }, []);
+  useEffect(reloadCategories, []);
 
   const value = {
     language,
@@ -53,7 +55,7 @@ function GlobalContextProvider(props: GlobalContextProps): JSX.Element {
     overlayOpen,
     setOverlayOpen,
     allCategories,
-    setAllCategories,
+    reloadCategories,
     categoryOptions,
   };
 

@@ -42,7 +42,7 @@ function VerticalScrollSelect<T>({
   }, 200);
 
   useEffect(() => {
-    if (containerRef.current) {
+    if (containerRef.current?.children[0]) {
       const optionHeight = containerRef.current.children[0].getBoundingClientRect()
         .height;
       containerRef.current.scrollTo({

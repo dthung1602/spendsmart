@@ -4,16 +4,18 @@ import {
   Modal,
   VerticalScrollSelect,
   HorizontalScrollSelect,
+  ModalButton,
+  notify,
 } from "../../../components";
 import { useTranslation } from "../../../utils/hooks";
-import { Category } from "../../../database";
+import { Category, categoryDataStore } from "../../../database";
 import { GlobalContext } from "../../../GlobalContext";
 import { icons } from "../../../utils";
 import "./CategoryModal.less";
 
 interface CategoryModalProps {
   open: boolean;
-  category?: Category;
+  category: Category;
   onClose: () => void;
 }
 
@@ -23,15 +25,15 @@ function CategoryModal({
   onClose,
 }: CategoryModalProps): JSX.Element {
   const { t } = useTranslation();
-  const { categoryOptions } = useContext(GlobalContext);
-  const action = category?.isNew ? "create" : "update";
+  const { categoryOptions, reloadCategories } = useContext(GlobalContext);
+  const action = category.isNew ? "create" : "update";
 
   const titleInputRef = useRef<HTMLInputElement>(null);
 
-  const [title, setTitle] = useState<string>(category?.title || "");
-  const [icon, setIcon] = useState<string>(category?.icon || "");
-  const [parentTitle, setParentTitle] = useState<string | undefined>(
-    category?.parentTitle
+  const [title, setTitle] = useState<string>(category.title || "");
+  const [icon, setIcon] = useState<string>(category.icon || "");
+  const [parentId, setParentId] = useState<number | undefined>(
+    category.parentId
   );
 
   const iconOptions = Object.entries(icons).map(([iconName, icon]) => ({
@@ -39,20 +41,50 @@ function CategoryModal({
     icon: icon,
   }));
 
-  const categoryOptionsWithEmpty = [
+  const parentCategoryOptions = [
     {
       icon: icons.faBan,
       displayText: t("common.none"),
       nested: false,
       value: undefined,
     },
-    ...categoryOptions.filter((opt) => opt.value !== title),
+    ...categoryOptions.filter(
+      // cant be parent of self; only nest 1 level
+      (opt) => opt.value !== category.id && !opt.nested
+    ),
+  ];
+
+  const close = () => {
+    reloadCategories();
+    notify(t(`parts.category-modal.notify-${action}`), "success");
+    onClose();
+  };
+
+  const buttons: ModalButton[] = [
+    {
+      displayText: t(`common.${action}`),
+      type: action === "update" ? "warning" : "success",
+      onClick: () => {
+        const cat = new Category({
+          ...(category ? category : {}),
+          title,
+          icon,
+          parentId,
+        });
+        categoryDataStore[action](cat)
+          .then(close)
+          .catch((e) => {
+            console.log(e);
+            notify(String(e), "error");
+          });
+      },
+    },
   ];
 
   useEffect(() => {
-    setTitle(category?.title || "");
-    setParentTitle(category?.parentTitle);
-    setIcon(category?.icon || "");
+    setTitle(category.title || "");
+    setParentId(category.parentId);
+    setIcon(category.icon || "");
   }, [category]);
 
   useEffect(() => {
@@ -64,6 +96,7 @@ function CategoryModal({
       title={t("parts.category-modal.title." + action)}
       open={open}
       onClose={onClose}
+      buttons={buttons}
     >
       <div className="input-modal">
         <label>{t("parts.category-modal.title-label")}</label>
@@ -75,9 +108,9 @@ function CategoryModal({
         />
         <label>{t("parts.category-modal.parent-title")}</label>
         <VerticalScrollSelect
-          options={categoryOptionsWithEmpty}
-          onSelect={setParentTitle}
-          value={parentTitle}
+          options={parentCategoryOptions}
+          onSelect={setParentId}
+          value={parentId}
         />
         <label>{t("parts.category-modal.icon")}</label>
         <HorizontalScrollSelect

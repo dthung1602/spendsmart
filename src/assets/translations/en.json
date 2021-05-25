@@ -6,6 +6,8 @@
     "unexpected-spending": "unexpected",
     "datetime": "date time",
     "add": "add",
+    "create": "create",
+    "update": "update",
     "delete": "delete",
     "more": "more",
     "less": "less",
@@ -45,7 +47,9 @@
       },
       "title-label": "title",
       "parent-title": "parent",
-      "icon": "icon"
+      "icon": "icon",
+      "notify-update": "category updated",
+      "notify-create": "category created"
     }
   },
   "default-categories": {

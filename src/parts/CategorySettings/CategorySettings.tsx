@@ -11,7 +11,12 @@ import { GlobalContext } from "../../GlobalContext";
 import "./CategorySettings.less";
 
 function CategorySettings(): JSX.Element {
-  const [openedCategory, setOpenedCategory] = useState<Category | undefined>();
+  const [openedCategory, setOpenedCategory] = useState<Category>(
+    new Category({
+      title: "",
+      icon: "faNone",
+    })
+  );
   const { overlayOpen, setOverlayOpen, allCategories } = useContext(
     GlobalContext
   );
@@ -30,7 +35,12 @@ function CategorySettings(): JSX.Element {
 
   const closeModal = () => {
     setOverlayOpen(false);
-    setOpenedCategory(undefined);
+    setOpenedCategory(
+      new Category({
+        title: "",
+        icon: "faNone",
+      })
+    );
   };
 
   return (

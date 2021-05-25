@@ -11,7 +11,7 @@ type CategoryInit = XOR<
   { categories: Category[] },
   {
     categoriesTitles: Category["title"][];
-    categoriesParentTitles: Category["parentTitle"][];
+    categoriesParentIds: Category["parentId"][];
     categoriesIcons: Category["icon"][];
   }
 >;
@@ -42,7 +42,6 @@ class Transaction extends AbstractModel {
     },
   ];
 
-  public readonly id: number;
   public readonly createdAt: Date;
 
   public price: number;
@@ -53,7 +52,7 @@ class Transaction extends AbstractModel {
 
   private _categories: Category[] = [];
   public categoriesTitles: Category["title"][] = [];
-  public categoriesParentTitles: Category["parentTitle"][] = [];
+  public categoriesParentIds: Category["parentId"][] = [];
   public categoriesIcons: Category["icon"][] = [];
 
   public get categories(): Category[] {
@@ -63,15 +62,15 @@ class Transaction extends AbstractModel {
   public set categories(categories: Category[]) {
     this._categories = categories;
     this.categoriesTitles = this.categories.map((cat) => cat.title);
-    this.categoriesParentTitles = this.categories.map((cat) => cat.parentTitle);
+    this.categoriesParentIds = this.categories.map((cat) => cat.parentId);
     this.categoriesIcons = this.categories.map((cat) => cat.icon);
   }
 
   constructor(data: TransactionConstructorArgument) {
-    super(!data.id);
+    super(data.id);
+    console.log(data);
     const now = new Date();
 
-    this.id = data.id || now.getTime();
     this.createdAt = data.createdAt || now;
 
     this.price = data.price;
@@ -83,11 +82,16 @@ class Transaction extends AbstractModel {
     if (data.categories) {
       this.categories = data.categories;
     } else {
-      this.categories = Array.from(Array(8).keys()).map(
-        (i) =>
+      console.log({
+        t: data.categoriesTitles,
+        p: data.categoriesParentIds,
+        i: data.categoriesIcons,
+      });
+      this.categories = data.categoriesTitles.map(
+        (title, i) =>
           new Category({
-            title: data.categoriesTitles[i],
-            parentTitle: data.categoriesParentTitles[i],
+            title,
+            parentId: data.categoriesParentIds[i],
             icon: data.categoriesIcons[i],
           })
       );

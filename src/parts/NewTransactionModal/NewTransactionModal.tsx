@@ -33,8 +33,8 @@ function NewTransactionModal({
   const priceInputRef = useRef<HTMLInputElement>(null);
 
   const [expand, setExpand] = useState<boolean>(false);
-  const [price, setPrice] = useState<number>(0);
-  const [category, setCategory] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
+  const [category, setCategory] = useState<number>(-1);
   const [spendDatetime, setSpendDatetime] = useState<string>("");
   const [isUnexpected, setIsUnexpected] = useState<boolean>(false);
   const [note, setNote] = useState<string>("");
@@ -46,12 +46,12 @@ function NewTransactionModal({
   }, [open]);
 
   useEffect(() => {
-    setCategory(allCategories[0].title);
+    setCategory(allCategories[0]?.id || -1);
   }, [allCategories]);
 
   const clearAllInputs = () => {
-    setPrice(0);
-    setCategory("");
+    setPrice("");
+    setCategory(-1);
     setExpand(false);
     setSpendDatetime("");
     setIsUnexpected(false);
@@ -65,10 +65,10 @@ function NewTransactionModal({
 
   const add = () => {
     const leafCategory = allCategories.find(
-      (cat) => cat.title === category
+      (cat) => cat.id === category
     ) as Category;
     const parentCategory = allCategories.find(
-      (cat) => cat.title === leafCategory.parentTitle
+      (cat) => cat.id === leafCategory.parentId
     );
     const categories = [leafCategory];
     if (parentCategory) {
@@ -80,7 +80,7 @@ function NewTransactionModal({
       isUnexpected,
       spendDatetime: spendDatetime ? new Date(spendDatetime) : undefined,
       note,
-      price,
+      price: parseFloat(price),
     };
     const transaction = new Transaction(data);
     transactionDataStore
@@ -123,10 +123,8 @@ function NewTransactionModal({
           ref={priceInputRef}
           value={price}
           onChange={(event) => {
-            const newPrice = parseFloat(event.target.value);
-            if (!isNaN(newPrice) || event.target.value === "") {
-              setPrice(newPrice);
-            }
+            const newPrice = event.target.value.replace(/[^0-9.-]/g, "");
+            setPrice(newPrice);
           }}
         />
         <label>{t("common.category")}</label>

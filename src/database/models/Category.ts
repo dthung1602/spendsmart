@@ -12,17 +12,14 @@ class Category extends AbstractModel {
 
   public title: string;
   public icon: string;
-  public parentTitle: string | undefined = undefined;
+  public parentId: number | undefined = undefined;
 
   constructor(data: TransactionConstructorArgument) {
-    super(!data.title);
+    super(data.id);
+
     this.title = data.title;
     this.icon = data.icon;
-    this.parentTitle = data.parentTitle;
-  }
-
-  public getKey(): string {
-    return this.title;
+    this.parentId = data.parentId;
   }
 }
 

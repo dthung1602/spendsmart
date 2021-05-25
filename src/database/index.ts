@@ -21,6 +21,7 @@ function initDB(): Promise<IDBDatabase> {
   };
 
   request.onsuccess = (event) => {
+    localStorage.lastMigratedVersion = DB_VERSION;
     resolveDB((event as IDBResultEvent<IDBDatabase>).target.result);
   };
 

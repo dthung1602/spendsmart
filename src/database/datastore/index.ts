@@ -1,3 +1,5 @@
+import { cloneDeep } from "lodash";
+
 import AbstractModel from "../models/AbstractModel";
 import NonIndexedFieldFilters from "./non-indexed-field-filters";
 import getIndexRange from "./index-range-builder";
@@ -98,15 +100,20 @@ class Datastore<Model extends AbstractModel> {
           const request = db
             .transaction(this.objectStoreName, "readwrite")
             .objectStore(this.objectStoreName)
-            .add(object);
+            .put(this.onlyPublicProps(object));
 
           request.onerror = (event) => reject(new DBError(event));
           request.onsuccess = () => {
+            object.postSave();
             resolve(object);
           };
         })
         .catch(() => reject(new DBError("Cannot find IndexedDB")));
     });
+  }
+
+  public update(object: Model): Promise<Optional<Model>> {
+    return this.create(object);
   }
 
   public delete(object: Model): Promise<void> {
@@ -116,13 +123,23 @@ class Datastore<Model extends AbstractModel> {
           const request = db
             .transaction(this.objectStoreName, "readwrite")
             .objectStore(this.objectStoreName)
-            .delete(object.getKey());
+            .delete(object.id);
 
           request.onsuccess = () => resolve();
           request.onerror = (event) => reject(new DBError(event));
         })
         .catch(() => reject(new DBError("Cannot find IndexedDB")));
     });
+  }
+
+  private onlyPublicProps(obj: Model) {
+    const cln = cloneDeep(obj);
+    for (const prop of Object.keys(cln)) {
+      if (prop.startsWith("_")) {
+        delete cln[prop as keyof Model];
+      }
+    }
+    return cln;
   }
 
   private openCursor(
@@ -142,11 +159,11 @@ class Datastore<Model extends AbstractModel> {
   }
 
   private mergeResults(partialResults: Model[][]): Model[] {
-    const result = new Map<ReturnType<AbstractModel["getKey"]>, Model>();
+    const result = new Map();
     for (const partialResult of partialResults) {
       for (const obj of partialResult) {
-        if (!result.has(obj.getKey())) {
-          result.set(obj.getKey(), obj);
+        if (!result.has(obj.id)) {
+          result.set(obj.id, obj);
         }
       }
     }

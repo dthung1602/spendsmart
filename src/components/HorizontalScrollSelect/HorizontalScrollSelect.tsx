@@ -22,7 +22,7 @@ function HorizontalScrollSelect<T>({
   onSelect,
 }: HorizontalScrollSelectProp<T>): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [mouseLeave, setMouseLeave] = useState(false);
+  const [mouseLeave, setMouseLeave] = useState(true);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -37,7 +37,7 @@ function HorizontalScrollSelect<T>({
 
   return (
     <div
-      className="horizontal-scroll-select-container padding-large"
+      className="horizontal-scroll-select-container padding-medium"
       onMouseLeave={() => setMouseLeave(true)}
       onMouseEnter={() => setMouseLeave(false)}
       ref={containerRef}
