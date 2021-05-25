@@ -25,7 +25,9 @@ function CategoryModal({
   onClose,
 }: CategoryModalProps): JSX.Element {
   const { t } = useTranslation();
-  const { categoryOptions, reloadCategories } = useContext(GlobalContext);
+  const { categoryOptions, reloadCategories, allCategories } = useContext(
+    GlobalContext
+  );
   const action = category.isNew ? "create" : "update";
 
   const titleInputRef = useRef<HTMLInputElement>(null);
@@ -80,6 +82,26 @@ function CategoryModal({
       },
     },
   ];
+
+  const categoryHasChildren = Boolean(
+    allCategories.find((cat) => cat.parentId === category.id)
+  );
+
+  if (action === "update" && !categoryHasChildren) {
+    buttons.splice(0, 0, {
+      displayText: t("common.delete"),
+      type: "error",
+      onClick: () => {
+        categoryDataStore
+          .delete(category)
+          .then(close)
+          .catch((e) => {
+            console.log(e);
+            notify(String(e), "error");
+          });
+      },
+    });
+  }
 
   useEffect(() => {
     setTitle(category.title || "");
