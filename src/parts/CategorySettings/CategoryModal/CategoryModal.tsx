@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 
 import {
-  Modal,
-  VerticalScrollSelect,
+  Button,
   HorizontalScrollSelect,
-  ModalButton,
+  Modal,
   notify,
+  VerticalScrollSelect,
 } from "../../../components";
 import { useTranslation } from "../../../utils/hooks";
 import { Category, categoryDataStore } from "../../../database";
 import { GlobalContext } from "../../../GlobalContext";
-import { icons } from "../../../utils";
+import { iconMapping } from "../../../utils";
 import "./CategoryModal.less";
 
 interface CategoryModalProps {
@@ -38,14 +38,14 @@ function CategoryModal({
     category.parentId
   );
 
-  const iconOptions = Object.entries(icons).map(([iconName, icon]) => ({
+  const iconOptions = Object.entries(iconMapping).map(([iconName, icon]) => ({
     value: iconName,
     icon: icon,
   }));
 
   const parentCategoryOptions = [
     {
-      icon: icons.faBan,
+      icon: iconMapping.faBan,
       displayText: t("common.none"),
       nested: false,
       value: undefined,
@@ -56,17 +56,18 @@ function CategoryModal({
     ),
   ];
 
-  const close = () => {
+  const close = (message: string) => {
     reloadCategories();
-    notify(t(`parts.category-modal.notify-${action}`), "success");
+    notify(t(`parts.category-modal.notify-${message}`), "success");
     onClose();
   };
 
-  const buttons: ModalButton[] = [
-    {
-      displayText: t(`common.${action}`),
-      type: action === "update" ? "warning" : "success",
-      onClick: () => {
+  const footer = [
+    <Button
+      key="primary-btn"
+      theme={action === "update" ? "warning" : "success"}
+      size="large"
+      onClick={() => {
         const cat = new Category({
           ...(category ? category : {}),
           title,
@@ -74,13 +75,17 @@ function CategoryModal({
           parentId,
         });
         categoryDataStore[action](cat)
-          .then(close)
+          .then(() => {
+            close(action);
+          })
           .catch((e) => {
             console.log(e);
             notify(String(e), "error");
           });
-      },
-    },
+      }}
+    >
+      {t(`common.${action}`)}
+    </Button>,
   ];
 
   const categoryHasChildren = Boolean(
@@ -88,19 +93,27 @@ function CategoryModal({
   );
 
   if (action === "update" && !categoryHasChildren) {
-    buttons.splice(0, 0, {
-      displayText: t("common.delete"),
-      type: "error",
-      onClick: () => {
-        categoryDataStore
-          .delete(category)
-          .then(close)
-          .catch((e) => {
-            console.log(e);
-            notify(String(e), "error");
-          });
-      },
-    });
+    footer.splice(
+      0,
+      0,
+      <Button
+        theme="error"
+        size="large"
+        onClick={() => {
+          categoryDataStore
+            .delete(category)
+            .then(() => {
+              close("delete");
+            })
+            .catch((e) => {
+              console.log(e);
+              notify(String(e), "error");
+            });
+        }}
+      >
+        {t("common.delete")}
+      </Button>
+    );
   }
 
   useEffect(() => {
@@ -118,13 +131,13 @@ function CategoryModal({
       title={t("parts.category-modal.title." + action)}
       open={open}
       onClose={onClose}
-      buttons={buttons}
+      footer={footer}
     >
       <div className="input-modal">
         <label>{t("parts.category-modal.title-label")}</label>
         <input
           ref={titleInputRef}
-          className="background"
+          className="light"
           value={title}
           onChange={(event) => setTitle(event.target.value)}
         />

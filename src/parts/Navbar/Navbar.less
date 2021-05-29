@@ -1,5 +1,5 @@
 @import "../../assets/styles/theme";
-@import "../../assets/styles/global";
+@import "../../assets/styles/utils";
 
 .nav-bar {
   position: fixed;
@@ -7,7 +7,7 @@
   right: 0;
   left: 0;
   display: flex;
-  background: @color-background;
+  background: @color-light;
   z-index: 500;
   transition: @transition-fast;
   transform: translateY(0);
@@ -21,20 +21,20 @@
     height: 100%;
     padding: 16px;
     text-align: center;
-    color: @color-primary;
+    color: @color-dark;
     transition: @transition;
     background: transparent;
     z-index: 510;
 
     &.active {
-      color: @color-background;
+      color: @color-light;
     }
   }
 
   .highlight {
     border: none;
     position: absolute;
-    background: @color-primary;
+    background: @color-dark;
     z-index: 505;
     height: 100%;
     width: 75%;
@@ -44,7 +44,7 @@
       display: inline-block;
       height: 100%;
       width: 33.33333333%;
-      background: @color-background;
+      background: @color-light;
     }
 
     & > *:first-child {
@@ -54,9 +54,9 @@
       border-top-left-radius: @border-radius-round;
     }
     & > *:nth-child(2) {
-      background: @color-background;
+      background: @color-light;
       &>div {
-        background: @color-primary;
+        background: @color-dark;
         border-bottom-left-radius: @border-radius-round;
         border-bottom-right-radius: $border-bottom-left-radius;
         width: 100%;

@@ -19,7 +19,6 @@ import {
 } from "./utils/constants";
 
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
-const HomePage = lazy(() => import("./pages/Home"));
 const IntroTourPage = lazy(() => import("./pages/IntroTour"));
 const NotFoundPage = lazy(() => import("./pages/NotFound"));
 const ReportsPage = lazy(() => import("./pages/Reports"));

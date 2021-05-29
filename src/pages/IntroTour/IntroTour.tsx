@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
+import { Button } from "../../components";
 import { GlobalContext } from "../../GlobalContext";
 import { Language } from "../../utils/types";
 import "./IntroTour.less";
@@ -29,19 +30,29 @@ function IntroTour({ onFinishIntroTour }: IntroTourProps): JSX.Element {
     case "language":
       content = (
         <div className="language">
-          <div className="">Language / Ngôn ngữ</div>
-          <button className="btn-background" onClick={() => click("en")}>
+          <div>Language / Ngôn ngữ</div>
+          <Button
+            theme="light"
+            size="large"
+            round={true}
+            onClick={() => click("en")}
+          >
             ENG
-          </button>
-          <button className="btn-background" onClick={() => click("vi")}>
+          </Button>
+          <Button
+            theme="light"
+            size="large"
+            round={true}
+            onClick={() => click("vi")}
+          >
             VIE
-          </button>
+          </Button>
         </div>
       );
       break;
   }
 
-  return <div className="intro-tour-page">{content}</div>;
+  return <div className="page intro-tour-page">{content}</div>;
 }
 
 export default IntroTour;

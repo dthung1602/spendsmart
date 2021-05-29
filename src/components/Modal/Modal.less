@@ -1,5 +1,6 @@
 @import "../../assets/styles/theme";
-@import "../../assets/styles/global";
+@import "../../assets/styles/space";
+@import "../../assets/styles/utils";
 
 .modal-background {
   position: fixed;
@@ -39,8 +40,8 @@
 }
 
 .modal-header {
-  background: @color-background;
-  color: @color-primary;
+  background: @color-light;
+  color: @color-dark;
   text-align: center;
   padding: @space-large;
 
@@ -55,9 +56,9 @@
 }
 
 .modal-body {
-  background: @color-background;
+  background: @color-light;
   color: black;
-  border-bottom: 2px solid darken(@color-background, 7%);
+  border-bottom: 2px solid darken(@color-light, 7%);
   border-top: $border-bottom;
 }
 
@@ -65,5 +66,9 @@
   display: flex;
   &>* {
     flex: 1
+  }
+
+  .button {
+    border-radius: 0;
   }
 }

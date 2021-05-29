@@ -34,6 +34,9 @@ import {
   faWineBottle,
   faWineGlass,
   faBan,
+  faPlus,
+  faAngleDoubleDown,
+  faAngleDoubleUp,
 } from "@fortawesome/free-solid-svg-icons";
 
 const icons = {
@@ -72,6 +75,9 @@ const icons = {
   faHandHoldingHeart,
   faRandom,
   faBan,
+  faPlus,
+  faAngleDoubleDown,
+  faAngleDoubleUp,
 };
 
 type IconName = keyof typeof icons;

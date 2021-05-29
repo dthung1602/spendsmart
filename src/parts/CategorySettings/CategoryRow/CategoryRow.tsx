@@ -2,11 +2,11 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { BasicJSXProp } from "../../../utils/types";
-import { icons } from "../../../utils";
+import { iconMapping } from "../../../utils";
 import { Category } from "../../../database";
 import "./CategoryRow.less";
 
-type CategoryIconName = keyof typeof icons;
+type CategoryIconName = keyof typeof iconMapping;
 
 interface CategoryRowProps extends BasicJSXProp {
   category: Category;
@@ -18,7 +18,7 @@ function CategoryRow({
   className,
   style,
 }: CategoryRowProps): JSX.Element {
-  const icon = icons[category.icon as CategoryIconName];
+  const icon = iconMapping[category.icon as CategoryIconName];
 
   return (
     <div

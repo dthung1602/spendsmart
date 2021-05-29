@@ -10,29 +10,33 @@ import {
   faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { ThemeColor, ThemeTone, ThemeableComponent } from "../../utils/types";
 import "./Notification.less";
 
-type NotificationType = "info" | "success" | "warning" | "error";
+type NotificationTheme = ThemeColor;
+type NotificationTone = ThemeTone;
 
-interface NotificationProps {
+interface NotificationProps extends ThemeableComponent {
   message: string;
-  type: NotificationType;
   time?: number;
   onDone?: () => void;
 }
 
-const iconMappings: { [K in NotificationType]: IconProp } = {
+const iconMappings: { [K in ThemeColor]: IconProp } = {
   info: faInfoCircle,
   success: faCheckCircle,
   warning: faExclamationCircle,
   error: faTimesCircle,
+  dark: faInfoCircle,
+  light: faInfoCircle,
 };
 
-type NotiState = "init" | "show" | "done";
+type NotiState = "init" | "show" | "closing" | "done";
 
 function Notification({
   message,
-  type,
+  theme = "dark",
+  tone = "",
   time,
   onDone,
 }: NotificationProps): JSX.Element {
@@ -45,8 +49,10 @@ function Notification({
       setState("show");
     } else if (state === "show") {
       if (time) {
-        tid = setTimeout(() => setState("done"), time);
+        tid = setTimeout(() => setState("closing"), time);
       }
+    } else if (state === "closing") {
+      tid = setTimeout(() => setState("done"), 500);
     } else {
       if (onDone) onDone();
     }
@@ -55,14 +61,23 @@ function Notification({
   }, [state, time, onDone]);
 
   return (
-    <div className={`notification padding-huge margin-huge ${type} ${state}`}>
-      <FontAwesomeIcon icon={iconMappings[type]} size="lg" />
-      <span className="h-padding-large message">{message}</span>
+    <div
+      className={`notification padding-huge margin-huge ${theme} ${tone} ${state}`}
+    >
+      <FontAwesomeIcon icon={iconMappings[theme]} size="lg" />
+      <span className="h-padding-large sentence-case inline-block">
+        {message}
+      </span>
     </div>
   );
 }
 
-function notify(message: string, type: NotificationType, time = 3000): void {
+function notify(
+  message: string,
+  theme: NotificationTheme = "dark",
+  tone: NotificationTone = "",
+  time = 3000
+): void {
   const container = document.createElement("div");
   document.body.appendChild(container);
 
@@ -72,7 +87,13 @@ function notify(message: string, type: NotificationType, time = 3000): void {
   };
 
   ReactDOM.render(
-    <Notification message={message} type={type} time={time} onDone={unmount} />,
+    <Notification
+      message={message}
+      theme={theme}
+      tone={tone}
+      time={time}
+      onDone={unmount}
+    />,
     container
   );
 }
@@ -81,4 +102,4 @@ Notification.notify = notify;
 
 export default Notification;
 export { notify };
-export type { NotificationType };
+export type { NotificationTheme, NotificationTone };

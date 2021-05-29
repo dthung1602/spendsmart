@@ -1,5 +1,6 @@
 @import "../../assets/styles/theme";
-@import "../../assets/styles/global";
+@import "../../assets/styles/space";
+@import "../../assets/styles/utils";
 
 .notification {
   position: fixed;
@@ -10,28 +11,10 @@
 
   margin: @space-large;
   font-size: 1.1rem;
-  color: white;
   transition: @transition;
   border-radius: @border-radius-lightly-round;
 
   &.show {
     top: 0;
-  }
-
-  .message {
-    text-transform: capitalize;
-  }
-
-  &.info {
-    background: @color-info;
-  }
-  &.success {
-    background: @color-success;
-  }
-  &.warning {
-    background: @color-warning;
-  }
-  &.error {
-    background: @color-error;
   }
 }

@@ -2,30 +2,30 @@ import React, { MouseEventHandler } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { IconProp } from "@fortawesome/fontawesome-svg-core";
-
+import type { ThemeColor } from "../../utils/types";
 import "./FAB.less";
 
-type FABType = "success" | "info" | "warning" | "error" | "default";
+type FABTheme = ThemeColor;
 
 interface FABProps {
   icon: IconProp;
   onClick: MouseEventHandler;
-  type?: FABType;
+  theme?: FABTheme;
   hide?: boolean;
 }
 
 function FAB({
   icon,
   onClick,
-  type = "default",
+  theme = "dark",
   hide = false,
 }: FABProps): JSX.Element {
   return (
-    <div className={`fab ${type} ${hide ? "hide" : ""}`} onClick={onClick}>
+    <button className={`fab ${theme} ${hide ? "hide" : ""}`} onClick={onClick}>
       <FontAwesomeIcon icon={icon} size="1x" />
-    </div>
+    </button>
   );
 }
 
 export default FAB;
-export type { FABProps, FABType };
+export type { FABProps, FABTheme };

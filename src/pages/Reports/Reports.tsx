@@ -5,7 +5,7 @@ import "./Reports.less";
 
 function Reports(): JSX.Element {
   return (
-    <div className="reports-page">
+    <div className="page reports-page">
       <WorkInProgress />
     </div>
   );

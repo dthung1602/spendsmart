@@ -1,25 +1,25 @@
 import React from "react";
 
-import { BasicJSXPropWithChildren } from "../../utils/types";
+import {
+  BasicJSXPropWithChildren,
+  ThemeableComponent,
+  ThemeColor,
+  ThemeTone,
+} from "../../utils/types";
 import "./Affix.less";
 
-type AffixType =
-  | "primary"
-  | "error"
-  | "waring"
-  | "info"
-  | "success"
-  | "default";
+type AffixColor = ThemeColor;
+type AffixTone = ThemeTone;
 
-interface AffixProps extends BasicJSXPropWithChildren {
+interface AffixProps extends BasicJSXPropWithChildren, ThemeableComponent {
   offsetTop: number;
-  type: AffixType;
 }
 
 function Affix({
   children,
   offsetTop = 0,
-  type = "default",
+  theme = "dark",
+  tone = "",
   className = "",
   style = {},
   onClick = undefined,
@@ -27,7 +27,7 @@ function Affix({
   style = { ...style, top: `${offsetTop}px` };
   return (
     <div
-      className={`affix ${className} ${type}`}
+      className={`affix ${className} ${theme} ${tone}`}
       style={style}
       onClick={onClick}
     >
@@ -37,4 +37,4 @@ function Affix({
 }
 
 export default Affix;
-export type { AffixProps, AffixType };
+export type { AffixProps, AffixTone, AffixColor };

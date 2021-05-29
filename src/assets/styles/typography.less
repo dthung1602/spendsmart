@@ -1,5 +1,3 @@
-@import "./global";
-
 .sub-title {
   text-transform: uppercase;
   font-weight: bold;
@@ -7,4 +5,11 @@
 
 .small-text {
   font-size: 0.8rem;
+}
+
+.sentence-case {
+  text-transform: lowercase;
+  &:first-letter {
+    text-transform: uppercase;
+  }
 }

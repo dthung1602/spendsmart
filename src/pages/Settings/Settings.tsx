@@ -5,7 +5,7 @@ import "./Settings.less";
 
 function Settings(): JSX.Element {
   return (
-    <div className="settings-page">
+    <div className="page settings-page">
       <GeneralSettings />
       <CategorySettings />
     </div>

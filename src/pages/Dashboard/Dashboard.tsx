@@ -71,13 +71,13 @@ function Dashboard(): JSX.Element {
   });
 
   return (
-    <div className="dashboard-page">
+    <div className="page dashboard-page">
       <PageHeaderHighLight thisWeek={thisWeekSum} thisMonth={thisMonthSum} />
       <DashboardGraphs />
       <TransactionList transactions={recentTransactions} />
       <FAB
         icon={faPlus}
-        type="success"
+        theme="success"
         hide={overlayOpen}
         onClick={() => setOverlayOpen(true)}
       />

@@ -17,6 +17,14 @@ type IDBResultEvent<T> = Event & {
 
 type Language = "en" | "vi";
 
+type ThemeColor = "success" | "info" | "warning" | "error" | "dark" | "light";
+type ThemeTone = "darker" | "lighter" | "";
+
+interface ThemeableComponent {
+  theme?: ThemeColor;
+  tone?: ThemeTone;
+}
+
 interface BasicJSXProp {
   className?: string;
   style?: CSS.Properties;
@@ -130,6 +138,9 @@ export type {
   PathValue,
   IDBResultEvent,
   Language,
+  ThemeableComponent,
+  ThemeColor,
+  ThemeTone,
   BasicJSXProp,
   BasicJSXPropWithChildren,
 };

@@ -8,10 +8,10 @@ import {
 import {
   Accordion,
   Modal,
-  ModalButton,
   notify,
   Switch,
   VerticalScrollSelect,
+  Button,
 } from "../../components";
 import { publish } from "../../pubsub";
 import { useTranslation } from "../../utils/hooks";
@@ -93,19 +93,19 @@ function NewTransactionModal({
       .catch((e) => notify(String(e), "error"));
   };
 
-  const buttons: ModalButton[] = [
-    {
-      type: "info",
-      displayText: expand ? t("common.less") : t("common.more"),
-      icon: expand ? faAngleDoubleDown : faAngleDoubleUp,
-      onClick: () => setExpand(!expand),
-    },
-    {
-      type: "success",
-      displayText: t("common.add"),
-      icon: faPlus,
-      onClick: add,
-    },
+  const buttons = [
+    <Button
+      key="more"
+      theme="info"
+      size="large"
+      icon={expand ? "faAngleDoubleDown" : "faAngleDoubleUp"}
+      onClick={() => setExpand(!expand)}
+    >
+      {expand ? t("common.less") : t("common.more")}
+    </Button>,
+    <Button key="add" theme="success" size="large" icon="faPlus" onClick={add}>
+      {t("common.add")}
+    </Button>,
   ];
 
   return (
@@ -113,13 +113,13 @@ function NewTransactionModal({
       title={t("parts.new-transaction-modal.title")}
       open={open}
       onClose={close}
-      buttons={buttons}
+      footer={buttons}
     >
       <div className="transaction-modal input-modal">
         <label>{t("common.price")}</label>
         <input
           type="number"
-          className="background"
+          className="light"
           ref={priceInputRef}
           value={price}
           onChange={(event) => {
@@ -146,14 +146,14 @@ function NewTransactionModal({
           />
           <label>{t("common.datetime")}</label>
           <input
-            className="background"
+            className="light"
             type="datetime-local"
             value={spendDatetime}
             onChange={(event) => setSpendDatetime(event.target.value)}
           />
           <label>{t("common.note")}</label>
           <textarea
-            className="background"
+            className="light"
             value={note}
             onChange={(event) => setNote(event.target.value)}
           />

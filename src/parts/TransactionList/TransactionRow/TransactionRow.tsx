@@ -7,12 +7,12 @@ import { format } from "date-fns";
 import { Transaction, transactionDataStore } from "../../../database";
 import { notify } from "../../../components";
 import { publish } from "../../../pubsub";
-import { formatMoney, icons } from "../../../utils";
+import { formatMoney, iconMapping } from "../../../utils";
 import { useTranslation } from "../../../utils/hooks";
 
 import "./TransactionRow.less";
 
-type TransactionIconName = keyof typeof icons;
+type TransactionIconName = keyof typeof iconMapping;
 
 interface TransactionRowProps {
   transaction: Transaction;
@@ -27,7 +27,8 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
     setDeleteConfirm(false);
   }, [expand]);
 
-  const icon = icons[transaction.categoriesIcons[0] as TransactionIconName];
+  const icon =
+    iconMapping[transaction.categoriesIcons[0] as TransactionIconName];
 
   const deleteTransaction: MouseEventHandler = (event) => {
     event.stopPropagation();

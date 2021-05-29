@@ -1,0 +1,30 @@
+@import "../../assets/styles/space";
+@import "../../assets/styles/utils";
+
+.button {
+  display: inline-block;
+  border-radius: @border-radius-lightly-round;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+
+  &:active {
+    filter: brightness(0.8);
+  }
+
+  &.large {
+    font-size: 0.95rem;
+  }
+
+  &.medium {
+    font-size: 0.85rem;
+  }
+
+  &.small {
+    font-size: 0.75rem;
+  }
+
+  &.round {
+    border-radius: @border-radius-round;
+  }
+}

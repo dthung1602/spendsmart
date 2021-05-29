@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 
-import { Affix, ButtonSelect } from "../../components";
+import { Affix, ButtonGroupSelect } from "../../components";
 import { useTranslation } from "../../utils/hooks";
 import { localStorage } from "../../database";
 import "./GeneralSettings.less";
@@ -32,15 +32,20 @@ function GeneralSettings(): JSX.Element {
     <>
       <Affix
         offsetTop={0}
-        type="primary"
+        theme="dark"
+        tone="darker"
         className="padding-wide b-margin-wide"
       >
         <span className="sub-title">{t("parts.general-settings.general")}</span>
       </Affix>
       <div className="setting-row v-padding-wide h-padding-huge">
-        <div>{t("parts.general-settings.language")}</div>
-        <ButtonSelect
-          type="primary"
+        <div className="sentence-case">
+          {t("parts.general-settings.language")}
+        </div>
+        <ButtonGroupSelect
+          theme="dark"
+          tone="lighter"
+          size="large"
           options={[
             {
               displayText: "en",
@@ -51,18 +56,28 @@ function GeneralSettings(): JSX.Element {
               value: "vi",
             },
           ]}
-          defaultValue={language}
+          value={language}
           onSelect={setLanguage}
         />
       </div>
       <div className="setting-row v-padding-wide h-padding-huge">
-        <div>{t("parts.general-settings.currency-symbol")}</div>
-        <input className="short primary" ref={symbolRef} onBlur={setSymbol} />
+        <div className="sentence-case">
+          {t("parts.general-settings.currency-symbol")}
+        </div>
+        <input
+          className="short dark lighter"
+          ref={symbolRef}
+          onBlur={setSymbol}
+        />
       </div>
       <div className="setting-row v-padding-wide h-padding-huge">
-        <div>{t("parts.general-settings.currency-placement")}</div>
-        <ButtonSelect
-          type="primary"
+        <div className="sentence-case">
+          {t("parts.general-settings.currency-placement")}
+        </div>
+        <ButtonGroupSelect
+          theme="dark"
+          tone="lighter"
+          size="large"
           options={[
             {
               displayText: t("parts.general-settings.before"),
@@ -73,7 +88,7 @@ function GeneralSettings(): JSX.Element {
               value: "after",
             },
           ]}
-          defaultValue={placement}
+          value={placement}
           onSelect={setPlacement}
         />
       </div>

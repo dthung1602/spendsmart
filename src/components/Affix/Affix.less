@@ -1,4 +1,4 @@
-@import "../../assets/styles/global";
+@import "../../assets/styles/space";
 @import "../../assets/styles/theme";
 
 .affix {
@@ -6,32 +6,32 @@
   z-index: 300;
 
   &.primary {
-    background: darken(@color-primary, 7%);
-    color: @color-default;
+    background: darken(@color-dark, 7%);
+    color: @color-near-white;
   }
 
   &.error {
     background: @color-error;
-    color: @color-default;
+    color: @color-near-white;
   }
 
   &.warning {
     background: @color-warning;
-    color: @color-default;
+    color: @color-near-white;
   }
 
   &.info {
     background: @color-info;
-    color: @color-default;
+    color: @color-near-white;
   }
 
   &.success {
     background: @color-success;
-    color: @color-default;
+    color: @color-near-white;
   }
 
   &.default {
-    background: @color-default;
-    color: @color-primary;
+    background: @color-near-white;
+    color: @color-dark;
   }
 }

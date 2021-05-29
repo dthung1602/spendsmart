@@ -1,4 +1,8 @@
-import Notification, { notify, NotificationType } from "./Notification";
+import Notification, {
+  notify,
+  NotificationTheme,
+  NotificationTone,
+} from "./Notification";
 export default Notification;
 export { notify };
-export type { NotificationType };
+export type { NotificationTheme, NotificationTone };

@@ -5,7 +5,7 @@ import { WorkInProgress } from "../../components";
 
 function Transactions(): JSX.Element {
   return (
-    <div className="transactions-page">
+    <div className="page transactions-page">
       <WorkInProgress />
     </div>
   );

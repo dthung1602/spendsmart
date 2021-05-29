@@ -1,3 +1,3 @@
-import FAB, { FABProps, FABType } from "./FAB";
+import FAB, { FABProps, FABTheme } from "./FAB";
 export default FAB;
-export type { FABProps, FABType };
+export type { FABProps, FABTheme };

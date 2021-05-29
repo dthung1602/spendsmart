@@ -1,10 +1,8 @@
 import React, { useContext, useState } from "react";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import CategoryRow from "./CategoryRow";
 import CategoryModal from "./CategoryModal";
-import { Affix } from "../../components";
+import { Affix, Button } from "../../components";
 import { useTranslation } from "../../utils/hooks";
 import { Category } from "../../database";
 import { GlobalContext } from "../../GlobalContext";
@@ -47,7 +45,8 @@ function CategorySettings(): JSX.Element {
     <>
       <Affix
         offsetTop={0}
-        type="primary"
+        theme="dark"
+        tone="darker"
         className="padding-wide v-margin-wide"
       >
         <span className="sub-title">
@@ -56,10 +55,14 @@ function CategorySettings(): JSX.Element {
       </Affix>
       <div className="setting-row h-padding-huge">
         <div />
-        <div className="btn-success rounded" onClick={() => openModal()}>
-          {t("parts.category-settings.add")} &nbsp;
-          <FontAwesomeIcon icon={faPlus} />
-        </div>
+        <Button
+          theme="success"
+          size="medium"
+          icon="faPlus"
+          onClick={() => openModal()}
+        >
+          {t("parts.category-settings.add")}
+        </Button>
       </div>
       <div className="v-padding-wide">
         {allCategories.map((cat) => (
