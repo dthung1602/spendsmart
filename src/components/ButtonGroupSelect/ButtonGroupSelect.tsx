@@ -1,7 +1,7 @@
 import React, { Key } from "react";
 
 import Button, { ButtonSize } from "../Button";
-import { Optional, ThemeableComponent } from "../../utils/types";
+import { Optional, ThemeableComponent, BasicJSXProp } from "../../utils/types";
 import "./ButtonGroupSelect.less";
 
 interface ButtonGroupSelectOption<T extends Optional<Key>> {
@@ -10,7 +10,8 @@ interface ButtonGroupSelectOption<T extends Optional<Key>> {
 }
 
 interface ButtonGroupSelectProps<T extends Optional<Key>>
-  extends ThemeableComponent {
+  extends ThemeableComponent,
+    BasicJSXProp {
   options: ButtonGroupSelectOption<T>[];
   value?: T;
   onSelect: (value: T) => void;
@@ -23,10 +24,12 @@ function ButtonGroupSelect<T extends Optional<Key>>({
   size = "medium",
   theme = "dark",
   tone = "",
+  className = "",
+  style = {},
   onSelect,
 }: ButtonGroupSelectProps<T>): JSX.Element {
   return (
-    <div className="button-group-select">
+    <div className={`button-group-select ${className}`} style={style}>
       {options.map((option) => (
         <Button
           key={option.value}

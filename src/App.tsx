@@ -8,7 +8,8 @@ import {
 
 import { GlobalContextProvider } from "./GlobalContext";
 import { initDB, localStorage } from "./database";
-import { ErrorBoundary, FullScreenLoading, notify } from "./components";
+import { FullScreenLoading, notify } from "./components";
+import { ErrorBoundary } from "./parts";
 import { Navbar } from "./parts";
 import {
   ROUTE_DASHBOARD,

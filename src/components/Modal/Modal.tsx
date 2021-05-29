@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
-
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import ModalOption from "./ModalOption";
 import type { BasicJSXPropWithChildren } from "../../utils/types";
 import "./Modal.less";
 
@@ -20,6 +17,8 @@ function Modal({
   onClose,
   footer,
   children,
+  className = "",
+  style = {},
 }: ModalProps): JSX.Element {
   const close: React.MouseEventHandler = (event) => {
     event.stopPropagation();
@@ -41,10 +40,10 @@ function Modal({
         onClick={close}
       />
       <div className={`modal-placeholder ${open ? "open" : ""}`}>
-        <div className="modal-container">
+        <div className={`modal-container light ${className}`} style={style}>
           <div className="modal-header">
             <span className="sub-title">{title}</span>
-            <FontAwesomeIcon icon={faTimesCircle} size="1x" onClick={close} />
+            <FontAwesomeIcon icon="times-circle" size="1x" onClick={close} />
           </div>
           <div className="modal-body v-padding-large h-padding-huge">
             {children}
@@ -55,8 +54,6 @@ function Modal({
     </>
   );
 }
-
-Modal.Option = ModalOption;
 
 export default Modal;
 export type { ModalProps };

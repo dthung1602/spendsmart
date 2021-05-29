@@ -1,13 +1,18 @@
-@import "../../../assets/styles/utils";
 @import "../../../assets/styles/space";
+@import "../../../assets/styles/utils";
 
 .horizontal-scroll-select-option {
   height: @space-large;
-  color: fade(black, 40%);
   display: inline-block;
-  //background: rgba(0, 0, 0, 0.03);
-  transition: all @transition;
+  transition: @transition;
   border-radius: @border-radius-lightly-round;
+
+  &.dark-text {
+    color: fade(black, 40%);
+  }
+  &.light-text {
+    color: fade(white, 30%);
+  }
 
   svg {
     width: 1.1rem;
@@ -18,7 +23,12 @@
   }
 
   &.selected {
-    color: black;
+    &.dark-text {
+      color: black;
+    }
+    &.light-text {
+      color: white;
+    }
     font-weight: bold;
     background: rgba(255, 255, 255, 0.35);
   }

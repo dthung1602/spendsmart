@@ -1,25 +1,45 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, Key } from "react";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
-import type { HorizontalScrollSelectOptionProps } from "./HorizontalScrollSelectOption";
 import HorizontalScrollSelectOption from "./HorizontalScrollSelectOption";
-import { BasicJSXProp } from "../../utils/types";
+import type {
+  HorizontalScrollSelectOptionProps,
+  HorizontalScrollSelectTextColor,
+} from "./HorizontalScrollSelectOption";
+import type { BasicJSXProp, Optional } from "../../utils/types";
 import "./HorizontalScrollSelect.less";
 
-interface HorizontalScrollSelectOptionValue<T>
-  extends HorizontalScrollSelectOptionProps {
+interface ValueWithIcon<T extends Optional<Key>> {
+  icon: IconProp;
+  displayText?: React.ReactNode;
   value: T;
 }
 
-interface HorizontalScrollSelectProp<T> extends BasicJSXProp {
+interface ValueWithText<T extends Optional<Key>> {
+  icon?: IconProp;
+  displayText: React.ReactNode;
+  value: T;
+}
+
+type HorizontalScrollSelectOptionValue<T extends Optional<Key>> =
+  | ValueWithIcon<T>
+  | ValueWithText<T>;
+
+interface HorizontalScrollSelectProp<T extends Optional<Key>>
+  extends BasicJSXProp {
   options: HorizontalScrollSelectOptionValue<T>[];
   value: T;
   onSelect: (value: T) => void;
+  textColor?: HorizontalScrollSelectTextColor;
 }
 
-function HorizontalScrollSelect<T>({
+function HorizontalScrollSelect<T extends Optional<Key>>({
   options,
   value,
   onSelect,
+  textColor = "dark",
+  className = "",
+  style = {},
 }: HorizontalScrollSelectProp<T>): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mouseLeave, setMouseLeave] = useState(true);
@@ -33,21 +53,24 @@ function HorizontalScrollSelect<T>({
           containerRef.current.offsetLeft;
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   return (
     <div
-      className="horizontal-scroll-select-container padding-medium"
+      className={`horizontal-scroll-select-container padding-medium ${className}`}
+      style={style}
       onMouseLeave={() => setMouseLeave(true)}
       onMouseEnter={() => setMouseLeave(false)}
       ref={containerRef}
     >
-      {options.map((option, idx) => (
+      {options.map((option) => (
         <HorizontalScrollSelectOption
           className={option.value === value ? "selected" : ""}
-          key={idx.toString() + String(option.displayText)}
+          key={option.value}
           displayText={option.displayText}
           icon={option.icon}
+          textColor={textColor}
           onClick={() => {
             onSelect(option.value);
           }}

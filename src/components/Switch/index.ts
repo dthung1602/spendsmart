@@ -1,5 +1,5 @@
 import Switch from "./Switch";
-import type { SwitchProps } from "./Switch";
+import type { SwitchProps, SwitchTheme } from "./Switch";
 
 export default Switch;
-export type { SwitchProps };
+export type { SwitchProps, SwitchTheme };

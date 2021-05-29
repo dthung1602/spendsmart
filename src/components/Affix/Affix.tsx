@@ -27,7 +27,7 @@ function Affix({
   style = { ...style, top: `${offsetTop}px` };
   return (
     <div
-      className={`affix ${className} ${theme} ${tone}`}
+      className={`affix ${theme} ${tone} ${className}`}
       style={style}
       onClick={onClick}
     >

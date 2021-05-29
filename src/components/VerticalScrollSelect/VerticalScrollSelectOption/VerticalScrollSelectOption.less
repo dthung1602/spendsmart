@@ -4,7 +4,13 @@
   padding-left: 10%;
   height: @space-large;
   transition: all 0.2s linear;
-  color: fade(black, 40%);
+
+  &.dark-text {
+    color: fade(black, 40%);
+  }
+  &.light-text {
+    color: fade(white, 30%);
+  }
 
   svg {
     width: 1.1rem;
@@ -15,7 +21,12 @@
   }
 
   &.selected {
-    color: black;
+    &.dark-text {
+      color: black;
+    }
+    &.light-text {
+      color: white;
+    }
     font-weight: bold;
   }
 

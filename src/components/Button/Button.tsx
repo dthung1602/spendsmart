@@ -1,17 +1,17 @@
 import React from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
+
 import type {
   BasicJSXPropWithChildren,
   ThemeableComponent,
 } from "../../utils/types";
-import { IconName, iconMapping } from "../../utils";
 import "./Button.less";
 
 type ButtonSize = "large" | "medium" | "small";
 
 interface ButtonProps extends BasicJSXPropWithChildren, ThemeableComponent {
-  icon?: IconName;
+  icon?: IconProp;
   size?: ButtonSize;
   block?: boolean;
   round?: boolean;
@@ -35,16 +35,18 @@ function Button({
   onClick = undefined,
   children,
 }: ButtonProps): JSX.Element {
-  className += ` button padding-${sizeToPadding[size]} ${size} ${theme} ${tone}`;
+  let baseClassName = `button padding-${sizeToPadding[size]} ${size} ${theme} ${tone}`;
   if (block) {
-    className += " block";
+    baseClassName += " block";
   }
   if (round) {
-    className += " round";
+    baseClassName += " round";
   }
+  className = baseClassName + " " + className;
+
   const iconElement = icon ? (
     <FontAwesomeIcon
-      icon={iconMapping[icon]}
+      icon={icon}
       className={`r-margin-${sizeToPadding[size]}`}
     />
   ) : undefined;

@@ -1,28 +1,36 @@
-import React, { useRef, useEffect } from "react";
-import type { UIEventHandler } from "react";
-
+import React, { useRef, useEffect, UIEventHandler, Key } from "react";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { debounce } from "lodash";
 
-import VerticalScrollSelectOption from "./VerticalScrollSelectOption";
-import type { VerticalScrollSelectOptionProps } from "./VerticalScrollSelectOption";
-import { BasicJSXProp } from "../../utils/types";
+import VerticalScrollSelectOption, {
+  VerticalScrollSelectTextColor,
+  VerticalScrollSelectOptionProps,
+} from "./VerticalScrollSelectOption";
+import { BasicJSXProp, Optional } from "../../utils/types";
 import "./VerticalScrollSelect.less";
 
-interface VerticalScrollSelectOptionValue<T>
-  extends VerticalScrollSelectOptionProps {
+interface VerticalScrollSelectOptionValue<T extends Optional<Key>> {
+  icon?: IconProp;
+  displayText: React.ReactNode;
+  nested?: boolean;
   value: T;
 }
 
-interface VerticalScrollSelectProp<T> extends BasicJSXProp {
+interface VerticalScrollSelectProp<T extends Optional<Key>>
+  extends BasicJSXProp {
   options: VerticalScrollSelectOptionValue<T>[];
+  textColor: VerticalScrollSelectTextColor;
   value: T;
   onSelect: (value: T) => void;
 }
 
-function VerticalScrollSelect<T>({
+function VerticalScrollSelect<T extends Optional<Key>>({
   options,
   value,
+  textColor,
   onSelect,
+  className = "",
+  style = {},
 }: VerticalScrollSelectProp<T>): JSX.Element {
   const selectedIdx = Math.max(
     options.findIndex((opt) => opt.value === value),
@@ -55,16 +63,18 @@ function VerticalScrollSelect<T>({
   return (
     <div className="vertical-scroll-select-container">
       <div
-        className="vertical-scroll-select no-scroll-bar"
+        className={`vertical-scroll-select no-scroll-bar ${className}`}
+        style={style}
         onScroll={onScroll}
         ref={containerRef}
       >
         {options.map((option, idx) => (
           <VerticalScrollSelectOption
             className={idx === selectedIdx ? "selected" : ""}
-            key={idx.toString() + String(option.displayText)}
+            key={option.value}
             displayText={option.displayText}
             icon={option.icon}
+            textColor={textColor}
             nested={option.nested}
           />
         ))}

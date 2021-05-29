@@ -1,34 +1,50 @@
 import React from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 import { BasicJSXProp } from "../../../utils/types";
 import "./HorizontalScrollSelectOption.less";
 
-interface HorizontalScrollSelectOptionProps extends BasicJSXProp {
+type HorizontalScrollSelectTextColor = "dark" | "light";
+
+interface PropsWithIcon extends BasicJSXProp {
   icon: IconProp;
   displayText?: React.ReactNode;
+  textColor?: HorizontalScrollSelectTextColor;
 }
 
+interface PropsWithText extends BasicJSXProp {
+  icon?: IconProp;
+  displayText: React.ReactNode;
+  textColor?: HorizontalScrollSelectTextColor;
+}
+
+type HorizontalScrollSelectOptionProps = PropsWithIcon | PropsWithText;
+
 function HorizontalScrollSelectOption({
-  icon,
-  onClick,
+  icon = undefined,
   displayText = undefined,
+  onClick,
+  textColor = "dark",
   className = "",
   style = {},
 }: HorizontalScrollSelectOptionProps): JSX.Element {
   return (
     <div
-      className={`horizontal-scroll-select-option v-padding-medium ${className}`}
+      className={`horizontal-scroll-select-option v-padding-medium ${className} text-${textColor}`}
       style={style}
       onClick={onClick}
     >
-      <FontAwesomeIcon className="h-padding-wide" icon={icon} size="1x" />
+      {icon ? (
+        <FontAwesomeIcon className="h-padding-wide" icon={icon} size="1x" />
+      ) : undefined}
       {displayText ? <span>{displayText}</span> : undefined}
     </div>
   );
 }
 
 export default HorizontalScrollSelectOption;
-export type { HorizontalScrollSelectOptionProps };
+export type {
+  HorizontalScrollSelectOptionProps,
+  HorizontalScrollSelectTextColor,
+};

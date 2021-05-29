@@ -1,37 +1,35 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { IconProp } from "@fortawesome/fontawesome-svg-core";
-import {
-  faCheckCircle,
-  faExclamationCircle,
-  faInfoCircle,
-  faTimesCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { IconName } from "@fortawesome/free-solid-svg-icons";
 
-import { ThemeColor, ThemeTone, ThemeableComponent } from "../../utils/types";
+import {
+  BasicJSXProp,
+  ThemeableComponent,
+  ThemeColor,
+  ThemeTone,
+} from "../../utils/types";
 import "./Notification.less";
 
 type NotificationTheme = ThemeColor;
 type NotificationTone = ThemeTone;
 
-interface NotificationProps extends ThemeableComponent {
+interface NotificationProps extends ThemeableComponent, BasicJSXProp {
   message: string;
   time?: number;
   onDone?: () => void;
 }
 
-const iconMappings: { [K in ThemeColor]: IconProp } = {
-  info: faInfoCircle,
-  success: faCheckCircle,
-  warning: faExclamationCircle,
-  error: faTimesCircle,
-  dark: faInfoCircle,
-  light: faInfoCircle,
+const iconMappings: { [K in ThemeColor]: IconName } = {
+  info: "info-circle",
+  success: "check-circle",
+  warning: "exclamation-circle",
+  error: "times-circle",
+  dark: "info-circle",
+  light: "info-circle",
 };
 
-type NotiState = "init" | "show" | "closing" | "done";
+type NotificationState = "init" | "showing" | "closing" | "done";
 
 function Notification({
   message,
@@ -39,15 +37,17 @@ function Notification({
   tone = "",
   time,
   onDone,
+  className = "",
+  style = {},
 }: NotificationProps): JSX.Element {
-  const [state, setState] = useState<NotiState>("init");
+  const [state, setState] = useState<NotificationState>("init");
 
   useEffect(() => {
     let tid: ReturnType<typeof setTimeout>;
 
     if (state === "init") {
-      setState("show");
-    } else if (state === "show") {
+      setState("showing");
+    } else if (state === "showing") {
       if (time) {
         tid = setTimeout(() => setState("closing"), time);
       }
@@ -62,7 +62,8 @@ function Notification({
 
   return (
     <div
-      className={`notification padding-huge margin-huge ${theme} ${tone} ${state}`}
+      className={`notification padding-huge margin-huge ${theme} ${tone} ${state} ${className}`}
+      style={style}
     >
       <FontAwesomeIcon icon={iconMappings[theme]} size="lg" />
       <span className="h-padding-large sentence-case inline-block">

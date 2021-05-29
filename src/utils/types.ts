@@ -29,7 +29,6 @@ interface BasicJSXProp {
   className?: string;
   style?: CSS.Properties;
   onClick?: MouseEventHandler;
-  id?: string;
 }
 
 interface BasicJSXPropWithChildren extends BasicJSXProp {

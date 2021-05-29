@@ -2,29 +2,31 @@ import en from "../../assets/translations/en.json";
 import vi from "../../assets/translations/vi.json";
 
 import Transaction from "../models/Transaction";
+import Category from "../models/Category";
 import localStorage from "../localstorage";
 
 const availableTranslations = { en, vi };
 
 type DefaultCatTitleType = keyof typeof en["default-categories"];
+type CategorySkeleton = Pick<Category, "id" | "title" | "parentId" | "icon">;
 
-const defaultCategories = [
-  { id: 1, title: "living", parentId: undefined, icon: "faHouseUser" },
-  { id: 2, title: "housing", parentId: 1, icon: "faHome" },
-  { id: 3, title: "water", parentId: 1, icon: "faFaucet" },
-  { id: 4, title: "electricity", parentId: 1, icon: "faPlug" },
-  { id: 5, title: "wifi-phone", parentId: 1, icon: "faWifi" },
-  { id: 6, title: "food", parentId: undefined, icon: "faUtensils" },
-  { id: 7, title: "main-meals", parentId: 6, icon: "faHamburger" },
-  { id: 8, title: "snack-coffee", parentId: 6, icon: "faCoffee" },
-  { id: 9, title: "transportation", parentId: undefined, icon: "faCar" },
-  { id: 10, title: "healthcare", parentId: undefined, icon: "faMedkit" },
-  { id: 11, title: "entertainment", parentId: undefined, icon: "faMusic" },
-  { id: 12, title: "investment", parentId: undefined, icon: "faPiggyBank" },
-  { id: 13, title: "personal-spending", parentId: undefined, icon: "faUser" },
-  { id: 14, title: "charity", parentId: undefined, icon: "faHandHoldingHeart" },
-  { id: 15, title: "travelling", parentId: undefined, icon: "faPlane" },
-  { id: 16, title: "miscellaneous", parentId: undefined, icon: "faRandom" },
+const defaultCategories: CategorySkeleton[] = [
+  { id: 1, title: "living", parentId: undefined, icon: "house-user" },
+  { id: 2, title: "housing", parentId: 1, icon: "home" },
+  { id: 3, title: "water", parentId: 1, icon: "faucet" },
+  { id: 4, title: "electricity", parentId: 1, icon: "plug" },
+  { id: 5, title: "wifi-phone", parentId: 1, icon: "wifi" },
+  { id: 6, title: "food", parentId: undefined, icon: "utensils" },
+  { id: 7, title: "main-meals", parentId: 6, icon: "hamburger" },
+  { id: 8, title: "snack-coffee", parentId: 6, icon: "coffee" },
+  { id: 9, title: "transportation", parentId: undefined, icon: "car" },
+  { id: 10, title: "healthcare", parentId: undefined, icon: "medkit" },
+  { id: 11, title: "entertainment", parentId: undefined, icon: "music" },
+  { id: 12, title: "investment", parentId: undefined, icon: "piggy-bank" },
+  { id: 13, title: "personal-spending", parentId: undefined, icon: "user" },
+  { id: 14, title: "charity", parentId: undefined, icon: "hand-holding-heart" },
+  { id: 15, title: "travelling", parentId: undefined, icon: "plane" },
+  { id: 16, title: "miscellaneous", parentId: undefined, icon: "random" },
 ];
 
 function loadDefaultCategories(store: IDBObjectStore) {

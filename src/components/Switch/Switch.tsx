@@ -1,21 +1,25 @@
 import React from "react";
 
-import { BasicJSXProp } from "../../utils/types";
+import { BasicJSXProp, ThemeColor } from "../../utils/types";
 import "./Switch.less";
 
+type SwitchTheme = ThemeColor;
+
 interface SwitchProps extends BasicJSXProp {
+  theme: SwitchTheme;
   checked: boolean;
 }
 
 function Switch({
   checked,
+  theme = "dark",
   style = {},
   className = "",
   onClick,
 }: SwitchProps): JSX.Element {
   return (
     <div
-      className={`switch ${checked ? "checked" : ""} ${className}`}
+      className={`switch ${checked ? "checked" : ""} ${theme} ${className}`}
       style={style}
       onClick={onClick}
     >
@@ -25,4 +29,4 @@ function Switch({
 }
 
 export default Switch;
-export type { SwitchProps };
+export type { SwitchProps, SwitchTheme };

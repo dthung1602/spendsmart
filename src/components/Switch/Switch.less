@@ -23,11 +23,20 @@
     transform: translateX(0);
   }
 
-  &.checked {
-    background: @color-warning;
-
-    .circle {
-      transform: translateX(calc(@switch-circle-diameter + @switch-spacing));
-    }
+  &.checked.circle {
+    transform: translateX(calc(@switch-circle-diameter + @switch-spacing));
   }
+
+  .-check-circle-bg(@i: length(@colors)) when (@i > 0) {
+    @name: extract(@colors-names, @i);
+    @border: extract(@colors-border, @i);
+
+    &.@{name} {
+      background: @border;
+    }
+
+    .-check-circle-bg((@i - 1));
+  }
+
+  .-check-circle-bg()
 }

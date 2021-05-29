@@ -1,3 +1,5 @@
+import type { IconName } from "@fortawesome/free-solid-svg-icons";
+
 import type { NonFunctionProperties } from "../../utils/types";
 import { WithRequired } from "../../utils/types";
 import AbstractModel from "./AbstractModel";
@@ -11,7 +13,7 @@ class Category extends AbstractModel {
   public static readonly INDICES_PREFERENCE_ORDER = [];
 
   public title: string;
-  public icon: string;
+  public icon: IconName;
   public parentId: number | undefined = undefined;
 
   constructor(data: TransactionConstructorArgument) {
