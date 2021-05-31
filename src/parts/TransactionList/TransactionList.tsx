@@ -1,6 +1,5 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory } from "@fortawesome/free-solid-svg-icons";
 
 import TransactionRow from "./TransactionRow";
 import { Transaction } from "../../database";
@@ -18,7 +17,7 @@ function TransactionList({ transactions }: TransactionListProps): JSX.Element {
     <div className="transactions-list">
       <div className="sub-title">
         <FontAwesomeIcon
-          icon={faHistory}
+          icon="history"
           className="transaction-icon h-margin-medium"
         />
         {t("parts.transaction-list.recent-transactions")}

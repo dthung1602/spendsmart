@@ -1,11 +1,9 @@
-import iconMapping from "./icons";
-import { IconName } from "./icons";
+import commonIcons from "./icons";
 
 import stemString from "./stem";
 import { categoriesToSelectOptions, sortCategory } from "./category";
 
-export { iconMapping, stemString, sortCategory, categoriesToSelectOptions };
-export type { IconName };
+export { commonIcons, stemString, sortCategory, categoriesToSelectOptions };
 
 export const formatMoney = (n: number): string => {
   const str = n % 1 === 0 ? n.toString() : n.toFixed(2);

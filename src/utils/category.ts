@@ -1,6 +1,5 @@
-import { Category, initDB } from "../database";
+import { Category } from "../database";
 import { VerticalScrollSelectOptionValue } from "../components";
-import icons, { IconName } from "./icons";
 
 export const sortCategory = (categories: Category[]): Category[] => {
   const idToTitleMapping = new Map<number | undefined, string>();
@@ -23,7 +22,7 @@ export const categoriesToSelectOptions = (
   return categories.map(({ id, title, parentId, icon }) => ({
     displayText: title,
     value: id,
-    icon: icons[icon as IconName],
+    icon,
     nested: parentId !== undefined,
   }));
 };

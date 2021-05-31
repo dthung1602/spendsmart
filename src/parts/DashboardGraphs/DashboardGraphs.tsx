@@ -1,6 +1,7 @@
 import React from "react";
-import "./DashboardGraphs.less";
+
 import { Tab, WorkInProgress } from "../../components";
+import "./DashboardGraphs.less";
 
 function DashboardGraphs(): JSX.Element {
   return (

@@ -1,18 +1,13 @@
 import React, { useState, useEffect, MouseEventHandler } from "react";
-
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 
-import { Transaction, transactionDataStore } from "../../../database";
 import { notify } from "../../../components";
 import { publish } from "../../../pubsub";
-import { formatMoney, iconMapping } from "../../../utils";
+import { Transaction, transactionDataStore } from "../../../database";
+import { formatMoney } from "../../../utils";
 import { useTranslation } from "../../../utils/hooks";
-
 import "./TransactionRow.less";
-
-type TransactionIconName = keyof typeof iconMapping;
 
 interface TransactionRowProps {
   transaction: Transaction;
@@ -27,8 +22,7 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
     setDeleteConfirm(false);
   }, [expand]);
 
-  const icon =
-    iconMapping[transaction.categoriesIcons[0] as TransactionIconName];
+  const icon = transaction.categoriesIcons[0];
 
   const deleteTransaction: MouseEventHandler = (event) => {
     event.stopPropagation();
@@ -72,11 +66,7 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
       {expand ? (
         <div className="transaction-footer">
           <div className="btn-error" onClick={deleteTransaction}>
-            <FontAwesomeIcon
-              icon={faTrash}
-              size="lg"
-              className="h-margin-wide"
-            />
+            <FontAwesomeIcon icon="trash" size="lg" className="h-margin-wide" />
             {deleteConfirm
               ? t("parts.transaction-row.delete-confirm")
               : t("common.delete")}
@@ -88,4 +78,4 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
 }
 
 export default TransactionRow;
-export type { TransactionRowProps, TransactionIconName };
+export type { TransactionRowProps };

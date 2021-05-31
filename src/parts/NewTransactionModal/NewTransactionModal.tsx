@@ -1,9 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import {
-  faAngleDoubleDown,
-  faAngleDoubleUp,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
 
 import {
   Accordion,
@@ -98,12 +93,12 @@ function NewTransactionModal({
       key="more"
       theme="info"
       size="large"
-      icon={expand ? "faAngleDoubleDown" : "faAngleDoubleUp"}
+      icon={expand ? "angle-double-down" : "angle-double-up"}
       onClick={() => setExpand(!expand)}
     >
       {expand ? t("common.less") : t("common.more")}
     </Button>,
-    <Button key="add" theme="success" size="large" icon="faPlus" onClick={add}>
+    <Button key="add" theme="success" size="large" icon="plus" onClick={add}>
       {t("common.add")}
     </Button>,
   ];
@@ -142,6 +137,7 @@ function NewTransactionModal({
           <Switch
             checked={isUnexpected}
             onClick={() => setIsUnexpected(!isUnexpected)}
+            theme="light"
             style={{ justifySelf: "end" }}
           />
           <label>{t("common.datetime")}</label>

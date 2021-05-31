@@ -7,7 +7,6 @@ export { default as TransactionList } from "./TransactionList";
 export type {
   TransactionListProps,
   TransactionRowProps,
-  TransactionIconName,
 } from "./TransactionList";
 export { default as DashboardGraphs } from "./DashboardGraphs";
 export { default as GeneralSettings } from "./GeneralSettings";

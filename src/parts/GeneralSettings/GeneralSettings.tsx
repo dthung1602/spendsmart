@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Affix, ButtonGroupSelect } from "../../components";
 import { useTranslation } from "../../utils/hooks";
@@ -12,21 +12,15 @@ function GeneralSettings(): JSX.Element {
   const [placement, setPlacement] = useState<CurrencyPlacement>(
     localStorage.currencyPlacement
   );
-  const symbolRef = useRef<HTMLInputElement>(null);
+  const [symbol, setSymbol] = useState<string>(localStorage.currencySymbol);
 
   useEffect(() => {
     localStorage.currencyPlacement = placement;
   }, [placement]);
 
   useEffect(() => {
-    if (symbolRef.current) {
-      symbolRef.current.value = localStorage.currencySymbol;
-    }
-  }, []);
-
-  const setSymbol = () => {
-    localStorage.currencySymbol = symbolRef?.current?.value || "$";
-  };
+    localStorage.currencySymbol = symbol;
+  }, [symbol]);
 
   return (
     <>
@@ -66,8 +60,8 @@ function GeneralSettings(): JSX.Element {
         </div>
         <input
           className="short dark lighter"
-          ref={symbolRef}
-          onBlur={setSymbol}
+          value={symbol}
+          onChange={(event) => setSymbol(event.target.value)}
         />
       </div>
       <div className="setting-row v-padding-wide h-padding-huge">

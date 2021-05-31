@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { IconName } from "@fortawesome/free-solid-svg-icons";
 
 import {
   Button,
@@ -10,7 +11,7 @@ import {
 import { useTranslation } from "../../../utils/hooks";
 import { Category, categoryDataStore } from "../../../database";
 import { GlobalContext } from "../../../GlobalContext";
-import { iconMapping } from "../../../utils";
+import { commonIcons } from "../../../utils";
 import "./CategoryModal.less";
 
 interface CategoryModalProps {
@@ -33,19 +34,21 @@ function CategoryModal({
   const titleInputRef = useRef<HTMLInputElement>(null);
 
   const [title, setTitle] = useState<string>(category.title || "");
-  const [icon, setIcon] = useState<string>(category.icon || "");
+  const [icon, setIcon] = useState<IconName | undefined>(
+    category.icon || undefined
+  );
   const [parentId, setParentId] = useState<number | undefined>(
     category.parentId
   );
 
-  const iconOptions = Object.entries(iconMapping).map(([iconName, icon]) => ({
-    value: iconName,
-    icon: icon,
+  const iconOptions = commonIcons.map((ic) => ({
+    value: ic,
+    icon: ic,
   }));
 
   const parentCategoryOptions = [
     {
-      icon: iconMapping.faBan,
+      icon: "ban" as IconName,
       displayText: t("common.none"),
       nested: false,
       value: undefined,
@@ -119,7 +122,7 @@ function CategoryModal({
   useEffect(() => {
     setTitle(category.title || "");
     setParentId(category.parentId);
-    setIcon(category.icon || "");
+    setIcon(category.icon || undefined);
   }, [category]);
 
   useEffect(() => {
@@ -144,14 +147,16 @@ function CategoryModal({
         <label>{t("parts.category-modal.parent-title")}</label>
         <VerticalScrollSelect
           options={parentCategoryOptions}
-          onSelect={setParentId}
           value={parentId}
+          onSelect={setParentId}
+          textColor="light"
         />
         <label>{t("parts.category-modal.icon")}</label>
         <HorizontalScrollSelect
           options={iconOptions}
           value={icon}
           onSelect={setIcon}
+          textColor="light"
         />
       </div>
     </Modal>

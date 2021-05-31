@@ -44,12 +44,12 @@ function Button({
   }
   className = baseClassName + " " + className;
 
-  const iconElement = icon ? (
+  const iconElement = icon && (
     <FontAwesomeIcon
       icon={icon}
       className={`r-margin-${sizeToPadding[size]}`}
     />
-  ) : undefined;
+  );
 
   return (
     <button className={className} style={style} onClick={onClick}>

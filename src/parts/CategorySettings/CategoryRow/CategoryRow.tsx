@@ -1,12 +1,9 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { BasicJSXProp } from "../../../utils/types";
-import { iconMapping } from "../../../utils";
 import { Category } from "../../../database";
+import { BasicJSXProp } from "../../../utils/types";
 import "./CategoryRow.less";
-
-type CategoryIconName = keyof typeof iconMapping;
 
 interface CategoryRowProps extends BasicJSXProp {
   category: Category;
@@ -18,8 +15,6 @@ function CategoryRow({
   className,
   style,
 }: CategoryRowProps): JSX.Element {
-  const icon = iconMapping[category.icon as CategoryIconName];
-
   return (
     <div
       className={`category-row v-padding-wide h-padding-huge ${className}
@@ -27,7 +22,7 @@ function CategoryRow({
       style={style}
       onClick={onClick}
     >
-      <FontAwesomeIcon icon={icon} />
+      <FontAwesomeIcon icon={category.icon} />
       <span>{category.title}</span>
     </div>
   );

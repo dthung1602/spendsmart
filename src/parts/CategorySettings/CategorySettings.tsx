@@ -12,7 +12,7 @@ function CategorySettings(): JSX.Element {
   const [openedCategory, setOpenedCategory] = useState<Category>(
     new Category({
       title: "",
-      icon: "faNone",
+      icon: "ban",
     })
   );
   const { overlayOpen, setOverlayOpen, allCategories } = useContext(
@@ -26,7 +26,7 @@ function CategorySettings(): JSX.Element {
       cat ||
       new Category({
         title: "",
-        icon: "",
+        icon: undefined,
       });
     setOpenedCategory(cat);
   };
@@ -36,7 +36,7 @@ function CategorySettings(): JSX.Element {
     setOpenedCategory(
       new Category({
         title: "",
-        icon: "faNone",
+        icon: "ban",
       })
     );
   };
@@ -58,7 +58,7 @@ function CategorySettings(): JSX.Element {
         <Button
           theme="success"
           size="medium"
-          icon="faPlus"
+          icon="plus"
           onClick={() => openModal()}
         >
           {t("parts.category-settings.add")}

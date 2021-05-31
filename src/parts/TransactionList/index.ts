@@ -1,8 +1,5 @@
 import TransactionList, { TransactionListProps } from "./TransactionList";
-import {
-  TransactionRowProps,
-  TransactionIconName,
-} from "./TransactionRow/TransactionRow";
+import { TransactionRowProps } from "./TransactionRow/TransactionRow";
 
 export default TransactionList;
-export type { TransactionListProps, TransactionRowProps, TransactionIconName };
+export type { TransactionListProps, TransactionRowProps };

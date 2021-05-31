@@ -35,10 +35,10 @@ function HorizontalScrollSelectOption({
       style={style}
       onClick={onClick}
     >
-      {icon ? (
+      {icon && (
         <FontAwesomeIcon className="h-padding-wide" icon={icon} size="1x" />
-      ) : undefined}
-      {displayText ? <span>{displayText}</span> : undefined}
+      )}
+      {displayText && <span>{displayText}</span>}
     </div>
   );
 }

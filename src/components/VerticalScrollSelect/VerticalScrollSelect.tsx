@@ -19,7 +19,7 @@ interface VerticalScrollSelectOptionValue<T extends Optional<Key>> {
 interface VerticalScrollSelectProp<T extends Optional<Key>>
   extends BasicJSXProp {
   options: VerticalScrollSelectOptionValue<T>[];
-  textColor: VerticalScrollSelectTextColor;
+  textColor?: VerticalScrollSelectTextColor;
   value: T;
   onSelect: (value: T) => void;
 }
@@ -27,8 +27,8 @@ interface VerticalScrollSelectProp<T extends Optional<Key>>
 function VerticalScrollSelect<T extends Optional<Key>>({
   options,
   value,
-  textColor,
   onSelect,
+  textColor = "dark",
   className = "",
   style = {},
 }: VerticalScrollSelectProp<T>): JSX.Element {

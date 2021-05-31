@@ -28,9 +28,9 @@ function VerticalScrollSelectOption({
         ${nested ? "nested" : ""} ${className}`}
       style={style}
     >
-      {icon ? (
+      {icon && (
         <FontAwesomeIcon className="h-padding-wide" icon={icon} size="1x" />
-      ) : undefined}
+      )}
       <span>{displayText}</span>
     </div>
   );

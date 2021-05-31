@@ -1,9 +1,8 @@
 import React from "react";
 
-import "./PageHeaderHighLight.less";
-
 import { formatMoney } from "../../utils";
 import { useTranslation } from "../../utils/hooks";
+import "./PageHeaderHighLight.less";
 
 interface PageHeaderHighLightProps {
   thisWeek: number;
@@ -40,13 +39,13 @@ function PageHeaderHighLight({
           <div className="sub-title small-text">
             {t("parts.page-header-highlight.this-week")}
           </div>
-          <div className="total">{formatMoney(thisWeek)}</div>
+          <div className="total t-margin-medium">{formatMoney(thisWeek)}</div>
         </div>
         <div>
           <div className="sub-title small-text">
             {t("parts.page-header-highlight.this-month")}
           </div>
-          <div className="total">{formatMoney(thisMonth)}</div>
+          <div className="total t-margin-medium">{formatMoney(thisMonth)}</div>
         </div>
       </div>
     </div>

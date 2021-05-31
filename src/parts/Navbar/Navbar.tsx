@@ -1,12 +1,6 @@
 import React, { useContext } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTachometerAlt,
-  faFileMedicalAlt,
-  faBullseye,
-  faTools,
-} from "@fortawesome/free-solid-svg-icons";
 import { useLocation, Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { GlobalContext } from "../../GlobalContext";
 import {
@@ -16,22 +10,23 @@ import {
   ROUTE_TRANSACTIONS,
 } from "../../utils/constants";
 import "./Navbar.less";
+import { IconName } from "@fortawesome/free-solid-svg-icons";
 
-const routeMapping = {
-  [ROUTE_DASHBOARD]: faTachometerAlt,
-  [ROUTE_TRANSACTIONS]: faFileMedicalAlt,
-  [ROUTE_REPORTS]: faBullseye,
-  [ROUTE_SETTINGS]: faTools,
+const routeToIconMapping: Record<string, IconName> = {
+  [ROUTE_DASHBOARD]: "tachometer-alt",
+  [ROUTE_TRANSACTIONS]: "file-medical-alt",
+  [ROUTE_REPORTS]: "bullseye",
+  [ROUTE_SETTINGS]: "tools",
 };
 
 function Navbar(): JSX.Element {
   const { overlayOpen } = useContext(GlobalContext);
   const location = useLocation();
-  const idx = Object.keys(routeMapping).indexOf(location.pathname);
+  const idx = Object.keys(routeToIconMapping).indexOf(location.pathname);
 
   return (
     <div className={`nav-bar ${overlayOpen ? "hide" : ""}`}>
-      {Object.entries(routeMapping).map(([route, icon]) => (
+      {Object.entries(routeToIconMapping).map(([route, icon]) => (
         <Link
           to={route}
           key={route}
