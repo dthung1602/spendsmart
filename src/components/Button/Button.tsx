@@ -10,11 +10,13 @@ import "./Button.less";
 
 type ButtonSize = "large" | "medium" | "small";
 
+type ButtonCorner = "" | "round" | "square";
+
 interface ButtonProps extends BasicJSXPropWithChildren, ThemeableComponent {
   icon?: IconProp;
   size?: ButtonSize;
   block?: boolean;
-  round?: boolean;
+  corner?: ButtonCorner;
 }
 
 const sizeToPadding = {
@@ -29,18 +31,15 @@ function Button({
   tone = "",
   size = "medium",
   block = false,
-  round = false,
+  corner = "",
   className = "",
   style = {},
   onClick = undefined,
   children,
 }: ButtonProps): JSX.Element {
-  let baseClassName = `button padding-${sizeToPadding[size]} ${size} ${theme} ${tone}`;
+  let baseClassName = `button padding-${sizeToPadding[size]} ${size} ${theme} ${tone} ${corner}`;
   if (block) {
     baseClassName += " block";
-  }
-  if (round) {
-    baseClassName += " round";
   }
   className = baseClassName + " " + className;
 
@@ -60,4 +59,4 @@ function Button({
 }
 
 export default Button;
-export type { ButtonProps, ButtonSize };
+export type { ButtonProps, ButtonSize, ButtonCorner };

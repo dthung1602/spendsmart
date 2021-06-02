@@ -2,7 +2,7 @@ import React, { useState, useEffect, MouseEventHandler } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 
-import { notify } from "../../../components";
+import { notify, Button } from "../../../components";
 import { publish } from "../../../pubsub";
 import { Transaction, transactionDataStore } from "../../../database";
 import { formatMoney } from "../../../utils";
@@ -65,12 +65,17 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
       </div>
       {expand ? (
         <div className="transaction-footer">
-          <div className="btn-error" onClick={deleteTransaction}>
+          <Button
+            theme="error"
+            block={true}
+            corner="square"
+            onClick={deleteTransaction}
+          >
             <FontAwesomeIcon icon="trash" size="lg" className="h-margin-wide" />
             {deleteConfirm
               ? t("parts.transaction-row.delete-confirm")
               : t("common.delete")}
-          </div>
+          </Button>
         </div>
       ) : null}
     </div>

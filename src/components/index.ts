@@ -1,3 +1,5 @@
+import { ButtonCorner } from "./Button";
+
 export { default as Accordion } from "./Accordion";
 export type { AccordionProps } from "./Accordion";
 
@@ -5,7 +7,7 @@ export { default as Affix } from "./Affix";
 export type { AffixProps, AffixColor, AffixTone } from "./Affix";
 
 export { default as Button } from "./Button";
-export type { ButtonProps, ButtonSize } from "./Button";
+export type { ButtonProps, ButtonSize, ButtonCorner } from "./Button";
 
 export { default as ButtonGroupSelect } from "./ButtonGroupSelect";
 export type { ButtonGroupSelectProps } from "./ButtonGroupSelect";
@@ -41,3 +43,5 @@ export type {
 } from "./VerticalScrollSelect";
 
 export { default as WorkInProgress } from "./WorkInProgress";
+
+export { default as ScrollToTop } from "./ScrollToTop";

@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { startOfWeek, startOfMonth, subWeeks } from "date-fns/fp";
 
+import { FAB, notify } from "../../components";
 import {
   PageHeaderHighLight,
   NewTransactionModal,
   TransactionList,
   DashboardGraphs,
 } from "../../parts";
-import { FAB, notify } from "../../components";
 import { subscribe } from "../../pubsub";
 import { GlobalContext } from "../../GlobalContext";
 import { Transaction, transactionDataStore } from "../../database";
@@ -76,7 +75,7 @@ function Dashboard(): JSX.Element {
       <DashboardGraphs />
       <TransactionList transactions={recentTransactions} />
       <FAB
-        icon={faPlus}
+        icon="plus"
         theme="success"
         hide={overlayOpen}
         onClick={() => setOverlayOpen(true)}

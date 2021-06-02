@@ -17,9 +17,12 @@ function Switch({
   className = "",
   onClick,
 }: SwitchProps): JSX.Element {
+  console.log(">> ", checked);
   return (
     <div
-      className={`switch ${checked ? "checked" : ""} ${theme} ${className}`}
+      className={`switch ${
+        checked ? "checked" : "unchecked"
+      } ${theme} ${className}`}
       style={style}
       onClick={onClick}
     >

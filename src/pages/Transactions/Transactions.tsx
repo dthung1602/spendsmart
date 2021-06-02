@@ -1,7 +1,7 @@
 import React from "react";
 
-import "./Transactions.less";
 import { WorkInProgress } from "../../components";
+import "./Transactions.less";
 
 function Transactions(): JSX.Element {
   return (

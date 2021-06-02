@@ -8,7 +8,7 @@ import {
 
 import { GlobalContextProvider } from "./GlobalContext";
 import { initDB, localStorage } from "./database";
-import { FullScreenLoading, notify } from "./components";
+import { FullScreenLoading, ScrollToTop, notify } from "./components";
 import { ErrorBoundary } from "./parts";
 import { Navbar } from "./parts";
 import {
@@ -49,6 +49,7 @@ function App(): JSX.Element {
   return (
     <ErrorBoundary>
       <Router>
+        <ScrollToTop />
         <GlobalContextProvider>
           <Suspense fallback={<FullScreenLoading />}>
             {introTourTaken ? (

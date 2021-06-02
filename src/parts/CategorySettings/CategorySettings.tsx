@@ -26,7 +26,7 @@ function CategorySettings(): JSX.Element {
       cat ||
       new Category({
         title: "",
-        icon: undefined,
+        icon: "ban",
       });
     setOpenedCategory(cat);
   };

@@ -11,7 +11,7 @@ import {
 import { useTranslation } from "../../../utils/hooks";
 import { Category, categoryDataStore } from "../../../database";
 import { GlobalContext } from "../../../GlobalContext";
-import { commonIcons } from "../../../utils";
+import { commonIconNames } from "../../../utils";
 import "./CategoryModal.less";
 
 interface CategoryModalProps {
@@ -34,14 +34,12 @@ function CategoryModal({
   const titleInputRef = useRef<HTMLInputElement>(null);
 
   const [title, setTitle] = useState<string>(category.title || "");
-  const [icon, setIcon] = useState<IconName | undefined>(
-    category.icon || undefined
-  );
+  const [icon, setIcon] = useState<IconName>(category.icon);
   const [parentId, setParentId] = useState<number | undefined>(
     category.parentId
   );
 
-  const iconOptions = commonIcons.map((ic) => ({
+  const iconOptions = commonIconNames.map((ic) => ({
     value: ic,
     icon: ic,
   }));
@@ -69,6 +67,7 @@ function CategoryModal({
     <Button
       key="primary-btn"
       theme={action === "update" ? "warning" : "success"}
+      icon={action === "update" ? "pen" : "plus"}
       size="large"
       onClick={() => {
         const cat = new Category({
@@ -102,6 +101,7 @@ function CategoryModal({
       <Button
         theme="error"
         size="large"
+        icon="trash"
         onClick={() => {
           categoryDataStore
             .delete(category)
@@ -126,7 +126,9 @@ function CategoryModal({
   }, [category]);
 
   useEffect(() => {
-    titleInputRef.current?.focus();
+    if (open) {
+      titleInputRef.current?.focus();
+    }
   }, [open]);
 
   return (

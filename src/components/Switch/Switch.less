@@ -14,6 +14,10 @@
   border-radius: calc(@switch-height / 2);
   cursor: pointer;
 
+  &.unchecked {
+    background: lightgray !important;
+  }
+
   .circle {
     border-radius: 50%;
     height: calc(1rem - 2px);
@@ -23,8 +27,10 @@
     transform: translateX(0);
   }
 
-  &.checked.circle {
-    transform: translateX(calc(@switch-circle-diameter + @switch-spacing));
+  &.checked {
+    .circle {
+      transform: translateX(calc(@switch-circle-diameter + @switch-spacing));
+    }
   }
 
   .-check-circle-bg(@i: length(@colors)) when (@i > 0) {

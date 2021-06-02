@@ -47,7 +47,7 @@ function VerticalScrollSelect<T extends Optional<Key>>({
     if (newSelectIdx != selectedIdx) {
       onSelect(options[newSelectIdx].value);
     }
-  }, 200);
+  }, 150);
 
   useEffect(() => {
     if (containerRef.current?.children[0]) {
@@ -63,7 +63,7 @@ function VerticalScrollSelect<T extends Optional<Key>>({
   return (
     <div className="vertical-scroll-select-container">
       <div
-        className={`vertical-scroll-select no-scroll-bar ${className}`}
+        className={`vertical-scroll-select ${className}`}
         style={style}
         onScroll={onScroll}
         ref={containerRef}

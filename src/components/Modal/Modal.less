@@ -32,6 +32,9 @@
 .modal-container {
   transition: @transition-fast;
   transform: translateY(100%);
+
+  border-top-left-radius: @border-radius-round;
+  border-top-right-radius: $border-top-left-radius;
 }
 
 .open .modal-container {
@@ -41,9 +44,6 @@
 .modal-header {
   text-align: center;
   padding: @space-large;
-
-  border-top-left-radius: @border-radius-round;
-  border-top-right-radius: $border-top-left-radius;
 
   svg {
     position: absolute;

@@ -34,7 +34,7 @@ function IntroTour({ onFinishIntroTour }: IntroTourProps): JSX.Element {
           <Button
             theme="light"
             size="large"
-            round={true}
+            corner="round"
             onClick={() => click("en")}
           >
             ENG
@@ -42,7 +42,7 @@ function IntroTour({ onFinishIntroTour }: IntroTourProps): JSX.Element {
           <Button
             theme="light"
             size="large"
-            round={true}
+            corner="round"
             onClick={() => click("vi")}
           >
             VIE
