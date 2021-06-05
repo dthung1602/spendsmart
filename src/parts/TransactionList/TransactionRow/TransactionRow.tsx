@@ -8,9 +8,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 
 import { notify, Button } from "../../../components";
+import Money from "../../Money";
 import { Transaction, transactionDataStore } from "../../../database";
 import { GlobalContext } from "../../../GlobalContext";
-import { formatMoney } from "../../../utils";
 import { useTranslation } from "../../../utils/hooks";
 import "./TransactionRow.less";
 
@@ -46,7 +46,7 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
 
   return (
     <div
-      className="transaction-row small-text"
+      className="transaction-row small-text dark lighter text-light"
       onClick={() => setExpand(!expand)}
     >
       <div className={`transaction-body ${expand ? "expand" : ""}`}>
@@ -58,7 +58,7 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
           {format(transaction.spendDatetime, "Y-M-d")}
         </div>
         <div className="transaction-price">
-          {formatMoney(transaction.price)}
+          <Money value={transaction.price} />
         </div>
         {expand ? (
           <>

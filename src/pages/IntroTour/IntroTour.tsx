@@ -4,7 +4,7 @@ import { Button } from "../../components";
 import { GlobalContext } from "../../GlobalContext";
 import { Language } from "../../utils/types";
 import "./IntroTour.less";
-
+import { localStorage } from "../../database";
 interface IntroTourProps {
   onFinishIntroTour: () => void;
 }
@@ -20,8 +20,14 @@ function IntroTour({ onFinishIntroTour }: IntroTourProps): JSX.Element {
     if (step === "done") onFinishIntroTour();
   }, [step, onFinishIntroTour]);
 
-  const click = (language: Language) => {
+  const click = (
+    language: Language,
+    symbol: string,
+    placement: "after" | "before"
+  ) => {
     setLanguage(language);
+    localStorage.currencySymbol = symbol;
+    localStorage.currencyPlacement = placement;
     setStep("done");
   };
 
@@ -35,7 +41,7 @@ function IntroTour({ onFinishIntroTour }: IntroTourProps): JSX.Element {
             theme="light"
             size="large"
             corner="round"
-            onClick={() => click("en")}
+            onClick={() => click("en", "$", "before")}
           >
             ENG
           </Button>
@@ -43,7 +49,7 @@ function IntroTour({ onFinishIntroTour }: IntroTourProps): JSX.Element {
             theme="light"
             size="large"
             corner="round"
-            onClick={() => click("vi")}
+            onClick={() => click("vi", "đ", "after")}
           >
             VIE
           </Button>

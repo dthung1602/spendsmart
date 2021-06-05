@@ -99,7 +99,13 @@ function CategoryModal({
 
   if (action === "update" && !categoryHasChildren) {
     footer.push(
-      <Button theme="error" size="large" icon="trash" onClick={deleteCategory}>
+      <Button
+        key="left-btn"
+        theme="error"
+        size="large"
+        icon="trash"
+        onClick={deleteCategory}
+      >
         {t("common.delete")}
       </Button>
     );
@@ -107,7 +113,7 @@ function CategoryModal({
 
   footer.push([
     <Button
-      key="primary-btn"
+      key="right-btn"
       theme={action === "update" ? "warning" : "success"}
       icon={action === "update" ? "pen" : "plus"}
       size="large"
@@ -149,14 +155,14 @@ function CategoryModal({
           options={parentCategoryOptions}
           value={parentId}
           onSelect={setParentId}
-          textColor="light"
+          textColor="dark"
         />
         <label>{t("parts.category-modal.icon")}</label>
         <HorizontalScrollSelect
           options={iconOptions}
           value={icon}
           onSelect={setIcon}
-          textColor="light"
+          textColor="dark"
         />
       </div>
     </Modal>

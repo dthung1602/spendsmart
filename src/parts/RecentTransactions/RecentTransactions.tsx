@@ -29,7 +29,7 @@ function RecentTransactions(): JSX.Element {
 
   return (
     <>
-      <div className="sub-title v-margin-large h-margin-medium">
+      <div className="sub-title v-margin-large h-margin-medium text-light">
         <FontAwesomeIcon
           icon="history"
           className="transaction-icon h-margin-medium"

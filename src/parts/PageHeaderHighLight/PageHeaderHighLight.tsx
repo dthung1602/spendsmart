@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-
-import { formatMoney } from "../../utils";
-import { useTranslation } from "../../utils/hooks";
-import "./PageHeaderHighLight.less";
-import { transactionDataStore } from "../../database";
 import { startOfMonth, startOfWeek } from "date-fns/fp";
+
 import { notify } from "../../components";
+import Money from "../Money";
+import { useTranslation } from "../../utils/hooks";
+import { transactionDataStore } from "../../database";
 import { GlobalContext } from "../../GlobalContext";
+import "./PageHeaderHighLight.less";
 
 interface PageHeaderHighLightProps {
   thisWeek: number;
@@ -65,7 +65,7 @@ function PageHeaderHighLight(): JSX.Element {
             {t("parts.page-header-highlight.this-week")}
           </div>
           <div className="total t-margin-medium">
-            {formatMoney(thisWeekSum)}
+            <Money value={thisWeekSum} />
           </div>
         </div>
         <div>
@@ -73,7 +73,7 @@ function PageHeaderHighLight(): JSX.Element {
             {t("parts.page-header-highlight.this-month")}
           </div>
           <div className="total t-margin-medium">
-            {formatMoney(thisMonthSum)}
+            <Money value={thisMonthSum} />
           </div>
         </div>
       </div>

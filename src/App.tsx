@@ -8,8 +8,12 @@ import {
 
 import { GlobalContextProvider } from "./GlobalContext";
 import { initDB, localStorage } from "./database";
-import { FullScreenLoading, ScrollToTop, notify } from "./components";
-import { ErrorBoundary } from "./parts";
+import {
+  FullScreenLoading,
+  ScrollToTop,
+  ErrorBoundary,
+  notify,
+} from "./components";
 import { Navbar } from "./parts";
 import {
   ROUTE_DASHBOARD,
@@ -19,6 +23,7 @@ import {
   ROUTE_TRANSACTIONS,
 } from "./utils/constants";
 
+// TODO Consider removing lazy loading
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
 const IntroTourPage = lazy(() => import("./pages/IntroTour"));
 const NotFoundPage = lazy(() => import("./pages/NotFound"));
