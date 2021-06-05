@@ -17,7 +17,6 @@ function Switch({
   className = "",
   onClick,
 }: SwitchProps): JSX.Element {
-  console.log(">> ", checked);
   return (
     <div
       className={`switch ${

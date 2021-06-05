@@ -1,10 +1,15 @@
-import React, { useState, useEffect, MouseEventHandler } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  MouseEventHandler,
+} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 
 import { notify, Button } from "../../../components";
-import { publish } from "../../../pubsub";
 import { Transaction, transactionDataStore } from "../../../database";
+import { GlobalContext } from "../../../GlobalContext";
 import { formatMoney } from "../../../utils";
 import { useTranslation } from "../../../utils/hooks";
 import "./TransactionRow.less";
@@ -17,6 +22,7 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
   const { t } = useTranslation();
   const [expand, setExpand] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const { emitTransactionChange } = useContext(GlobalContext);
 
   useEffect(() => {
     setDeleteConfirm(false);
@@ -30,7 +36,7 @@ function TransactionRow({ transaction }: TransactionRowProps): JSX.Element {
       transactionDataStore
         .delete(transaction)
         .then(() => {
-          publish("transaction-deleted", transaction);
+          emitTransactionChange({ type: "delete", transaction });
         })
         .catch((e) => notify(String(e), "error"));
     } else {

@@ -39,7 +39,7 @@ function GeneralSettings(): JSX.Element {
         <ButtonGroupSelect
           theme="dark"
           tone="lighter"
-          size="large"
+          size="medium"
           options={[
             {
               displayText: "en",
@@ -71,7 +71,7 @@ function GeneralSettings(): JSX.Element {
         <ButtonGroupSelect
           theme="dark"
           tone="lighter"
-          size="large"
+          size="medium"
           options={[
             {
               displayText: t("parts.general-settings.before"),

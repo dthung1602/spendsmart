@@ -12,3 +12,4 @@ export { default as DashboardGraphs } from "./DashboardGraphs";
 export { default as GeneralSettings } from "./GeneralSettings";
 export { default as CategorySettings } from "./CategorySettings";
 export { default as ErrorBoundary } from "./ErrorBoundary";
+export { default as RecentTransactions } from "./RecentTransactions";

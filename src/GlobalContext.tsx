@@ -2,12 +2,22 @@ import React, { createContext, useState, useEffect } from "react";
 
 import type { Language } from "./utils/types";
 
-import { Category, categoryDataStore, localStorage } from "./database";
+import {
+  Category,
+  Transaction,
+  categoryDataStore,
+  localStorage,
+} from "./database";
 import { categoriesToSelectOptions } from "./utils";
 import type { VerticalScrollSelectOptionValue } from "./components";
 
 interface GlobalContextProps {
   children: JSX.Element;
+}
+
+interface TransactionChange {
+  type: "create" | "delete";
+  transaction: Transaction;
 }
 
 /* eslint-disable @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars */
@@ -19,6 +29,8 @@ const defaultContextValue = {
   allCategories: [] as Category[],
   reloadCategories: () => {},
   categoryOptions: [] as VerticalScrollSelectOptionValue<number>[],
+  changedTransaction: null as TransactionChange | null,
+  emitTransactionChange: (change: TransactionChange) => {},
 } as const;
 /* eslint-enable @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars */
 
@@ -33,6 +45,12 @@ function GlobalContextProvider(props: GlobalContextProps): JSX.Element {
   );
   const [allCategories, setAllCategories] = useState<Category[]>(
     defaultContextValue.allCategories
+  );
+  const [
+    changedTransaction,
+    emitTransactionChange,
+  ] = useState<TransactionChange | null>(
+    defaultContextValue.changedTransaction
   );
 
   const categoryOptions = categoriesToSelectOptions(allCategories);
@@ -57,6 +75,8 @@ function GlobalContextProvider(props: GlobalContextProps): JSX.Element {
     allCategories,
     reloadCategories,
     categoryOptions,
+    changedTransaction,
+    emitTransactionChange,
   };
 
   return (

@@ -5,12 +5,9 @@ function ScrollToTop(): JSX.Element {
   const history = useHistory();
 
   useEffect(() => {
-    const unlisten = history.listen(() => {
+    return history.listen(() => {
       setTimeout(() => window.scrollTo(0, 0), 200);
     });
-    return () => {
-      unlisten();
-    };
   });
 
   return <></>;

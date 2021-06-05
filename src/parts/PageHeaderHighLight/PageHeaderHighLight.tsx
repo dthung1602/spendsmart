@@ -1,19 +1,44 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { formatMoney } from "../../utils";
 import { useTranslation } from "../../utils/hooks";
 import "./PageHeaderHighLight.less";
+import { transactionDataStore } from "../../database";
+import { startOfMonth, startOfWeek } from "date-fns/fp";
+import { notify } from "../../components";
+import { GlobalContext } from "../../GlobalContext";
 
 interface PageHeaderHighLightProps {
   thisWeek: number;
   thisMonth: number;
 }
 
-function PageHeaderHighLight({
-  thisWeek,
-  thisMonth,
-}: PageHeaderHighLightProps): JSX.Element {
+function PageHeaderHighLight(): JSX.Element {
   const { t } = useTranslation();
+  const [thisWeekSum, setThisWeekSum] = useState(0);
+  const [thisMonthSum, setThisMonthSum] = useState(0);
+  const { changedTransaction } = useContext(GlobalContext);
+
+  const now = new Date();
+
+  useEffect(() => {
+    transactionDataStore
+      .find({ spendDatetime: { $gte: startOfWeek(now) } })
+      .then((trans) => {
+        setThisWeekSum(
+          trans.map((t) => t.price).reduce((acc, val) => acc + val, 0)
+        );
+      })
+      .catch((e) => notify(String(e), "error"));
+    transactionDataStore
+      .find({ spendDatetime: { $gte: startOfMonth(now) } })
+      .then((trans) => {
+        setThisMonthSum(
+          trans.map((t) => t.price).reduce((acc, val) => acc + val, 0)
+        );
+      })
+      .catch((e) => notify(String(e), "error"));
+  }, [changedTransaction]);
 
   return (
     <div className="page-header-highlight">
@@ -39,13 +64,17 @@ function PageHeaderHighLight({
           <div className="sub-title small-text">
             {t("parts.page-header-highlight.this-week")}
           </div>
-          <div className="total t-margin-medium">{formatMoney(thisWeek)}</div>
+          <div className="total t-margin-medium">
+            {formatMoney(thisWeekSum)}
+          </div>
         </div>
         <div>
           <div className="sub-title small-text">
             {t("parts.page-header-highlight.this-month")}
           </div>
-          <div className="total t-margin-medium">{formatMoney(thisMonth)}</div>
+          <div className="total t-margin-medium">
+            {formatMoney(thisMonthSum)}
+          </div>
         </div>
       </div>
     </div>

@@ -8,7 +8,6 @@ import {
   VerticalScrollSelect,
   Button,
 } from "../../components";
-import { publish } from "../../pubsub";
 import { useTranslation } from "../../utils/hooks";
 import { GlobalContext } from "../../GlobalContext";
 import { Category, Transaction, transactionDataStore } from "../../database";
@@ -24,7 +23,9 @@ function NewTransactionModal({
   onClose,
 }: NewTransactionModalProps): JSX.Element {
   const { t } = useTranslation();
-  const { allCategories, categoryOptions } = useContext(GlobalContext);
+  const { allCategories, categoryOptions, emitTransactionChange } = useContext(
+    GlobalContext
+  );
   const priceInputRef = useRef<HTMLInputElement>(null);
 
   const [expand, setExpand] = useState<boolean>(false);
@@ -83,7 +84,7 @@ function NewTransactionModal({
       .then(() => {
         close();
         notify(t("parts.new-transaction-modal.added"), "success");
-        publish("transaction-added", transaction);
+        emitTransactionChange({ type: "create", transaction });
       })
       .catch((e) => notify(String(e), "error"));
   };

@@ -63,61 +63,59 @@ function CategoryModal({
     onClose();
   };
 
-  const footer = [
-    <Button
-      key="primary-btn"
-      theme={action === "update" ? "warning" : "success"}
-      icon={action === "update" ? "pen" : "plus"}
-      size="large"
-      onClick={() => {
-        const cat = new Category({
-          ...(category ? category : {}),
-          title,
-          icon,
-          parentId,
-        });
-        categoryDataStore[action](cat)
-          .then(() => {
-            close(action);
-          })
-          .catch((e) => {
-            console.log(e);
-            notify(String(e), "error");
-          });
-      }}
-    >
-      {t(`common.${action}`)}
-    </Button>,
-  ];
+  const addOrUpdateCategory = () => {
+    const cat = new Category({
+      ...category,
+      title,
+      icon,
+      parentId,
+    });
+    categoryDataStore[action](cat)
+      .then(() => {
+        close(action);
+      })
+      .catch((e) => {
+        notify(String(e), "error");
+      });
+  };
+
+  const deleteCategory = () => {
+    categoryDataStore
+      .delete(category)
+      .then(() => {
+        close("delete");
+      })
+      .catch((e) => {
+        console.log(e);
+        notify(String(e), "error");
+      });
+  };
+
+  const footer: React.ReactNode[] = [];
 
   const categoryHasChildren = Boolean(
     allCategories.find((cat) => cat.parentId === category.id)
   );
 
   if (action === "update" && !categoryHasChildren) {
-    footer.splice(
-      0,
-      0,
-      <Button
-        theme="error"
-        size="large"
-        icon="trash"
-        onClick={() => {
-          categoryDataStore
-            .delete(category)
-            .then(() => {
-              close("delete");
-            })
-            .catch((e) => {
-              console.log(e);
-              notify(String(e), "error");
-            });
-        }}
-      >
+    footer.push(
+      <Button theme="error" size="large" icon="trash" onClick={deleteCategory}>
         {t("common.delete")}
       </Button>
     );
   }
+
+  footer.push([
+    <Button
+      key="primary-btn"
+      theme={action === "update" ? "warning" : "success"}
+      icon={action === "update" ? "pen" : "plus"}
+      size="large"
+      onClick={addOrUpdateCategory}
+    >
+      {t(`common.${action}`)}
+    </Button>,
+  ]);
 
   useEffect(() => {
     setTitle(category.title || "");
