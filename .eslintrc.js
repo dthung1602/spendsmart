@@ -8,6 +8,7 @@ module.exports = {
     ".eslintrc.js",
     "craco.config.js",
     "node_module/**",
+    "serve.js",
     "*foo*",
     "**/*foo*"
   ],

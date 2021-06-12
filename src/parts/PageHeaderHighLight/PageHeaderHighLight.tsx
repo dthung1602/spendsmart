@@ -19,9 +19,8 @@ function PageHeaderHighLight(): JSX.Element {
   const [thisMonthSum, setThisMonthSum] = useState(0);
   const { changedTransaction } = useContext(GlobalContext);
 
-  const now = new Date();
-
   useEffect(() => {
+    const now = new Date();
     transactionDataStore
       .find({ spendDatetime: { $gte: startOfWeek(now) } })
       .then((trans) => {
