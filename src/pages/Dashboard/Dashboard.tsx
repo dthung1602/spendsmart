@@ -5,7 +5,6 @@ import {
   DashboardGraphs,
   NewTransactionModal,
   PageHeaderHighLight,
-  RecentTransactions,
 } from "../../parts";
 import { GlobalContext } from "../../GlobalContext";
 import "./Dashboard.less";
@@ -17,7 +16,6 @@ function Dashboard(): JSX.Element {
     <div className="page dashboard-page">
       <PageHeaderHighLight />
       <DashboardGraphs />
-      <RecentTransactions />
       <FAB
         icon="plus"
         theme="success"
