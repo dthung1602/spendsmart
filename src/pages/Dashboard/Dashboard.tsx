@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 
 import { FAB } from "../../components";
 import {
-  DashboardGraphs,
   NewTransactionModal,
   PageHeaderHighLight,
   RecentTransactions,
@@ -16,7 +15,6 @@ function Dashboard(): JSX.Element {
   return (
     <div className="page dashboard-page">
       <PageHeaderHighLight />
-      <DashboardGraphs />
       <RecentTransactions />
       <FAB
         icon="plus"
