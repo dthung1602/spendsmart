@@ -46,6 +46,10 @@ import {
   faTimesCircle,
   faPen,
   faHistory,
+  faInfoCircle,
+  faCheckCircle,
+  faExclamationCircle,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
@@ -96,6 +100,10 @@ const commonIcons = {
   faTimesCircle,
   faPen,
   faHistory,
+  faInfoCircle,
+  faCheckCircle,
+  faExclamationCircle,
+  faTimes,
 };
 
 library.add(...Array.from(Object.values(commonIcons)));

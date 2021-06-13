@@ -68,7 +68,6 @@ class Transaction extends AbstractModel {
 
   constructor(data: TransactionConstructorArgument) {
     super(data.id);
-    console.log(data);
     const now = new Date();
 
     this.createdAt = data.createdAt || now;
@@ -82,11 +81,6 @@ class Transaction extends AbstractModel {
     if (data.categories) {
       this.categories = data.categories;
     } else {
-      console.log({
-        t: data.categoriesTitles,
-        p: data.categoriesParentIds,
-        i: data.categoriesIcons,
-      });
       this.categories = data.categoriesTitles.map(
         (title, i) =>
           new Category({

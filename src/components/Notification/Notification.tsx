@@ -24,7 +24,7 @@ const iconMappings: { [K in ThemeColor]: IconName } = {
   info: "info-circle",
   success: "check-circle",
   warning: "exclamation-circle",
-  error: "times-circle",
+  error: "times",
   dark: "info-circle",
   light: "info-circle",
 };
@@ -46,7 +46,7 @@ function Notification({
     let tid: ReturnType<typeof setTimeout>;
 
     if (state === "init") {
-      setState("showing");
+      tid = setTimeout(() => setState("showing"), 200);
     } else if (state === "showing") {
       if (time) {
         tid = setTimeout(() => setState("closing"), time);

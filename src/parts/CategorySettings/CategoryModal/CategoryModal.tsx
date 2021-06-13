@@ -86,7 +86,6 @@ function CategoryModal({
         close("delete");
       })
       .catch((e) => {
-        console.log(e);
         notify(String(e), "error");
       });
   };
