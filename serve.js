@@ -10,12 +10,18 @@ const express = require("express");
 const staticGZIP = require("express-static-gzip");
 
 const port = process.env.PORT || 3000;
-const buildDir = path.join(__dirname, "build")
+const buildDir = path.join(__dirname, "build");
 const frontendBuildIndex = path.join(buildDir, "index.html");
 
 const app = express();
 
 app.set("port", port);
+app.enable("trust proxy");
+
+if (process.env.NODE_ENV === "production") {
+  app.use(enforceHTTPS);
+}
+
 app.use("/", staticGZIP(buildDir));
 app.get("*", (req, res) => {
   res.sendFile(frontendBuildIndex);
@@ -27,6 +33,16 @@ const server = http.createServer(app);
 server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
+
+function enforceHTTPS(req, res, next) {
+  if (req.secure) {
+    next();
+  } else if (req.method === "GET") {
+    res.redirect(301, "https://" + req.headers.host + req.originalUrl);
+  } else {
+    res.send(403, "Please use HTTPS when submitting data to this server.");
+  }
+}
 
 function onError(error) {
   if (error.syscall !== "listen") {

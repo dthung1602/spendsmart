@@ -1,6 +1,6 @@
 {
   "name": "spendsmart",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.1.1",
