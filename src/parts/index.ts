@@ -1,15 +1,25 @@
+export { default as CategorySettings } from "./CategorySettings";
+
+export { default as DashboardGraphs } from "./DashboardGraphs";
+
+export { default as GeneralSettings } from "./GeneralSettings";
+
 export { default as Navbar } from "./Navbar";
+
 export { default as NewTransactionModal } from "./NewTransactionModal";
 export type { NewTransactionModalProps } from "./NewTransactionModal";
+
 export { default as PageHeaderHighLight } from "./PageHeaderHighLight";
 export type { PageHeaderHighLightProps } from "./PageHeaderHighLight";
+
+export { default as RecentTransactions } from "./RecentTransactions";
+
+export { default as TransactionFilter } from "./TransactionFilter";
+
 export { default as TransactionList } from "./TransactionList";
 export type {
   TransactionListProps,
   TransactionRowProps,
 } from "./TransactionList";
-export { default as DashboardGraphs } from "./DashboardGraphs";
-export { default as GeneralSettings } from "./GeneralSettings";
-export { default as CategorySettings } from "./CategorySettings";
-export { default as RecentTransactions } from "./RecentTransactions";
+
 export { default as Money } from "./Money";

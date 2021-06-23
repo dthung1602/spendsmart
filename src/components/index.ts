@@ -12,6 +12,8 @@ export type { ButtonProps, ButtonSize, ButtonCorner } from "./Button";
 export { default as ButtonGroupSelect } from "./ButtonGroupSelect";
 export type { ButtonGroupSelectProps } from "./ButtonGroupSelect";
 
+export { default as DateInput } from "./DateInput";
+
 export { default as ErrorBoundary } from "./ErrorBoundary";
 
 export { default as FAB } from "./FAB";
