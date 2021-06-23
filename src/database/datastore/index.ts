@@ -15,20 +15,24 @@ class Datastore<Model extends AbstractModel> {
   constructor(
     protected readonly ModelClass: ModelClass<Model>,
     protected readonly objectStoreName: string,
-    protected dbFactory: () => Promise<IDBDatabase>
+    protected readonly dbFactory: () => Promise<IDBDatabase>
   ) {}
 
   public findAll(): Promise<Model[]> {
-    return this.find({});
+    return this.find({} as Readonly<Record<never, never>>);
   }
 
-  public findOne(filters: FilterObject<Model>): Promise<Optional<Model>> {
+  public findOne(
+    filters: Readonly<FilterObject<Model>>
+  ): Promise<Optional<Model>> {
     return this.find({ ...filters, $limit: 1, $skip: 0 }).then(
       (objs) => objs[0]
     );
   }
 
-  public find(filters: FilterObject<Model>): Promise<Model[]> {
+  public find(filters: Readonly<FilterObject<Model>>): Promise<Model[]> {
+    filters = cloneDeep(filters);
+
     return new Promise((resolve, reject) => {
       this.dbFactory()
         .then((db) => {
@@ -92,6 +96,14 @@ class Datastore<Model extends AbstractModel> {
   }
 
   public create(object: Model): Promise<Optional<Model>> {
+    return this.put(object);
+  }
+
+  public update(object: Model): Promise<Optional<Model>> {
+    return this.put(object);
+  }
+
+  private put(object: Model): Promise<Optional<Model>> {
     return new Promise((resolve, reject) => {
       this.dbFactory()
         .then((db) => {
@@ -110,10 +122,6 @@ class Datastore<Model extends AbstractModel> {
         })
         .catch(() => reject(new DBError("Cannot find IndexedDB")));
     });
-  }
-
-  public update(object: Model): Promise<Optional<Model>> {
-    return this.create(object);
   }
 
   public delete(object: Model): Promise<void> {
@@ -172,3 +180,4 @@ class Datastore<Model extends AbstractModel> {
 }
 
 export default Datastore;
+export type { FilterObject };
