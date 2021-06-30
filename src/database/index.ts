@@ -3,7 +3,7 @@ import { IDBResultEvent } from "../utils/types";
 import { DBError } from "../utils/errors";
 import migrate from "./migrations";
 import localStorage from "./localstorage";
-import Datastore, { FilterObject } from "./datastore";
+import Datastore, { FilterObject, Pagination } from "./datastore";
 import { Category, Transaction } from "./models";
 
 let resolveDB: (db: IDBDatabase) => void;
@@ -46,4 +46,4 @@ export {
   Transaction,
 };
 
-export type { FilterObject };
+export type { FilterObject, Pagination };

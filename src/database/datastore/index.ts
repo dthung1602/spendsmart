@@ -7,7 +7,12 @@ import { DBError } from "../../utils/errors";
 import { stemString } from "../../utils";
 
 import { Optional, IDBResultEvent } from "../../utils/types";
-import type { FilterObject, SelectedIndex, ModelClass } from "./type";
+import type {
+  FilterObject,
+  SelectedIndex,
+  ModelClass,
+  Pagination,
+} from "./type";
 
 // https://www.codeproject.com/Articles/744986/How-to-do-some-magic-with-indexedDB
 // TODO some agg
@@ -180,4 +185,4 @@ class Datastore<Model extends AbstractModel> {
 }
 
 export default Datastore;
-export type { FilterObject };
+export type { FilterObject, Pagination };

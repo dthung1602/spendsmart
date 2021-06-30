@@ -34,6 +34,7 @@ module.exports = {
     },
   },
   rules: {
+    "prettier/prettier": "warn",
     "react/prop-types": 0,
     "@typescript-eslint/no-empty-interface": 0,
     "no-prototype-builtins": 0

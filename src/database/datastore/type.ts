@@ -38,4 +38,10 @@ type ComparableQuery<Model> = {
 
 type FilterObject<Model> = ComparableQuery<Model> & TextQuery & Pagination;
 
-export type { FilterObject, ComparableQuery, SelectedIndex, ModelClass };
+export type {
+  FilterObject,
+  ComparableQuery,
+  SelectedIndex,
+  ModelClass,
+  Pagination,
+};

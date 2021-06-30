@@ -1,31 +1,25 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { subWeeks } from "date-fns/fp";
 
 import TransactionList from "../TransactionList";
 import { notify } from "../../components";
-import { GlobalContext } from "../../GlobalContext";
-import { Transaction, transactionDataStore } from "../../database";
-import { useTranslation } from "../../utils/hooks";
+import { transactionDataStore } from "../../database";
+import { useTransactionList, useTranslation } from "../../utils/hooks";
 import "./RecentTransactions.less";
 
 const subOneWeek = subWeeks(1);
 
 function RecentTransactions(): JSX.Element {
   const { t } = useTranslation();
-  const [recentTransactions, setRecentTransactions] = useState<Transaction[]>(
-    []
-  );
-  const { changedTransaction } = useContext(GlobalContext);
+  const [recentTransactions, setRecentTransactions] = useTransactionList();
 
   useEffect(() => {
     transactionDataStore
       .find({ spendDatetime: { $gte: subOneWeek(new Date()) } })
-      .then((trans) => {
-        setRecentTransactions(trans);
-      })
+      .then(setRecentTransactions)
       .catch((e) => notify(String(e), "error"));
-  }, [changedTransaction]);
+  }, []);
 
   return (
     <>

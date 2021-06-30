@@ -1,26 +1,23 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 
 import { notify } from "../../components";
 import { TransactionFilter, TransactionList } from "../../parts";
-import { GlobalContext } from "../../GlobalContext";
-import {
-  Transaction,
-  FilterObject,
-  transactionDataStore,
-} from "../../database";
+import { useTransactionList, useTransactionFilter } from "../../utils/hooks";
 import "./Transactions.less";
+import { transactionDataStore } from "../../database";
+
+const PAGE_SIZE = 12;
 
 function Transactions(): JSX.Element {
-  const [filter, setFilter] = useState<FilterObject<Transaction>>({});
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const { changedTransaction } = useContext(GlobalContext);
+  const [filter, setFilter, setPage] = useTransactionFilter(PAGE_SIZE);
+  const [transactions, setTransactions] = useTransactionList();
 
   useEffect(() => {
     transactionDataStore
       .find(filter)
       .then(setTransactions)
       .catch((e) => notify(String(e), "error"));
-  }, [filter, changedTransaction]);
+  }, [filter]);
 
   return (
     <div className="page transactions-page">
