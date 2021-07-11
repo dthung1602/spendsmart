@@ -1,15 +1,16 @@
 import { useRef, useState } from "react";
 
 import { FilterObject, QueryObject, Transaction } from "../../database";
+import type { ReactSetter } from "../types";
 
 type TransFil = FilterObject<Transaction>;
 type TransQr = QueryObject<Transaction>;
 type UseTransactionFilterReturn = {
   filter: TransFil;
   query: TransQr;
-  setQuery: (q: TransQr) => void;
+  setQuery: ReactSetter<TransQr>;
   page: number;
-  setPage: (p: number) => void;
+  setPage: ReactSetter<number>;
 };
 
 function useTransactionFilter(pageSize?: number): UseTransactionFilterReturn {
@@ -21,23 +22,26 @@ function useTransactionFilter(pageSize?: number): UseTransactionFilterReturn {
     $limit: pageSize,
   });
 
-  function setQuery(newQuery: TransQr) {
+  const setQuery: ReactSetter<TransQr> = (arg) => {
+    const newQuery = typeof arg === "function" ? arg(query.current) : arg;
     query.current = newQuery;
+    page.current = 0;
     setFilter({
       ...newQuery,
       $skip: 0,
       $limit: pageSize,
     });
-  }
+  };
 
-  function setPage(newPage: number) {
+  const setPage: ReactSetter<number> = (arg) => {
+    const newPage = typeof arg === "function" ? arg(page.current) : arg;
     page.current = newPage;
     setFilter({
       ...filter,
       $skip: pageSize === undefined ? undefined : pageSize * newPage,
       $limit: pageSize,
     });
-  }
+  };
 
   return {
     filter,
