@@ -1,5 +1,5 @@
 import React, { ChangeEventHandler, useContext } from "react";
-import { cloneDeep, get, set, omit } from "lodash";
+import { cloneDeep, get, set, omit, debounce } from "lodash";
 
 import { Affix } from "../../components";
 import { GlobalContext } from "../../GlobalContext";
@@ -77,7 +77,7 @@ function TransactionFilter({
           </option>
         ))}
       </select>
-      <input value={filter.$text} onChange={onChange("$text")} />
+      <input onChange={debounce(onChange("$text"), 300)} />
     </Affix>
   );
 }

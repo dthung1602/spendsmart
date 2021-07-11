@@ -19,9 +19,10 @@ function Transactions(): JSX.Element {
   const [allFetched, setAllFetched] = useState(false);
   const [transactions, setTransactions] = useTransactionList();
 
-  const debouncedFilter = useDebounce(filter, 300);
+  const debouncedFilter = filter;
 
   useEffect(() => {
+    console.log({ debouncedFilter, page });
     transactionDataStore
       .find(debouncedFilter)
       .then((newTrans) => {
