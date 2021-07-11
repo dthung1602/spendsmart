@@ -77,6 +77,7 @@ function TransactionFilter({
           </option>
         ))}
       </select>
+      <input value={filter.$text} onChange={onChange("$text")} />
     </Affix>
   );
 }

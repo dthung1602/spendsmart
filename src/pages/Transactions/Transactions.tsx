@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import { notify } from "../../components";
 import { TransactionFilter, TransactionList } from "../../parts";
-import { useTransactionList, useTransactionFilter } from "../../utils/hooks";
+import {
+  useTransactionList,
+  useTransactionFilter,
+  useDebounce,
+} from "../../utils/hooks";
 import { transactionDataStore } from "../../database";
 import "./Transactions.less";
 
@@ -15,9 +19,11 @@ function Transactions(): JSX.Element {
   const [allFetched, setAllFetched] = useState(false);
   const [transactions, setTransactions] = useTransactionList();
 
+  const debouncedFilter = useDebounce(filter, 300);
+
   useEffect(() => {
     transactionDataStore
-      .find(filter)
+      .find(debouncedFilter)
       .then((newTrans) => {
         setTransactions((oldTrans) => {
           return page == 0 ? newTrans : [...oldTrans, ...newTrans];
@@ -25,7 +31,7 @@ function Transactions(): JSX.Element {
         setAllFetched(newTrans.length < PAGE_SIZE);
       })
       .catch((e) => notify(String(e), "error"));
-  }, [filter, page, setTransactions]);
+  }, [debouncedFilter, page, setTransactions]);
 
   const incPage = allFetched ? undefined : () => setPage(page + 1);
 
