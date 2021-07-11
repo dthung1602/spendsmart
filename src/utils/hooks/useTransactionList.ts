@@ -1,9 +1,17 @@
-import { useContext, useState, useEffect } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 import { Transaction } from "../../database";
 import { GlobalContext } from "../../GlobalContext";
 
-function useTransactionList(): [Transaction[], (trs: Transaction[]) => void] {
+type SetTransActions = Dispatch<SetStateAction<Transaction[]>>;
+
+function useTransactionList(): [Transaction[], SetTransActions] {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const { changedTransaction } = useContext(GlobalContext);
 

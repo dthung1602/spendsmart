@@ -1,24 +1,51 @@
-import { useState, useEffect } from "react";
+import { useRef, useState } from "react";
 
-import { FilterObject, Transaction } from "../../database";
+import { FilterObject, QueryObject, Transaction } from "../../database";
 
 type TransFil = FilterObject<Transaction>;
+type TransQr = QueryObject<Transaction>;
+type UseTransactionFilterReturn = {
+  filter: TransFil;
+  query: TransQr;
+  setQuery: (q: TransQr) => void;
+  page: number;
+  setPage: (p: number) => void;
+};
 
-function useTransactionFilter(
-  pageSize = 10
-): [TransFil, (f: TransFil) => void, (p: number) => void] {
-  const [page, setPage] = useState<number>(0);
-  const [filter, setFilter] = useState<TransFil>({});
+function useTransactionFilter(pageSize?: number): UseTransactionFilterReturn {
+  const page = useRef<number>(0);
+  const query = useRef<TransQr>({});
 
-  useEffect(() => {
-    setPage(0);
-  }, [filter]);
+  const [filter, setFilter] = useState<TransFil>({
+    $skip: pageSize === undefined ? undefined : 0,
+    $limit: pageSize,
+  });
 
-  return [
-    { ...filter, $skip: pageSize * page, $limit: page },
-    setFilter,
+  function setQuery(newQuery: TransQr) {
+    query.current = newQuery;
+    setFilter({
+      ...newQuery,
+      $skip: 0,
+      $limit: pageSize,
+    });
+  }
+
+  function setPage(newPage: number) {
+    page.current = newPage;
+    setFilter({
+      ...filter,
+      $skip: pageSize === undefined ? undefined : pageSize * newPage,
+      $limit: pageSize,
+    });
+  }
+
+  return {
+    filter,
+    query: query.current,
+    setQuery,
+    page: page.current,
     setPage,
-  ];
+  };
 }
 
 export default useTransactionFilter;

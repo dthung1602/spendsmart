@@ -1,14 +1,19 @@
 import React from "react";
 
+import { EndOfList } from "../../components";
 import TransactionRow from "./TransactionRow";
 import { Transaction } from "../../database";
 import "./TransactionList.less";
 
 interface TransactionListProps {
   transactions: Transaction[];
+  onEndReached?: () => void;
 }
 
-function TransactionList({ transactions }: TransactionListProps): JSX.Element {
+function TransactionList({
+  transactions,
+  onEndReached,
+}: TransactionListProps): JSX.Element {
   return (
     <div className="v-margin-huge">
       {transactions.map((transaction) => {
@@ -16,6 +21,11 @@ function TransactionList({ transactions }: TransactionListProps): JSX.Element {
           <TransactionRow transaction={transaction} key={transaction.id} />
         );
       })}
+      <EndOfList
+        onReached={onEndReached}
+        disabled={!onEndReached}
+        yOffset={0}
+      />
     </div>
   );
 }

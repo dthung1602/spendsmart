@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import type { MouseEventHandler } from "react";
 import CSS from "csstype";
 
@@ -34,6 +34,8 @@ interface BasicJSXProp {
 interface BasicJSXPropWithChildren extends BasicJSXProp {
   children: React.ReactNode;
 }
+
+type ReactSetter<T> = Dispatch<SetStateAction<T>>;
 
 // ref: https://stackoverflow.com/a/55479659/7342188
 type NonFunctionProperties<T> = Pick<
@@ -142,4 +144,5 @@ export type {
   ThemeTone,
   BasicJSXProp,
   BasicJSXPropWithChildren,
+  ReactSetter,
 };

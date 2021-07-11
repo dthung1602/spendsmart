@@ -36,10 +36,13 @@ type ComparableQuery<Model> = {
   [K in Path<Model>]?: Query<PathValue<Model, K>>;
 };
 
-type FilterObject<Model> = ComparableQuery<Model> & TextQuery & Pagination;
+type QueryObject<Model> = ComparableQuery<Model> & TextQuery;
+
+type FilterObject<Model> = QueryObject<Model> & Pagination;
 
 export type {
   FilterObject,
+  QueryObject,
   ComparableQuery,
   SelectedIndex,
   ModelClass,

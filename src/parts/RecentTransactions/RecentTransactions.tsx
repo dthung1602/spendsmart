@@ -30,7 +30,7 @@ function RecentTransactions(): JSX.Element {
         />
         {t("parts.transaction-list.recent-transactions")}
       </div>
-      <TransactionList transactions={recentTransactions} />{" "}
+      <TransactionList transactions={recentTransactions} />
     </>
   );
 }

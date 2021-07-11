@@ -9,6 +9,7 @@ import { stemString } from "../../utils";
 import { Optional, IDBResultEvent } from "../../utils/types";
 import type {
   FilterObject,
+  QueryObject,
   SelectedIndex,
   ModelClass,
   Pagination,
@@ -185,4 +186,4 @@ class Datastore<Model extends AbstractModel> {
 }
 
 export default Datastore;
-export type { FilterObject, Pagination };
+export type { FilterObject, QueryObject, Pagination };

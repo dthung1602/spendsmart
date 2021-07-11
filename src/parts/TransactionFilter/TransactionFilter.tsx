@@ -19,11 +19,6 @@ function TransactionFilter({
   const dateGTE = filter.spendDatetime?.$gte?.toISOString().slice(0, 10) || "";
   const dateLTE = filter.spendDatetime?.$lte?.toISOString().slice(0, 10) || "";
 
-  console.log({
-    dateGTE,
-    dateLTE,
-  });
-
   const onChange = (
     fieldPath: string,
     cast: (value: string) => any = (value) => value

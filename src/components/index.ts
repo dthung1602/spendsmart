@@ -48,4 +48,6 @@ export type {
 
 export { default as WorkInProgress } from "./WorkInProgress";
 
+export { default as EndOfList } from "./EndOfList";
+
 export { default as ScrollToTop } from "./ScrollToTop";
