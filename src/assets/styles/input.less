@@ -1,5 +1,6 @@
-@import "space";
+@import "./space";
 @import "./theme";
+@import "./utils";
 
 .-input-color-scheme(@i: length(@colors)) when (@i > 0) {
   @color-name: extract(@colors-names, @i);
@@ -21,7 +22,7 @@
   .-input-color-scheme((@i - 1));
 }
 
-input, textarea {
+input, textarea, select {
   font-size: 1rem;
   padding: @space-medium @space-wide;
   border-radius: @border-radius-lightly-round;

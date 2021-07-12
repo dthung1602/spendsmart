@@ -11,7 +11,10 @@
     "delete": "delete",
     "more": "more",
     "less": "less",
-    "none":  "none"
+    "none":  "none",
+    "from": "from",
+    "to": "to",
+    "search": "search"
   },
   "parts": {
     "page-header-highlight": {
@@ -51,6 +54,9 @@
       "notify-update": "category updated",
       "notify-create": "category created",
       "notify-delete": "category deleted"
+    },
+    "transaction-filter": {
+      "category-empty-option": "select category"
     }
   },
   "default-categories": {

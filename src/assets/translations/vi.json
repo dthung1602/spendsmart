@@ -11,7 +11,10 @@
     "delete": "xoá",
     "more": "mở rộng",
     "less": "thu gọn",
-    "none": "trống"
+    "none": "trống",
+    "from": "từ",
+    "to": "đến",
+    "search": "tìm kiếm"
   },
   "parts": {
     "page-header-highlight": {
@@ -50,6 +53,9 @@
       "icon": "biểu tượng",
       "notify-update": "cập nhật thành công",
       "notify-create": "đã thêm thành công"
+    },
+    "transaction-filter": {
+      "category-empty-option": "chọn danh mục"
     }
   },
   "default-categories": {
